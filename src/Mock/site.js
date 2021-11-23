@@ -8,7 +8,7 @@ export default [
             return {
                 code: 20000,
                 data: {
-                    avatar: 'https://z3.ax1x.com/2021/11/23/o9E1Nq.png',
+                    avatar: 'https://z3.ax1x.com/2021/11/23/o9ZsXD.png',
                     slogan: 'You got a dream,you gotta protect it!',
                     name: '无论何时的个人博客',
                     domain: 'https://whenevers.gitee.io/',
