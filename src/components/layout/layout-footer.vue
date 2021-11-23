@@ -6,16 +6,16 @@
             </div>
             <div class="footer-item">
                 <div style="font-size:17px;font-weight: bold;">资源</div>
-                <div><a target="_blank" class="out-link" href="https://segmentfault.com/weekly?utm_source=sf-footer">每周精选</a></div>
-                <div><a target="_blank" class="out-link" href="https://www.jmjc.tech/">简明教程</a></div>
-                <div><a target="_blank" class="out-link" href="https://www.liaoxuefeng.com/">廖雪峰的官方网站</a></div>
+                <div><a target="_blank" class="out-link" href="https://www.soinside.com/">BUG天敌</a></div>
+                <div><a target="_blank" class="out-link" href="https://es6.ruanyifeng.com/">阮一峰的ES6教程</a></div>
+                <div><a target="_blank" class="out-link" href="https://space.bilibili.com/478692215">晓舟老师带你学前端</a></div>
             </div>
             <div class="footer-item">
                 <div>本站已苟活 {{runTimeInterval}}</div>
                 <div><a target="_blank" class="out-link" href="#">☞后台管理</a></div>
             </div>
         </div>
-        <div class="copyright">Copyright © 2020 by <a target="_blank" class="out-link" href="https://www.fengziy.cn">fengziy.cn</a> . All rights reserved. | <a target="_blank" class="out-link" href="http://www.beian.miit.gov.cn">渝ICP备17015355号-1</a></div>
+        <div class="copyright">Copyright © 2021 by <a target="_blank" class="out-link" href="https://whenevers.gitee.io/">无论何时</a> . All rights reserved.</div>
     </div>
 </template>
 

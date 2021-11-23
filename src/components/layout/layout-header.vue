@@ -3,7 +3,7 @@
         <div class="site-logo">
             <router-link to="/">
                 <img src="@/assets/site-logo.svg" alt="">
-                <p class="site-name">Gblog</p>
+                <p class="site-name">无论何时的个人博客</p>
             </router-link>
         </div>
         <div class="menus-btn" @click.stop="mobileShow=!mobileShow">
@@ -13,12 +13,12 @@
             <div class="menu-item header-search"><header-search/></div>
             <div class="menu-item"><router-link to="/">首页</router-link></div>
             <div class="menu-item hasChild">
-                <a href="#">文章</a>
+                <a href="#">博客</a>
                 <div class="childMenu" v-if="category.length">
                     <div class="sub-menu" v-for="item in category" :key="item.title"><router-link :to="`/category/${item.title}`">{{item.title}}</router-link></div>
                 </div>
             </div>
-            <div class="menu-item"><router-link to="/friend">友链</router-link></div>
+            <div class="menu-item"><router-link to="/friend">友情链接</router-link></div>
             <div class="menu-item"><router-link to="/about">关于</router-link></div>
         </div>
     </div>

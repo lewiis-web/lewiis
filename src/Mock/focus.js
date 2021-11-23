@@ -9,18 +9,18 @@ export default [
                 data: [
                     {
                         id: 1,
-                        title: 'Akina',
-                        img: 'https://s1.ax1x.com/2020/05/14/YDfRnU.jpg'
+                        title: '前端',
+                        img: 'https://z3.ax1x.com/2021/11/23/o9tw4K.png'
                     },
                     {
                         id: 2,
-                        title: '使用说明',
-                        img: 'https://s1.ax1x.com/2020/05/14/YDf4AJ.jpg'
+                        title: '后端',
+                        img: 'https://z3.ax1x.com/2021/11/23/o9NJG8.png'
                     },
                     {
                         id: 3,
-                        title: '文章归档',
-                        img: 'https://s1.ax1x.com/2020/05/14/YDfT91.jpg'
+                        title: '数据库',
+                        img: 'https://z3.ax1x.com/2021/11/23/o9NjeA.jpg'
                     }
                 ]
             }

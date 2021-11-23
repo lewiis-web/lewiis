@@ -9,13 +9,13 @@
             </section-title>
             <!---说明--->
             <div class="statement">
-                <p>首先将需要接入本博客站点，然后给我<router-link to="/about#Guestbook">留言</router-link>提供您站点的如下信息：</p>
+                <!-- <p>首先将需要接入本博客站点，然后给我<router-link to="/about#Guestbook">留言</router-link>提供您站点的如下信息：</p> -->
                 <quote>
                     <p>站点名称：{{websiteInfo.name}}</p>
                     <p>站点链接：{{websiteInfo.domain}}</p>
                     <p>简短描述：{{websiteInfo.desc}}</p>
                 </quote>
-                <p>接入成功后将会以邮件的方式通知。</p>
+                <!-- <p>接入成功后将会以邮件的方式通知。</p> -->
             </div>
             <!----->
             <hr/>
@@ -30,12 +30,13 @@
     import sectionTitle from '@/components/section-title'
     import Quote from "@/components/quote";
     import {fetchFriend} from '../api'
+    import lists from "@/Mock/friend"
     export default {
         name: "Friend",
         data(){
           return{
               websiteInfo: {},
-              list: []
+              list: lists[1]
           }
         },
         components:{
@@ -43,13 +44,13 @@
             sectionTitle
         },
         methods: {
-            fetchFriend() {
-                fetchFriend().then(res => {
-                    this.list = res.data || []
-                }).catch(err => {
-                    console.log(err)
-                })
-            },
+            // fetchFriend() {
+            //     fetchFriend().then(res => {
+            //         this.list = res.data || []
+            //     }).catch(err => {
+            //         console.log(err)
+            //     })
+            // },
             getWebSiteInfo(){
                 this.$store.dispatch('getSiteInfo').then(data =>{
                     this.websiteInfo = data
@@ -58,7 +59,7 @@
         },
         mounted() {
             this.getWebSiteInfo();
-            this.fetchFriend();
+            // this.fetchFriend();
         }
     }
 </script>

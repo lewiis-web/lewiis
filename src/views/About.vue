@@ -5,9 +5,9 @@
                 <div class="about-site about-info">
                     <section-title><span>❤</span>关于博客</section-title>
                     <div class="info-card">
-                        <p>偶然之间看见了<a target="_blank" class="out-link" href="https://zhebk.cn/Web/Akina.html">Akina For Typecho</a>博客的主题，风格很是喜欢。</p>
-                        <p>然后就开始用Vue搭建这种风格的博客，在此呢也将这套模板开放给大家。</p>
-                        <p><a target="_blank" href="https://gitee.com/fengziy/Gblog" style="color: #ff6d6d;">Gitee仓库</a> | <a target="_blank" href="https://github.com/fengziye/Gblog" style="color: #ff6d6d;">Github仓库</a>记得star★哟</p>
+                        <p>博客基于<a target="_blank" class="out-link" href="https://fengziy.cn" style="color: #ff6d6d;">fengziy.cn</a>二次开发（跪谢大佬！！！）</p>
+                        <p>源码使用vue前端框架搭建</p>
+                        <p>您高抬贵手，<a target="_blank" class="out-link" href="https://gitee.com/whenevers/whenevers" style="color: #ff6d6d;">Gitee仓库</a>star★一下哟!</p>
                     </div>
                 </div>
                 <div class="about-me about-info">
@@ -15,12 +15,16 @@
                     <div class="info-card">
                         <div class="contactForm">
                             <div class="form-item">
+                                <label for="username">用户名</label>
+                                <input class="v" type="text" name="username" id="username">
+                            </div>
+                            <div class="form-item">
                                 <label for="mail">邮箱</label>
                                 <input class="v" type="email" name="mail" id="mail">
                             </div>
                             <div class="form-item">
                                 <label for="content">内容</label>
-                                <textarea class="v" id="content" name="content"></textarea>
+                                <textarea rows="10" class="v" id="content" name="content"></textarea>
                             </div>
                             <div class="form-item">
                                 <label></label>

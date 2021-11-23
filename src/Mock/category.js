@@ -9,17 +9,17 @@ export default [
                 data: [
                     {
                         id: 1,
-                        title: 'JAVA',
+                        title: '前端',
                         href: '/category/java'
                     },
                     {
                         id: 2,
-                        title: 'SpringBoot',
+                        title: '后端',
                         href: '/category/SpringBoot',
                     },
                     {
                         id: 3,
-                        title: 'MySql',
+                        title: '数据库',
                         href: '/category/MySql'
                     },
                     {

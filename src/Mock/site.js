@@ -8,12 +8,12 @@ export default [
             return {
                 code: 20000,
                 data: {
-                    avatar: 'https://s2.ax1x.com/2020/01/17/1SCadg.png',
-                    slogan: 'The way up is not crowded, and most chose ease.',
-                    name: 'FZY′blog',
+                    avatar: 'https://z3.ax1x.com/2021/11/23/o9E1Nq.png',
+                    slogan: 'You got a dream,you gotta protect it!',
+                    name: '无论何时的个人博客',
                     domain: 'https://whenevers.gitee.io/',
-                    notice: '本博客的Demo数据由Mockjs生成',
-                    desc: '一个It技术的探索者'
+                    notice: '一个人只能全力以赴，等待命运去揭晓答案',
+                    desc: '一个正在努力的web前端cv码农'
                 }
             }
         }
