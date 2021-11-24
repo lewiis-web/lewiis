@@ -9,6 +9,15 @@ import {parseTime} from './utils'
 
 Vue.config.productionTip = false
 Vue.filter('parseTime', (v) => parseTime(v,'{y}-{m}-{d}'))
+// 加入百度统计
+router.beforeEach((to, from, next) => {
+  if (to.path) {
+    if (window._hmt) {
+      window._hmt.push(['_trackPageview', '/#' + to.fullPath])
+    }
+  }
+  next()
+})
 new Vue({
   router,
   store,
