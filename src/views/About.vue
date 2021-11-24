@@ -5,9 +5,13 @@
                 <div class="about-site about-info">
                     <section-title><span>❤</span>关于博客</section-title>
                     <div class="info-card">
+                        <p>无论何时</p>
+                        <p>在校大学生</p>
+                        <p>数字媒体技术专业</p>
+                        <p>一个正在努力的前端cv码农</p>
+                        <p>你渐渐远走没有回头，我却依旧想着你的温柔</p>
                         <p>博客基于<a target="_blank" class="out-link" href="https://fengziy.cn" style="color: #ff6d6d;">fengziy.cn</a>二次开发（跪谢大佬！！！）</p>
-                        <p>源码使用vue前端框架搭建</p>
-                        <p>您高抬贵手，<a target="_blank" class="out-link" href="https://gitee.com/whenevers/whenevers" style="color: #ff6d6d;">Gitee仓库</a>star★一下哟!</p>
+                        <p>您高抬贵手，<a target="_blank" class="out-link" href="https://gitee.com/whenevers/whenevers" style="color: #ff6d6d;">Gitee仓库</a>无论如何一定要star★一下哟!</p>
                     </div>
                 </div>
                 <div class="about-me about-info">
