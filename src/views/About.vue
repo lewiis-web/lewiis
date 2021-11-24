@@ -12,6 +12,7 @@
                         <p>你渐渐远走没有回头，我却依旧想着你的温柔</p>
                         <p>博客基于<a target="_blank" class="out-link" href="https://fengziy.cn" style="color: #ff6d6d;">fengziy.cn</a>二次开发（跪谢大佬！！！）</p>
                         <p>您高抬贵手，<a target="_blank" class="out-link" href="https://gitee.com/whenevers/whenevers" style="color: #ff6d6d;">Gitee仓库</a>无论如何一定要star★一下哟!</p>
+                        <p>网络社交牛逼症患者，有问题发个邮件(<a href="mailto:1819631759@qq.com?subject=深入探讨一些事情&body你此时所想的内容" style="color: #ff6d6d;">1819631759@qq.com</a>)，我们一起"深入探讨"</p>
                     </div>
                 </div>
                 <div class="about-me about-info">
