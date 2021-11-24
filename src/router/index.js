@@ -33,7 +33,7 @@ const routes = [
         path: '/friend',
         name: 'friend',
         component: () => import('../views/Friend.vue'),
-        meta: { title: '友链'}
+        meta: { title: '友情链接'}
     },
     {
         path: '/article/:id',
@@ -49,7 +49,7 @@ const router = new VueRouter({
     routes
 })
 router.beforeEach((to, from, next) => {
-    let title = 'Gblog'
+    let title = '无论何时的个人博客'
     if (to.meta.params){
         title = `${to.meta.title}:${to.params[to.meta.params] || ''} - ${title}`
     }else {

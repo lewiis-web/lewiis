@@ -18,30 +18,16 @@ export default {
     layoutBody,
     layoutFooter,
     Loading,
-  },
-  created() {
-    setTimeout(() => {
-      window.L2Dwidget.init({
-        pluginRootPath: "live2dw/",
-        pluginJsPath: "lib/",
-        pluginModelPath: "live2d-widget-model-shizuku/assets/",
-        tagMode: false,
-        debug: false,
-        model: {
-          jsonPath:
-            "../live2dw/live2d-widget-model-shizuku/assets/shizuku.model.json",
-        },
-        display: { position: "right", width: 200, height: 300 },
-        mobile: { show: true },
-        log: false,
-      });
-    }, 1000);
-  },
+  }
 };
 </script>
 <style lang="less">
 #app {
   font-size: 17px;
   color: #6f6f6f;
+  cursor: url('./assets/cursor/pointer.png'),pointer;
+}
+a{
+  cursor: url('./assets/cursor/person.png'),pointer;
 }
 </style>
