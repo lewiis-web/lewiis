@@ -2,9 +2,9 @@
 const List = [
   {
     id: 0,
-    siteName: "无论何时",
-    path: "https://whenevers.gitee.io",
-    desc: "一个正在努力的web前端cv码农"
+    siteName: "Lewiis的个人博客",
+    path: "https://lewiis.gitee.io",
+    desc: "一个正在努力的web前端工作者"
   },
   {
     id: 1,

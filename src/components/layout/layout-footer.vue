@@ -6,7 +6,7 @@
             </div>
             <div class="footer-item">
                 <div style="font-size:17px;font-weight: bold;">资源</div>
-                <div><a target="_blank" class="out-link" href="https://www.soinside.com/">BUG天敌</a></div>
+                <div><a target="_blank" class="out-link" href="https://www.soinside.com/">修BUG来这里</a></div>
                 <div><a target="_blank" class="out-link" href="https://es6.ruanyifeng.com/">阮一峰的ES6教程</a></div>
                 <div><a target="_blank" class="out-link" href="https://space.bilibili.com/478692215">晓舟老师带你学前端</a></div>
             </div>
@@ -15,7 +15,7 @@
                 <div><a target="_blank" class="out-link" href="#">☞后台管理</a></div>
             </div>
         </div>
-        <div class="copyright">Copyright © 2021 by <a target="_blank" class="out-link" href="https://whenevers.gitee.io/">无论何时</a> . All rights reserved.</div>
+        <div class="copyright">Copyright © 2021 by <a target="_blank" class="out-link" href="https://whenevers.gitee.io/">Lewiis</a> . All rights reserved.</div>
     </div>
 </template>
 

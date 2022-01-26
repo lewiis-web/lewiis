@@ -3,32 +3,27 @@
     <div class="site-content">
       <section-title>
         <div class="friend-header">
-          <div class="title">友链</div>
+          <div class="title">独家资源</div>
           <div class="apply">
-            <router-link to="/about#Guestbook">+ 加入</router-link>
+            <router-link to="/about#Guestbook">+ 联系我</router-link>
           </div>
         </div>
       </section-title>
-      <!---说明--->
+
       <div class="statement">
-        <!-- <p>首先将需要接入本博客站点，然后给我<router-link to="/about#Guestbook">留言</router-link>提供您站点的如下信息：</p> -->
         <quote>
-          <p>站点名称：{{ websiteInfo.name }}</p>
-          <p>站点链接：{{ websiteInfo.domain }}</p>
-          <p>简短描述：{{ websiteInfo.desc }}</p>
+          <p>资源名称：{{ websiteInfo.name }}</p>
         </quote>
-        <!-- <p>接入成功后将会以邮件的方式通知。</p> -->
+        <el-tabs type="border-card" class="tabname">
+          <el-tab-pane label="百度网盘">百度网盘</el-tab-pane>
+          <el-tab-pane label="夸克网盘">夸克网盘</el-tab-pane>
+          <el-tab-pane label="阿里云盘">阿里云盘</el-tab-pane>
+          <el-tab-pane label="蓝奏云">蓝奏云</el-tab-pane>
+          <el-tab-pane label="天翼云盘">天翼云盘</el-tab-pane>
+        </el-tabs>
       </div>
-      <!----->
       <hr />
-      <div class="friend-list animate">
-        <div class="friend-item" v-for="item in list" :key="item.id">
-          <a target="_blank" :href="item.path"
-            ><div class="site-name">{{ item.siteName }}</div>
-            <div class="site-detail">{{ item.desc }}</div></a
-          >
-        </div>
-      </div>
+
     </div>
   </div>
 </template>
@@ -90,7 +85,21 @@ export default {
   }
 }
 .statement {
-  margin: 60px 0 20px 0;
+  margin: 30px 0 10px 0;
+  a {
+    color: #ff6d6d;
+  }
+  p {
+    line-height: 2rem;
+  }
+}
+
+.tabname{
+  margin-top: 10px;
+}
+
+.state {
+  margin: 20px 0 20px 0;
   a {
     color: #ff6d6d;
   }
@@ -99,7 +108,7 @@ export default {
   }
 }
 hr {
-  margin: 40px 0;
+  margin: 30px 0 0 0;
   border: 0;
   height: 1px;
   background-image: linear-gradient(

@@ -40,6 +40,12 @@ const routes = [
         name: 'article',
         component: () => import('../views/Articles.vue'),
         meta: { title: '文章'}
+    },
+    {
+        path: '/resource',
+        name: 'resource',
+        component: () => import('../views/Resource.vue'),
+        meta: { title: '资源'}
     }
 ]
 
@@ -49,7 +55,7 @@ const router = new VueRouter({
     routes
 })
 router.beforeEach((to, from, next) => {
-    let title = '无论何时的个人博客'
+    let title = 'Lewiis的个人博客'
     if (to.meta.params){
         title = `${to.meta.title}:${to.params[to.meta.params] || ''} - ${title}`
     }else {

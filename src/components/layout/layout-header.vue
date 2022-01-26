@@ -3,7 +3,7 @@
         <div class="site-logo">
             <router-link to="/">
                 <img src="@/assets/site-logo.svg" alt="">
-                <p class="site-name">无论何时的个人博客</p>
+                <p class="site-name">Lewiis的个人博客</p>
             </router-link>
         </div>
         <div class="menus-btn" @click.stop="mobileShow=!mobileShow">
@@ -19,6 +19,7 @@
                 </div>
             </div>
             <div class="menu-item"><router-link to="/friend">友情链接</router-link></div>
+            <div class="menu-item"><router-link to="/resource">独家资源</router-link></div>
             <div class="menu-item"><router-link to="/about">关于</router-link></div>
         </div>
     </div>

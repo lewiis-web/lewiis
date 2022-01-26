@@ -10,10 +10,10 @@ export default [
                 data: {
                     avatar: 'https://z3.ax1x.com/2021/11/23/o9ZsXD.png',
                     slogan: 'You got a dream,you gotta protect it!',
-                    name: '无论何时的个人博客',
-                    domain: 'https://whenevers.gitee.io/',
+                    name: 'Lewiis的个人博客',
+                    domain: 'https://lewiis.gitee.io/',
                     notice: '一个人只能全力以赴，等待命运去揭晓答案',
-                    desc: '一个正在努力的web前端cv码农'
+                    desc: '一个正在努力的web前端工作者'
                 }
             }
         }

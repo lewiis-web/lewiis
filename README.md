@@ -1,6 +1,6 @@
-# 无论何时的个人博客
+# Lewiis的个人博客
 ## 介绍
->基于基于[fengziy.cn](https://fengziy.cn)二次开发；使用vue前端框架搭建；您高抬贵手，[Gitee仓库](https://gitee.com/whenevers/whenevers)star★一下哟!
+>基于基于[fengziy.cn](https://fengziy.cn)二次开发；使用vue前端框架搭建；您高抬贵手，[Gitee仓库](https://gitee.com/lewiis/lewiis)star★一下哟!
 ## 完成功能
 博客将持续更新，敬请关注···
 - [x] 搜索
