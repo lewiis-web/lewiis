@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {getTimeInterval} from '../utils/index'
-import {fetchSocial,fetchSiteInfo} from '@/api'
+import {fetchSocial,fetchSiteInfo} from '@/api/site'
 
 Vue.use(Vuex)
 // 略:后台获取系统运行时间

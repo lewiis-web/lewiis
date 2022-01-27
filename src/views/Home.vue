@@ -47,7 +47,9 @@ import sectionTitle from "@/components/section-title";
 import Post from "@/components/post";
 import SmallIco from "@/components/small-ico";
 import Quote from "@/components/quote";
-import { fetchFocus, fetchList } from "../api";
+import { fetchFocus } from "../api/focus";
+import { fetchList } from "../api";
+
 
 export default {
   name: "Home",
