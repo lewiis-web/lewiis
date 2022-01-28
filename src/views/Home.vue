@@ -48,7 +48,7 @@ import Post from "@/components/post";
 import SmallIco from "@/components/small-ico";
 import Quote from "@/components/quote";
 import { fetchFocus } from "../api/focus";
-import { fetchList } from "../api";
+import { fetchList } from "../api/post";
 
 
 export default {
