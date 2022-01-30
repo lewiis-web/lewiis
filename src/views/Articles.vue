@@ -1,16 +1,21 @@
 <template>
   <div class="articles">
-    <banner></banner>
     <div class="site-content animate">
-      <!-- 文章目录 -->
-      <div id="article-menus">
-        <menu-tree :menus="menus" child-label="child"></menu-tree>
-      </div>
       <main class="site-main">
         <article class="hentry">
           <!-- 文章内容 -->
-          <div>
-            
+          <div class="mavon">
+            <mavon-editor
+              v-model="articalContent"
+              :toolbars="toolbars"
+              :toolbarsFlag="true"
+              :subfield="false"
+              defaultOpen="preview"
+              :navigation="false"
+              :ishljs="true"
+              codeStyle="tomorrow-night-bright"
+              style="height:750px;"
+            />
           </div>
           <!-- 文章底部 -->
           <section-title>
@@ -18,7 +23,7 @@
               <!-- 阅读次数 -->
               <div class="post-like">
                 <i class="iconfont iconeyes"></i>
-                <span class="count">685</span>
+                <span class="count">{{article.viewsCount}}</span>
               </div>
               <!-- 赞助按钮 -->
               <div class="donate" @click="showDonate = !showDonate">
@@ -53,7 +58,6 @@ import sectionTitle from "@/components/section-title";
 import menuTree from "@/components/menu-tree";
 import { fetchArticle } from "../api/post";
 
-
 export default {
   name: "articles",
   data() {
@@ -62,6 +66,13 @@ export default {
       comments: [],
       menus: [],
       article: {},
+      articalContent: "",
+      toolbars: {
+        navigation: true,
+        readmodel: true,
+        htmlcode: true, // 展示html源码
+        help: true, // 帮助
+      },
     };
   },
   components: {
@@ -70,57 +81,26 @@ export default {
     menuTree,
   },
   methods: {
-    fetchH(arr, left, right) {
-      if (right) {
-        return arr.filter(
-          (item) => item.offsetTop > left && item.offsetTop < right
-        );
-      } else {
-        return arr.filter((item) => item.offsetTop > left);
-      }
-    },
-    // 生成目录
-    createMenus() {
-      let arr = [];
-      for (let i = 6; i > 0; i--) {
-        let temp = [];
-        let e = document
-          .querySelector(".entry-content")
-          .querySelectorAll(`h${i}`);
-        for (let j = 0; j < e.length; j++) {
-          let child = this.fetchH(
-            arr,
-            e[j].offsetTop,
-            j + 1 === e.length ? undefined : e[j + 1].offsetTop
-          );
-          temp.push({
-            h: i,
-            title: e[j].innerText,
-            id: e[j].id,
-            offsetTop: e[j].offsetTop,
-            child,
-          });
-        }
-        if (temp.length) {
-          arr = temp;
-        }
-      }
-      this.menus = arr;
-    },
+    
   },
   mounted() {
     this.createMenus();
   },
   created() {
-    console.log("这是从列表传过来的文章id", this.$route.params.id);
-    fetchArticle({articleId:this.$route.params.id})
-    .then((res)=>{
-      console.log("res",res);
-      this.article = res.data[0]
-    }).catch((err)=>{
-      console.log(err);
-    })
-
+    console.log("这是从列表传过来的文章id", this.$route);
+    fetchArticle({ articleId: this.$route.params.id })
+      .then((res) => {
+        console.log("res", res);
+        this.article = res.data[0];
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.$axios
+      .get(`http://127.0.0.1:3000/md/${this.$route.query.content}.md`)
+      .then((res) => {
+        this.articalContent = res.data;
+      });
   },
 };
 </script>
@@ -131,17 +111,12 @@ export default {
     padding: 80px 0 0 0;
   }
 }
-#article-menus {
-  position: sticky;
-  top: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-  padding: 15px;
-  width: 300px;
-  transform: translateX(-120%) translateY(150px);
-  font-size: 14px;
-}
 article.hentry {
+  margin-left: -50%;
+  width: 200%;
+  .mavon{
+    margin-top: 10px;
+  }
   .entry-header {
     .entry-title {
       font-size: 23px;
@@ -174,6 +149,7 @@ article.hentry {
   }
 
   .entry-content {
+    
   }
 
   footer.post-footer {

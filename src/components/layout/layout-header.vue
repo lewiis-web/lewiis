@@ -27,7 +27,7 @@
 
 <script>
     import HeaderSearch from '@/components/header-search'
-    import {fetchCategory} from '../../api/category'
+    import {fetchCategory} from '@/api/category'
     export default {
         name: "layout-header",
         components: {HeaderSearch},

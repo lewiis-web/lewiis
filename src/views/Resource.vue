@@ -10,20 +10,29 @@
         </div>
       </section-title>
 
-      <div class="statement">
+      <div class="statement" v-for="item in list" :key="item.id">
         <quote>
-          <p>资源名称：{{ websiteInfo.name }}</p>
+          <p>资源名称：{{ item.name }}</p>
         </quote>
         <el-tabs type="border-card" class="tabname">
-          <el-tab-pane label="百度网盘">百度网盘</el-tab-pane>
-          <el-tab-pane label="夸克网盘">夸克网盘</el-tab-pane>
-          <el-tab-pane label="阿里云盘">阿里云盘</el-tab-pane>
-          <el-tab-pane label="蓝奏云">蓝奏云</el-tab-pane>
-          <el-tab-pane label="天翼云盘">天翼云盘</el-tab-pane>
+          <el-tab-pane label="百度网盘">{{ item.baidu }}</el-tab-pane>
+          <el-tab-pane label="夸克网盘">{{ item.kuake }}</el-tab-pane>
+          <el-tab-pane label="阿里云盘">{{ item.aliyun }}</el-tab-pane>
+          <el-tab-pane label="蓝奏云">{{ item.lanzouyun }}</el-tab-pane>
+          <el-tab-pane label="天翼云盘">{{ item.tianyiyun }}</el-tab-pane>
         </el-tabs>
+        <hr />
       </div>
-      <hr />
 
+      <el-pagination
+        background
+        :current-page="queryForm.pageNo"
+        :layout="layout"
+        :page-size="queryForm.pageSize"
+        :total="total"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+      ></el-pagination>
     </div>
   </div>
 </template>
@@ -31,14 +40,20 @@
 <script>
 import sectionTitle from "@/components/section-title";
 import Quote from "@/components/quote";
-import { fetchFriend } from "../api";
-import lists from "@/Mock/friend";
+import { fetchResource } from "@/api/resource";
 export default {
   name: "Friend",
   data() {
     return {
       websiteInfo: {},
-      list: lists[1],
+      list: [],
+      queryForm: {
+        pageNo: 1,
+        pageSize: 10,
+        title: "",
+      },
+      layout: "total, sizes, prev, pager, next, jumper",
+      total: 0,
     };
   },
   components: {
@@ -46,22 +61,31 @@ export default {
     sectionTitle,
   },
   methods: {
-    // fetchFriend() {
-    //     fetchFriend().then(res => {
-    //         this.list = res.data || []
-    //     }).catch(err => {
-    //         console.log(err)
-    //     })
-    // },
     getWebSiteInfo() {
       this.$store.dispatch("getSiteInfo").then((data) => {
         this.websiteInfo = data;
       });
     },
+    fetchResource() {
+      fetchResource(this.queryForm).then((res) => {
+        this.list = res.data;
+        this.total = res.data.length
+      });
+    },
+    handleSizeChange(val) {
+      this.queryForm.pageSize = val;
+      this.fetchResource();
+    },
+    handleCurrentChange(val) {
+      this.queryForm.pageNo = val;
+      this.fetchResource();
+    },
+  },
+  created() {
+    this.fetchResource();
   },
   mounted() {
     this.getWebSiteInfo();
-    // this.fetchFriend();
   },
 };
 </script>
@@ -84,6 +108,9 @@ export default {
     color: #ff6d6d;
   }
 }
+.el-pagination{
+  margin: 20px 0 5px 18%;
+}
 .statement {
   margin: 30px 0 10px 0;
   a {
@@ -94,7 +121,7 @@ export default {
   }
 }
 
-.tabname{
+.tabname {
   margin-top: 10px;
 }
 
