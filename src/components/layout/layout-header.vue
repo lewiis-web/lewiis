@@ -171,7 +171,7 @@ export default {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     position: absolute;
     top: 55px;
-    z-index: 2;
+    z-index: 10;
     opacity: 0;
     visibility: hidden;
     transition: 0.7s all ease;

@@ -14,7 +14,7 @@
               :navigation="false"
               :ishljs="true"
               codeStyle="tomorrow-night-bright"
-              style="height:750px;"
+              style="height:750px;z-index: 2;"
             />
           </div>
           <!-- 文章底部 -->
@@ -56,7 +56,7 @@
 import Banner from "@/components/banner";
 import sectionTitle from "@/components/section-title";
 import menuTree from "@/components/menu-tree";
-import { fetchArticle } from "../api/post";
+import { fetchArticle,addViewsCount } from "../api/post";
 
 export default {
   name: "articles",
@@ -81,13 +81,24 @@ export default {
     menuTree,
   },
   methods: {
-    
+    addViewsCount(){
+      addViewsCount({articleId:this.article.id})
+      .then((res)=>{
+        if (res.message === "成功") {
+          this.$message({
+          message: '这篇博客的热度嗖地一下加了一点儿！',
+          type: 'success'
+        });
+        }
+      }).catch((err)=>{
+        this.$message.error(err);
+      })
+    }
   },
   mounted() {
-    this.createMenus();
+    
   },
   created() {
-    console.log("这是从列表传过来的文章id", this.$route);
     fetchArticle({ articleId: this.$route.params.id })
       .then((res) => {
         console.log("res", res);
@@ -100,6 +111,9 @@ export default {
       .get(`http://127.0.0.1:3000/md/${this.$route.query.content}.md`)
       .then((res) => {
         this.articalContent = res.data;
+        setTimeout(() => {
+          this.addViewsCount()
+        }, 2000);
       });
   },
 };
@@ -112,8 +126,8 @@ export default {
   }
 }
 article.hentry {
-  margin-left: -50%;
-  width: 200%;
+  // margin-left: -50%;
+  // width: 200%;
   .mavon{
     margin-top: 10px;
   }

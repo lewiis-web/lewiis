@@ -84,6 +84,7 @@ export default {
   },
   watch: {
     category(val) {
+      console.log(val);
       fetchList({ category: val })
         .then((res) => {
           this.postList = res.data.items || [];
@@ -133,7 +134,7 @@ export default {
         });
     },
     fetchList() {
-      fetchList()
+      fetchList({category:this.$route.params.cate,searchWords:this.$route.params.words})
         .then((res) => {
           this.postList = res.data.items || [];
           this.currPage = res.data.page;
@@ -154,6 +155,7 @@ export default {
   mounted() {
     this.fetchFocus();
     this.fetchList();
+    console.log(this.$route);
   },
 };
 </script>
