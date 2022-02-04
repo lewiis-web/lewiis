@@ -1,10 +1,10 @@
 <template>
   <div class="feature">
-    <router-link :to="`/article/${data.id}`">
+    <router-link :to="{path:`/article/${data.id}`,query:{id:data.id,content:data.content}}">
       <div class="feature-title">
         <span class="foverlay">{{ data.title }}</span>
       </div>
-      <img :src="data.img" />
+      <img :src="data.banner" />
     </router-link>
   </div>
 </template>

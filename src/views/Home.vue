@@ -6,7 +6,7 @@
       <div class="notify">
         <div class="search-result" v-if="hideSlogan">
           <span v-if="searchWords">搜索结果："{{ searchWords }}" 相关文章</span>
-          <span v-else-if="category">分类 "{{ category }}" 相关文章</span>
+          <span v-else-if="category">分类 "{{ category | filterCategory }}" 相关文章</span>
         </div>
         <quote v-else>{{ notice }}</quote>
       </div>
@@ -19,7 +19,7 @@
           </div>
         </section-title>
         <div class="feature-content">
-          <div class="feature-item" v-for="item in features" :key="item.title">
+          <div class="feature-item" v-for="item in features" :key="item.id">
             <Feature :data="item"></Feature>
           </div>
         </div>
@@ -50,7 +50,6 @@ import Quote from "@/components/quote";
 import { fetchFocus } from "../api/focus";
 import { fetchList } from "../api/post";
 
-
 export default {
   name: "Home",
   props: ["cate", "words"],
@@ -69,6 +68,45 @@ export default {
     Post,
     SmallIco,
     Quote,
+  },
+  filters:{
+    filterCategory(val){
+      if (val === "fontend") {
+        return "前端"
+      }else if (val === "backend") {
+        return "后端"
+      }else if (val === "sql") {
+        return "数据库"
+      }else if (val === "essays") {
+        return "随笔"
+      }
+    }
+  },
+  watch: {
+    category(val) {
+      fetchList({ category: val })
+        .then((res) => {
+          this.postList = res.data.items || [];
+          this.currPage = res.data.page;
+          this.hasNextPage = res.data.hasNextPage;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$message.error(err);
+        });
+    },
+    searchWords(val) {
+      fetchList({ searchWords: val })
+        .then((res) => {
+          this.postList = res.data.items || [];
+          this.currPage = res.data.page;
+          this.hasNextPage = res.data.hasNextPage;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$message.error(err);
+        });
+    },
   },
   computed: {
     searchWords() {

@@ -18,7 +18,7 @@
       <div class="p-time">
         <i class="iconfont iconmeditor-time"> </i> {{ post.pubTime
         }}<i
-          v-if="post.isHot"
+          v-if="post.viewsCount >= 1500"
           class="iconfont iconfire"
           style="margin-left: 5px; color: #ff6d6d"
         ></i>

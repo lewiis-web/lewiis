@@ -36,14 +36,13 @@
 <script>
 import sectionTitle from "@/components/section-title";
 import Quote from "@/components/quote";
-import { fetchFriend } from "../api";
-import lists from "@/Mock/friend";
+import { fetchFriend } from "../api/friend";
 export default {
   name: "Friend",
   data() {
     return {
       websiteInfo: {},
-      list: lists[1],
+      list: []
     };
   },
   components: {
@@ -51,13 +50,13 @@ export default {
     sectionTitle,
   },
   methods: {
-    // fetchFriend() {
-    //     fetchFriend().then(res => {
-    //         this.list = res.data || []
-    //     }).catch(err => {
-    //         console.log(err)
-    //     })
-    // },
+    fetchFriend() {
+        fetchFriend().then(res => {
+            this.list = res.data || []
+        }).catch(err => {
+            console.log(err)
+        })
+    },
     getWebSiteInfo() {
       this.$store.dispatch("getSiteInfo").then((data) => {
         this.websiteInfo = data;
@@ -66,7 +65,7 @@ export default {
   },
   mounted() {
     this.getWebSiteInfo();
-    // this.fetchFriend();
+    this.fetchFriend();
   },
 };
 </script>

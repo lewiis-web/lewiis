@@ -5,7 +5,8 @@
         <div class="friend-header">
           <div class="title">独家资源</div>
           <div class="apply">
-            <router-link to="/about#Guestbook">+ 联系我</router-link>
+            <el-input v-model="queryForm.title" placeholder="资源搜索从这里开始···" class="search_input"></el-input>
+            <el-button icon="el-icon-search" circle class="search_btn" @click="handleQuery"></el-button>
           </div>
         </div>
       </section-title>
@@ -15,11 +16,16 @@
           <p>资源名称：{{ item.name }}</p>
         </quote>
         <el-tabs type="border-card" class="tabname">
-          <el-tab-pane label="百度网盘">{{ item.baidu }}</el-tab-pane>
-          <el-tab-pane label="夸克网盘">{{ item.kuake }}</el-tab-pane>
-          <el-tab-pane label="阿里云盘">{{ item.aliyun }}</el-tab-pane>
-          <el-tab-pane label="蓝奏云">{{ item.lanzouyun }}</el-tab-pane>
-          <el-tab-pane label="天翼云盘">{{ item.tianyiyun }}</el-tab-pane>
+          <el-tab-pane v-if="item.baidu === '' || item.baidu === null" label="百度网盘">{{ item.baidu }}</el-tab-pane>
+          <el-tab-pane v-else label="百度网盘😀">{{ item.baidu }}</el-tab-pane>
+          <el-tab-pane v-if="item.kuake === '' || item.kuake === null" label="夸克网盘">{{ item.kuake }}</el-tab-pane>
+          <el-tab-pane v-else label="夸克网盘😁">{{ item.kuake }}</el-tab-pane>
+          <el-tab-pane v-if="item.aliyun === '' || item.aliyun === null" label="阿里云盘">{{ item.aliyun }}</el-tab-pane>
+          <el-tab-pane v-else label="阿里云盘😂">{{ item.aliyun }}</el-tab-pane>
+          <el-tab-pane v-if="item.lanzouyun === '' || item.lanzouyun === null" label="蓝奏云">{{ item.lanzouyun }}</el-tab-pane>
+          <el-tab-pane v-else label="蓝奏云😎">{{ item.lanzouyun }}</el-tab-pane>
+          <el-tab-pane v-if="item.tianyiyun === '' || item.tianyiyun === null" label="天翼云盘">{{ item.tianyiyun }}</el-tab-pane>
+          <el-tab-pane v-else label="天翼云盘😄">{{ item.tianyiyun }}</el-tab-pane>
         </el-tabs>
         <hr />
       </div>
@@ -69,7 +75,7 @@ export default {
     fetchResource() {
       fetchResource(this.queryForm).then((res) => {
         this.list = res.data;
-        this.total = res.data.length
+        this.total = res.totalCount
       });
     },
     handleSizeChange(val) {
@@ -80,6 +86,10 @@ export default {
       this.queryForm.pageNo = val;
       this.fetchResource();
     },
+    handleQuery(){
+      this.queryForm.pageNo = 1
+      this.fetchResource()
+    }
   },
   created() {
     this.fetchResource();
@@ -103,6 +113,16 @@ export default {
   font-weight: 400;
   .title {
     font-size: 20px;
+  }
+  .apply{
+    .search_input{
+      float: left;
+      width: 250px;
+    }
+    .search_btn{
+      clear: both;
+      margin-left: 10px;
+    }
   }
   .apply:hover {
     color: #ff6d6d;
