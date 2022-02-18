@@ -26,6 +26,8 @@
           <el-tab-pane v-else label="蓝奏云😎">{{ item.lanzouyun }}</el-tab-pane>
           <el-tab-pane v-if="item.tianyiyun === '' || item.tianyiyun === null" label="天翼云盘">{{ item.tianyiyun }}</el-tab-pane>
           <el-tab-pane v-else label="天翼云盘😄">{{ item.tianyiyun }}</el-tab-pane>
+          <el-tab-pane v-if="item.website === '' || item.website === null" label="网址">{{ item.website }}</el-tab-pane>
+          <el-tab-pane v-else label="网址😍">{{ item.website }}</el-tab-pane>
         </el-tabs>
         <hr />
       </div>
