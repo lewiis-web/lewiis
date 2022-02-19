@@ -54,7 +54,7 @@ export default {
         fetchFriend().then(res => {
             this.list = res.data || []
         }).catch(err => {
-            console.log(err)
+            
         })
     },
     getWebSiteInfo() {

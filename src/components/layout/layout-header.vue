@@ -84,7 +84,7 @@ export default {
           this.category = res.data;
         })
         .catch((err) => {
-          console.log(err);
+          
         });
     },
   },

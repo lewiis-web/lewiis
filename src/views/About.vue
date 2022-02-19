@@ -91,7 +91,6 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log(this.email,this.question);
       // 保存到数据库中
       this.addMessage()
     },

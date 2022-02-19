@@ -84,7 +84,6 @@ export default {
   },
   watch: {
     category(val) {
-      console.log(val);
       fetchList({ category: val })
         .then((res) => {
           this.postList = res.data.items || [];
@@ -92,7 +91,6 @@ export default {
           this.hasNextPage = res.data.hasNextPage;
         })
         .catch((err) => {
-          console.log(err);
           this.$message.error(err);
         });
     },
@@ -104,7 +102,6 @@ export default {
           this.hasNextPage = res.data.hasNextPage;
         })
         .catch((err) => {
-          console.log(err);
           this.$message.error(err);
         });
     },
@@ -130,7 +127,6 @@ export default {
           this.features = res.data || [];
         })
         .catch((err) => {
-          console.log(err);
         });
     },
     fetchList() {
@@ -141,7 +137,6 @@ export default {
           this.hasNextPage = res.data.hasNextPage;
         })
         .catch((err) => {
-          console.log(err);
         });
     },
     loadMore() {
@@ -155,7 +150,6 @@ export default {
   mounted() {
     this.fetchFocus();
     this.fetchList();
-    console.log(this.$route);
   },
 };
 </script>

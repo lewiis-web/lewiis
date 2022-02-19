@@ -101,14 +101,14 @@ export default {
   created() {
     fetchArticle({ articleId: this.$route.params.id })
       .then((res) => {
-        console.log("res", res);
+        
         this.article = res.data[0];
       })
       .catch((err) => {
-        console.log(err);
+        
       });
     this.$axios
-      .get(`http://127.0.0.1:3000/md/${this.$route.query.content}.md`)
+      .get(`${process.env.VUE_APP_BASE_API.substring(0,process.env.VUE_APP_BASE_API.length - 4)}/md/${this.$route.query.content}.md`)
       .then((res) => {
         this.articalContent = res.data;
         setTimeout(() => {
