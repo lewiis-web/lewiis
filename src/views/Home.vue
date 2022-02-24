@@ -158,7 +158,10 @@ export default {
       let wel = new Date().toLocaleTimeString().substring(0,2)
       // 调用接口保存访客信息
       saveVisitorInfo(visitorInfo).then((ret)=>{
-        this.$message(`${wel}好,感谢大佬的来访,身体健康,恭喜发财!`);
+        this.$message({
+          message:`${wel}好,感谢大佬的来访,身体健康,恭喜发财!`,
+          duration:5000
+        });
       })
     },
   },
