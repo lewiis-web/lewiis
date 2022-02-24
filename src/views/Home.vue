@@ -151,10 +151,14 @@ export default {
       });
     },
     saveVisitorInfo() {
-      const visitorInfo = JSON.parse(localStorage.getItem("visitorInfo"));
+      let visitorInfo = JSON.parse(localStorage.getItem("visitorInfo"));
+      visitorInfo = Object.assign({}, visitorInfo, {
+        type: "Lewiis的个人博客",
+      });
+      let wel = new Date().toLocaleTimeString().substring(0,2)
       // 调用接口保存访客信息
       saveVisitorInfo(visitorInfo).then((ret)=>{
-        console.log(ret);
+        this.$message(`${wel}好,感谢大佬的来访,身体健康,恭喜发财!`);
       })
     },
   },

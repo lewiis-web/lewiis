@@ -23,6 +23,12 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script type="text/javascript">
+      let visitorInfo = JSON.stringify(returnCitySN);
+      localStorage.setItem("visitorInfo", visitorInfo);
+    </script>
     <!-- 统计 -->
     <script>
       var _hmt = _hmt || [];
@@ -159,12 +165,5 @@
     document.addEventListener("copy", function(e) {
       setClipboardText(e);
     });
-  </script>
-
-  <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
-  <script type="text/javascript">
-    let visitorInfo = JSON.stringify(returnCitySN);
-    visitorInfo = Object.assign({},visitorInfo,{type:"Lewiis的个人博客"})
-    localStorage.setItem("visitorInfo", visitorInfo);
   </script>
 </html>
