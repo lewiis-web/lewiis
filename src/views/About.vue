@@ -58,7 +58,7 @@
                   class="v"
                   id="content"
                   name="content"
-                  placeholder="请输入你想咨询的问题"
+                  placeholder="这里可以输入你想咨询的问题或者你的博客名称+个人简介+博客地址,收到后第一时间我将在博客中发布!"
                   v-model="question"
                 ></textarea>
               </div>
