@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/favicon.ico><title>gblog</title><script>var _hmt = _hmt || [];</script><link href=/css/chunk-0902cbca.89eafe32.css rel=prefetch><link href=/css/chunk-2a785bac.23128588.css rel=prefetch><link href=/css/chunk-461c11c3.062da7c6.css rel=prefetch><link href=/css/chunk-9b561790.834a2085.css rel=prefetch><link href=/css/chunk-c1e68f4c.8e041e3f.css rel=prefetch><link href=/js/chunk-0902cbca.208ca67c.js rel=prefetch><link href=/js/chunk-2a785bac.3e33da4e.js rel=prefetch><link href=/js/chunk-461c11c3.a6f7f681.js rel=prefetch><link href=/js/chunk-9b561790.a6522609.js rel=prefetch><link href=/js/chunk-c1e68f4c.240be7e4.js rel=prefetch><link href=/css/app.d527e94a.css rel=preload as=style><link href=/css/chunk-vendors.3f1c9aa3.css rel=preload as=style><link href=/js/app.be7c9d60.js rel=preload as=script><link href=/js/chunk-vendors.c4a62d6c.js rel=preload as=script><link href=/css/chunk-vendors.3f1c9aa3.css rel=stylesheet><link href=/css/app.d527e94a.css rel=stylesheet></head><body><noscript><strong>We're sorry but gblog doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script>var _hmt = _hmt || [];
     (function () {
       var hm = document.createElement("script");
@@ -24,12 +25,132 @@
     if (event.clipboardData) {
       event.clipboardData.setData("text/html", htmlData);
       event.clipboardData.setData("text/plain", textData);
+=======
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/favicon.ico><title>gblog</title><script>var _hmt = _hmt || [];</script><link href=/css/chunk-2a785bac.23128588.css rel=prefetch><link href=/css/chunk-461c11c3.062da7c6.css rel=prefetch><link href=/css/chunk-522342bf.3efd5a59.css rel=prefetch><link href=/css/chunk-7259e8ee.1c1167d4.css rel=prefetch><link href=/css/chunk-c1e68f4c.8e041e3f.css rel=prefetch><link href=/js/chunk-2a785bac.37a86a77.js rel=prefetch><link href=/js/chunk-461c11c3.5f06da4b.js rel=prefetch><link href=/js/chunk-522342bf.c756decd.js rel=prefetch><link href=/js/chunk-7259e8ee.8e5c8e36.js rel=prefetch><link href=/js/chunk-c1e68f4c.faa79cea.js rel=prefetch><link href=/css/app.d527e94a.css rel=preload as=style><link href=/css/chunk-vendors.3f1c9aa3.css rel=preload as=style><link href=/js/app.5b2b613a.js rel=preload as=script><link href=/js/chunk-vendors.26c21df2.js rel=preload as=script><link href=/css/chunk-vendors.3f1c9aa3.css rel=stylesheet><link href=/css/app.d527e94a.css rel=stylesheet></head><body><noscript><strong>We're sorry but gblog doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src="http://pv.sohu.com/cityjson?ie=utf-8"></script><script>let visitorInfo = JSON.stringify(returnCitySN);
+      localStorage.setItem("visitorInfo", visitorInfo);</script><script>var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?34d627e9de099a7f98565cd972c6a961";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();</script><script src=/js/chunk-vendors.26c21df2.js></script><script src=/js/app.5b2b613a.js></script></body><script>!(function(e, t, a) {
+      function n() {
+        c(
+          ".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"
+        ),
+          o(),
+          r();
+      }
+      function r() {
+        for (var e = 0; e < d.length; e++)
+          d[e].alpha <= 0
+            ? (t.body.removeChild(d[e].el), d.splice(e, 1))
+            : (d[e].y--,
+              (d[e].scale += 0.004),
+              (d[e].alpha -= 0.013),
+              (d[e].el.style.cssText =
+                "left:" +
+                d[e].x +
+                "px;top:" +
+                d[e].y +
+                "px;opacity:" +
+                d[e].alpha +
+                ";transform:scale(" +
+                d[e].scale +
+                "," +
+                d[e].scale +
+                ") rotate(45deg);background:" +
+                d[e].color +
+                ";z-index:99999"));
+        requestAnimationFrame(r);
+      }
+      function o() {
+        var t = "function" == typeof e.onclick && e.onclick;
+        e.onclick = function(e) {
+          t && t(), i(e);
+        };
+      }
+      function i(e) {
+        var a = t.createElement("div");
+        (a.className = "heart"),
+          d.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: s(),
+          }),
+          t.body.appendChild(a);
+      }
+      function c(e) {
+        var a = t.createElement("style");
+        a.type = "text/css";
+        try {
+          a.appendChild(t.createTextNode(e));
+        } catch (t) {
+          a.styleSheet.cssText = e;
+        }
+        t.getElementsByTagName("head")[0].appendChild(a);
+      }
+      function s() {
+        return (
+          "rgb(" +
+          ~~(255 * Math.random()) +
+          "," +
+          ~~(255 * Math.random()) +
+          "," +
+          ~~(255 * Math.random()) +
+          ")"
+        );
+      }
+      var d = [];
+      (e.requestAnimationFrame = (function() {
+        return (
+          e.requestAnimationFrame ||
+          e.webkitRequestAnimationFrame ||
+          e.mozRequestAnimationFrame ||
+          e.oRequestAnimationFrame ||
+          e.msRequestAnimationFrame ||
+          function(e) {
+            setTimeout(e, 1e3 / 60);
+          }
+        );
+      })()),
+        n();
+    })(window, document);</script><script>/**/
+    function setClipboardText(event) {
+      event.preventDefault();
+      var node = document.createElement("div");
+      node.appendChild(
+        window
+          .getSelection()
+          .getRangeAt(0)
+          .cloneContents()
+      );
+      var htmlData =
+        "<div>" +
+        node.innerHTML +
+        "<br/><br/>著作权归作者所有。<br/>" +
+        "商业转载请联系作者获得授权，非商业转载请注明出处。<br/>" +
+        "作者：Lewiis<br/>" +
+        "来源：https://www.fengziy.cn<br/><br/>" +
+        "</div>";
+      var textData =
+        window.getSelection().getRangeAt(0) +
+        "\n\n著作权归作者所有。\n" +
+        "商业转载请联系作者获得授权，非商业转载请注明出处。\n" +
+        "作者：Lewiis\n" +
+        "来源：https://whenevers.gitee.io\n\n";
+      if (event.clipboardData) {
+        event.clipboardData.setData("text/html", htmlData);
+        event.clipboardData.setData("text/plain", textData);
+      } else if (window.clipboardData) {
+        return window.clipboardData.setData("text", textData);
+      }
+>>>>>>> 466a327d08f94db9752b698c176c9728d54d0417
     }
-    else if (window.clipboardData) {
-      return window.clipboardData.setData("text", textData);
-    }
-  };
 
-  document.addEventListener('copy', function (e) {
-    setClipboardText(e);
-  });</script></html>
+    document.addEventListener("copy", function(e) {
+      setClipboardText(e);
+    });</script></html>

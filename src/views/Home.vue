@@ -6,7 +6,9 @@
       <div class="notify">
         <div class="search-result" v-if="hideSlogan">
           <span v-if="searchWords">搜索结果："{{ searchWords }}" 相关文章</span>
-          <span v-else-if="category">分类 "{{ category | filterCategory }}" 相关文章</span>
+          <span v-else-if="category"
+            >分类 "{{ category | filterCategory }}" 相关文章</span
+          >
         </div>
         <quote v-else>{{ notice }}</quote>
       </div>
@@ -47,8 +49,9 @@ import sectionTitle from "@/components/section-title";
 import Post from "@/components/post";
 import SmallIco from "@/components/small-ico";
 import Quote from "@/components/quote";
-import { fetchFocus } from "../api/focus";
-import { fetchList } from "../api/post";
+import { fetchFocus } from "@/api/focus";
+import { fetchList } from "@/api/post";
+import { saveVisitorInfo } from "@/api/visitor"
 
 export default {
   name: "Home",
@@ -69,18 +72,18 @@ export default {
     SmallIco,
     Quote,
   },
-  filters:{
-    filterCategory(val){
+  filters: {
+    filterCategory(val) {
       if (val === "fontend") {
-        return "前端"
-      }else if (val === "backend") {
-        return "后端"
-      }else if (val === "sql") {
-        return "数据库"
-      }else if (val === "essays") {
-        return "随笔"
+        return "前端";
+      } else if (val === "backend") {
+        return "后端";
+      } else if (val === "sql") {
+        return "数据库";
+      } else if (val === "essays") {
+        return "随笔";
       }
-    }
+    },
   },
   watch: {
     category(val) {
@@ -126,18 +129,19 @@ export default {
         .then((res) => {
           this.features = res.data || [];
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     },
     fetchList() {
-      fetchList({category:this.$route.params.cate,searchWords:this.$route.params.words})
+      fetchList({
+        category: this.$route.params.cate,
+        searchWords: this.$route.params.words,
+      })
         .then((res) => {
           this.postList = res.data.items || [];
           this.currPage = res.data.page;
           this.hasNextPage = res.data.hasNextPage;
         })
-        .catch((err) => {
-        });
+        .catch((err) => {});
     },
     loadMore() {
       fetchList({ page: this.currPage + 1 }).then((res) => {
@@ -146,10 +150,26 @@ export default {
         this.hasNextPage = res.data.hasNextPage;
       });
     },
+    saveVisitorInfo() {
+      let visitorInfo = JSON.parse(localStorage.getItem("visitorInfo"));
+      visitorInfo = Object.assign({}, visitorInfo, {
+        type: "Lewiis的个人博客",
+      });
+      let wel = new Date().toLocaleTimeString().substring(0,2)
+      // 调用接口保存访客信息
+      saveVisitorInfo(visitorInfo).then((ret)=>{
+        this.$message({
+          message:`${wel}好,感谢大佬的来访,身体健康,恭喜发财!`,
+          duration:5000
+        });
+      })
+    },
   },
+
   mounted() {
     this.fetchFocus();
     this.fetchList();
+    this.saveVisitorInfo();
   },
 };
 </script>
