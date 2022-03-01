@@ -25,7 +25,7 @@
         <div class="friend-item" v-for="item in list" :key="item.id">
           <a target="_blank" :href="item.path"
             ><div class="site-name">{{ item.siteName }}</div>
-            <div class="site-detail">{{ item.desc }}</div></a
+            <div class="site-detail">{{ item.description }}</div></a
           >
         </div>
       </div>

@@ -51,6 +51,43 @@
                   v-model="email"
                 />
               </div>
+
+              <div class="form-item">
+                <label for="mail">名称：</label>
+                <input
+                  class="v"
+                  type="text"
+                  name="blogName"
+                  id="blogName"
+                  placeholder="请输入你的博客名称"
+                  v-model="blogName"
+                />
+              </div>
+
+              <div class="form-item">
+                <label for="mail">主页：</label>
+                <input
+                  class="v"
+                  type="text"
+                  name="blogHomePage"
+                  id="blogHomePage"
+                  placeholder="请输入你的博客主页地址"
+                  v-model="blogHomePage"
+                />
+              </div>
+
+              <div class="form-item">
+                <label for="mail">个人简介：</label>
+                <input
+                  class="v"
+                  type="text"
+                  name="personalIntroduction"
+                  id="personalIntroduction"
+                  placeholder="请输入你的个人简介"
+                  v-model="personalIntroduction"
+                />
+              </div>
+
               <div class="form-item">
                 <label for="content">内容：</label>
                 <textarea
@@ -58,14 +95,16 @@
                   class="v"
                   id="content"
                   name="content"
-                  placeholder="这里可以输入你想咨询的问题或者你的博客名称+个人简介+博客地址,收到后第一时间我将在博客中发布!"
+                  placeholder="更多问题请留言"
                   v-model="question"
                 ></textarea>
               </div>
+              
               <div class="form-item">
                 <label></label>
                 <button @click="onSubmit">提交</button>
               </div>
+
             </div>
           </div>
         </div>
@@ -75,15 +114,18 @@
 </template>
 <script>
 import sectionTitle from "@/components/section-title";
-import { addMessage } from "@/api/message"
-import { getTime, getTimeInterval } from "@/utils";
+import { addMessage } from "@/api/message";
+
 export default {
   name: "About",
   data() {
     return {
       list: [],
-      email:'',
-      question:''
+      email: "",
+      question: "我想加入Lewiis的个人博客-友情链接中,感谢您的支持!",
+      blogName: "",
+      blogHomePage: "",
+      personalIntroduction:""
     };
   },
   components: {
@@ -92,20 +134,40 @@ export default {
   methods: {
     onSubmit() {
       // 保存到数据库中
-      this.addMessage()
+      this.addMessage();
     },
-    addMessage(){
-      addMessage({email:this.email,msg:this.question})
-      .then((res)=>{
+    addMessage() {
+      addMessage({
+        email: this.email,
+        msg: this.question,
+        avatarUrl: this.avatarUrl,
+        blogName: this.blogName,
+        blogHomePage: this.blogHomePage,
+        personalIntroduction:this.personalIntroduction
+      }).then(() => {
         this.$message({
-          message: '恭喜你，留言成功',
-          type: 'success'
+          message: "恭喜你,留言成功!",
+          type: "success",
         });
         // 清空输入框的内容
-        this.email = '',
-        this.question = ''
-      })
-    }
+        (this.email = ""),
+          (this.question = ""),
+          (this.blogName = ""),
+          (this.blogHomePage = "");
+      (this.personalIntroduction = "")
+      });
+    },
+    fetchAvatarUrl() {
+      this.$axios({
+        method: "get",
+        url: `https://api.muxiaoguo.cn/api/sjtx?method=pc`,
+      }).then((ret) => {
+        this.avatarUrl = ret.data.data.imgurl;
+      });
+    },
+  },
+  created() {
+    this.fetchAvatarUrl();
   },
   mounted() {},
 };
@@ -147,7 +209,7 @@ export default {
         margin-bottom: 20px;
       }
       label {
-        width: 80px;
+        width: 120px;
       }
       .v {
         min-height: 40px;

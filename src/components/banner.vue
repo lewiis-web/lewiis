@@ -44,7 +44,7 @@ export default {
   props: {
     src: {
       type: String,
-      default: "https://z3.ax1x.com/2021/11/25/oAd5Ss.png",
+      default: "https://api.xiaobaibk.com/api/bing_images",
     },
     isHome: {
       type: [Boolean, String],
