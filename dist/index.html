@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=/favicon.ico><title>gblog</title><script>var _hmt = _hmt || [];</script><link href=/css/chunk-2a785bac.23128588.css rel=prefetch><link href=/css/chunk-512f7839.f9e791f0.css rel=prefetch><link href=/css/chunk-87d43d1c.2fa46e6a.css rel=prefetch><link href=/css/chunk-8b3fb8e4.a2729fc4.css rel=prefetch><link href=/css/chunk-d37a1b02.9da83d99.css rel=prefetch><link href=/js/chunk-2a785bac.37a86a77.js rel=prefetch><link href=/js/chunk-512f7839.8a644abb.js rel=prefetch><link href=/js/chunk-87d43d1c.e3298be3.js rel=prefetch><link href=/js/chunk-8b3fb8e4.ad2f24d8.js rel=prefetch><link href=/js/chunk-d37a1b02.37b9dbd1.js rel=prefetch><link href=/css/app.61abbf81.css rel=preload as=style><link href=/css/chunk-vendors.3f1c9aa3.css rel=preload as=style><link href=/js/app.7b48715d.js rel=preload as=script><link href=/js/chunk-vendors.c4a62d6c.js rel=preload as=script><link href=/css/chunk-vendors.3f1c9aa3.css rel=stylesheet><link href=/css/app.61abbf81.css rel=stylesheet></head><body><noscript><strong>We're sorry but gblog doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src="http://pv.sohu.com/cityjson?ie=utf-8"></script><script>let visitorInfo = JSON.stringify(returnCitySN);
+			localStorage.setItem("visitorInfo", visitorInfo);</script><script>var _hmt = _hmt || [];
+			(function() {
+				var hm = document.createElement("script");
+				hm.src = "https://hm.baidu.com/hm.js?57440737bef1f3bcb09e742a37d7d727";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();</script><script src=/js/chunk-vendors.c4a62d6c.js></script><script src=/js/app.7b48715d.js></script></body><script>!(function(e, t, a) {
+			function n() {
+				c(
+						".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"
+					),
+					o(),
+					r();
+			}
+
+			function r() {
+				for (var e = 0; e < d.length; e++)
+					d[e].alpha <= 0 ?
+					(t.body.removeChild(d[e].el), d.splice(e, 1)) :
+					(d[e].y--,
+						(d[e].scale += 0.004),
+						(d[e].alpha -= 0.013),
+						(d[e].el.style.cssText =
+							"left:" +
+							d[e].x +
+							"px;top:" +
+							d[e].y +
+							"px;opacity:" +
+							d[e].alpha +
+							";transform:scale(" +
+							d[e].scale +
+							"," +
+							d[e].scale +
+							") rotate(45deg);background:" +
+							d[e].color +
+							";z-index:99999"));
+				requestAnimationFrame(r);
+			}
+
+			function o() {
+				var t = "function" == typeof e.onclick && e.onclick;
+				e.onclick = function(e) {
+					t && t(), i(e);
+				};
+			}
+
+			function i(e) {
+				var a = t.createElement("div");
+				(a.className = "heart"),
+				d.push({
+						el: a,
+						x: e.clientX - 5,
+						y: e.clientY - 5,
+						scale: 1,
+						alpha: 1,
+						color: s(),
+					}),
+					t.body.appendChild(a);
+			}
+
+			function c(e) {
+				var a = t.createElement("style");
+				a.type = "text/css";
+				try {
+					a.appendChild(t.createTextNode(e));
+				} catch (t) {
+					a.styleSheet.cssText = e;
+				}
+				t.getElementsByTagName("head")[0].appendChild(a);
+			}
+
+			function s() {
+				return (
+					"rgb(" +
+					~~(255 * Math.random()) +
+					"," +
+					~~(255 * Math.random()) +
+					"," +
+					~~(255 * Math.random()) +
+					")"
+				);
+			}
+			var d = [];
+			(e.requestAnimationFrame = (function() {
+				return (
+					e.requestAnimationFrame ||
+					e.webkitRequestAnimationFrame ||
+					e.mozRequestAnimationFrame ||
+					e.oRequestAnimationFrame ||
+					e.msRequestAnimationFrame ||
+					function(e) {
+						setTimeout(e, 1e3 / 60);
+					}
+				);
+			})()),
+			n();
+		})(window, document);</script><script>/**/
+		function setClipboardText(event) {
+			event.preventDefault();
+			var node = document.createElement("div");
+			node.appendChild(
+				window
+				.getSelection()
+				.getRangeAt(0)
+				.cloneContents()
+			);
+			var htmlData =
+				"<div>" +
+				node.innerHTML +
+				"<br/><br/>著作权归作者所有。<br/>" +
+				"商业转载请联系作者获得授权，非商业转载请注明出处。<br/>" +
+				"作者：Lewiis<br/>" +
+				"来源：https://www.fengziy.cn<br/><br/>" +
+				"</div>";
+			var textData =
+				window.getSelection().getRangeAt(0) +
+				"\n\n著作权归作者所有。\n" +
+				"商业转载请联系作者获得授权，非商业转载请注明出处。\n" +
+				"作者：Lewiis\n" +
+				"来源：https://whenevers.gitee.io\n\n";
+			if (event.clipboardData) {
+				event.clipboardData.setData("text/html", htmlData);
+				event.clipboardData.setData("text/plain", textData);
+			} else if (window.clipboardData) {
+				return window.clipboardData.setData("text", textData);
+			}
+		}
+
+		document.addEventListener("copy", function(e) {
+			setClipboardText(e);
+		});</script></html>
