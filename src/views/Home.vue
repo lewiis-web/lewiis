@@ -155,11 +155,12 @@ export default {
       visitorInfo = Object.assign({}, visitorInfo, {
         type: "Lewiis的个人博客",
       });
-      let wel = new Date().toLocaleTimeString().substring(0,2)
+      let wel = new Date().getHours()
+      wel = wel < 6 ? "凌晨好" : wel < 9 ? "早上好" : wel < 12 ? "上午好" : wel < 14 ? "中午好" : wel < 17 ? "下午好" : wel < 19 ? "傍晚好" : wel < 22 ? "晚上好" : "夜里好"
       // 调用接口保存访客信息
-      saveVisitorInfo(visitorInfo).then((ret)=>{
+      saveVisitorInfo(visitorInfo).then(()=>{
         this.$message({
-          message:`${wel}好,感谢大佬的来访,身体健康,恭喜发财!`,
+          message:`${wel},感谢大佬的来访，身体健康，恭喜发财！`,
           duration:5000
         });
       })

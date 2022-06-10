@@ -5,25 +5,31 @@
         <article class="hentry">
           <!-- 文章内容 -->
           <div class="mavon">
-            <mavon-editor
-              v-model="articalContent"
-              :toolbars="toolbars"
-              :toolbarsFlag="true"
-              :subfield="false"
-              defaultOpen="preview"
-              :navigation="false"
-              :ishljs="true"
-              codeStyle="tomorrow-night-bright"
-              style="height:750px;z-index: 2;"
-            />
+            <!-- 预览文件的地方（用于渲染） -->
+            <div ref="file"></div>
           </div>
           <!-- 文章底部 -->
           <section-title>
             <footer class="post-footer">
+              <!-- 下载按钮 -->
+              <div class="post-like">
+                <i class="el-icon-download"></i>
+                <el-popconfirm
+                  confirm-button-text="好的"
+                  cancel-button-text="不用了"
+                  icon="el-icon-info"
+                  icon-color="red"
+                  title="确定下载吗？"
+                  @confirm="downLoad"
+                >
+                  <span slot="reference">下载</span>
+                </el-popconfirm>
+                
+              </div>
               <!-- 阅读次数 -->
               <div class="post-like">
-                <i class="iconfont iconeyes"></i>
-                <span class="count">{{article.viewsCount}}</span>
+                <i class="el-icon-view"></i>
+                <span>{{ article.viewsCount }}</span>
               </div>
               <!-- 赞助按钮 -->
               <div class="donate" @click="showDonate = !showDonate">
@@ -56,7 +62,10 @@
 import Banner from "@/components/banner";
 import sectionTitle from "@/components/section-title";
 import menuTree from "@/components/menu-tree";
-import { fetchArticle,addViewsCount } from "../api/post";
+import { fetchArticle, addViewsCount } from "../api/post";
+// 引入docx-preview插件
+let docx = require("docx-preview");
+window.JSZip = require("jszip");
 
 export default {
   name: "articles",
@@ -81,40 +90,54 @@ export default {
     menuTree,
   },
   methods: {
-    addViewsCount(){
-      addViewsCount({articleId:this.article.id})
-      .then((res)=>{
-        if (res.message === "成功") {
-          this.$message({
-          message: '这篇博客的热度嗖地一下加了一点儿！',
-          type: 'success'
+    addViewsCount() {
+      addViewsCount({ articleId: this.article.id })
+        .then((res) => {
+          if (res.message === "成功") {
+            this.$message({
+              message: "这篇博客的热度嗖地一下加了一点儿！",
+              type: "success",
+            });
+          }
+        })
+        .catch((err) => {
+          this.$message.error(err);
         });
-        }
-      }).catch((err)=>{
-        this.$message.error(err);
-      })
-    }
+    },
+    // 预览
+    goPreview(articleName) {
+      this.$axios({
+        method: "get",
+        responseType: "blob", // 因为是流文件，所以要指定blob类型
+        url: `http://127.0.0.1:8889/api/getDoc?articleName=${articleName}`, // 自己的服务器，提供的一个word下载文件接口
+      }).then(({ data }) => {
+        docx.renderAsync(data, this.$refs.file); // 渲染到页面
+      });
+    },
+    // 下载
+    downLoad() {
+      this.$axios({
+        method: "get",
+        responseType: "blob", // 因为是流文件，所以要指定blob类型
+        url: `http://127.0.0.1:8889/api/getDoc?articleName=${this.article.content}`, // 自己的服务器，提供的一个word下载文件接口
+      }).then(({ data }) => {
+        const blob = new Blob([data]); // 把得到的结果用流对象转一下
+        var a = document.createElement("a"); //创建一个<a></a>标签
+        a.href = URL.createObjectURL(blob); // 将流文件写入a标签的href属性值
+        a.download = `${this.article.content}.docx`; //设置文件名
+        a.style.display = "none"; // 障眼法藏起来a标签
+        document.body.appendChild(a); // 将a标签追加到文档对象中
+        a.click(); // 模拟点击了a标签，会触发a标签的href的读取，浏览器就会自动下载了
+        a.remove(); // 一次性的，用完就删除a标签
+      });
+    },
   },
-  mounted() {
-    
-  },
+  mounted() {},
   created() {
-    fetchArticle({ articleId: this.$route.params.id })
-      .then((res) => {
-        
-        this.article = res.data[0];
-      })
-      .catch((err) => {
-        
-      });
-    this.$axios
-      .get(`${process.env.VUE_APP_BASE_API.substring(0,process.env.VUE_APP_BASE_API.length - 4)}/md/${this.$route.query.content}.md`)
-      .then((res) => {
-        this.articalContent = res.data;
-        setTimeout(() => {
-          this.addViewsCount()
-        }, 2000);
-      });
+    fetchArticle({ articleId: this.$route.params.id }).then((res) => {
+      this.article = res.data[0];
+      this.goPreview(this.article.content);
+    });
   },
 };
 </script>
@@ -126,10 +149,17 @@ export default {
   }
 }
 article.hentry {
-  // margin-left: -50%;
-  // width: 200%;
-  .mavon{
+  .mavon {
     margin-top: 10px;
+    ::v-deep .docx-wrapper {
+      background: #fff !important;
+      & > section.docx {
+        background: white;
+        box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+        margin-bottom: 30px;
+        padding: 24px;
+      }
+    }
   }
   .entry-header {
     .entry-title {
@@ -163,7 +193,6 @@ article.hentry {
   }
 
   .entry-content {
-    
   }
 
   footer.post-footer {
@@ -172,6 +201,11 @@ article.hentry {
     margin-top: 30px;
     height: 65px;
     position: relative;
+    .download {
+      span {
+        // cursor: pointer;
+      }
+    }
     i {
       font-size: 18px;
       margin-right: 5px;
@@ -179,6 +213,11 @@ article.hentry {
     .post-like {
       float: right;
       margin: 7px 0 0 20px;
+      & span:hover {
+        cursor: pointer;
+        color: red;
+        font-weight: 500;
+      }
     }
 
     .post-share {

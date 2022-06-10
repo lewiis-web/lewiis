@@ -6,17 +6,18 @@
           <section-title><span>❤</span>关于博客</section-title>
           <div class="info-card">
             <p>Lewiis</p>
+            <!-- 2022/6/3毕业离校
             <p>在校大学生</p>
-            <p>数字媒体技术专业</p>
-            <p>一个正在努力的前端工作者</p>
+            <p>数字媒体技术专业</p> -->
+            <p>前端码农，也叫Tab工程师</p>
             <p>
               博客基于<a
                 target="_blank"
                 class="out-link"
                 href="https://fengziy.cn"
                 style="color: #ff6d6d"
-                >fengziy</a
-              >二次开发(跪谢大佬!!!)
+                >fengziy(已停用)</a
+              >二次开发
             </p>
             <p>
               您高抬贵手，<a
