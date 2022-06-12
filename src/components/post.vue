@@ -2,39 +2,27 @@
   <article class="post post-list">
     <div class="post-entry">
       <div class="feature">
-        <router-link :to="{path:`/article/${post.id}`,query:{id:post.id,content:post.content}}">
+        <router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }">
           <img :src="post.banner" />
         </router-link>
       </div>
       <h1 class="entry-title">
-        <router-link :to="{path:`/article/${post.id}`,query:{id:post.id,content:post.content}}"
-          ><span
-            v-if="post.isTop === 'true'"
-            style="color: #ff6d6d; font-weight: 600"
-            >[置顶] </span
-          >{{ post.title }}</router-link
-        >
+        <router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }">{{ post.title }}
+        </router-link>
       </h1>
       <div class="p-time">
         <i class="iconfont iconmeditor-time"> </i> {{ post.pubTime
-        }}<i
-          v-if="post.viewsCount >= 1500"
-          class="iconfont iconfire"
-          style="margin-left: 5px; color: #ff6d6d"
-        ></i>
+        }}<i v-if="post.viewsCount >= 1500" class="iconfont iconfire" style="margin-left: 5px; color: #ff6d6d"></i>
       </div>
       <p class="summary">{{ post.summary }}</p>
       <footer class="entry-footer">
         <div class="post-more">
-          <router-link :to="{path:`/article/${post.id}`,query:{id:post.id,content:post.content}}"
-            ><i class="iconfont iconfish-li" style="font-size: 25px"></i
-          ></router-link>
+          <router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }"><i
+              class="iconfont iconfish-li" style="font-size: 25px"></i></router-link>
         </div>
         <div class="info-meta">
           <div class="views">
-            <span
-              ><i class="iconfont iconeyes"></i>{{ post.viewsCount }} 热度</span
-            >
+            <span><i class="iconfont iconeyes"></i>{{ post.viewsCount }} 热度</span>
           </div>
         </div>
       </footer>
@@ -75,6 +63,7 @@ export default {
       position: relative;
       transition: all 0.2s linear;
       overflow: hidden;
+
       &:hover {
         transform: scale(1.1, 1.1);
         filter: contrast(130%);
@@ -192,31 +181,37 @@ export default {
     display: none;
   }
 }
+
 @media (max-width: 800px) {
   .post-entry {
     .feature img {
       width: 50px;
       height: 50px;
     }
+
     .entry-title {
       font-size: 16px;
       line-height: 30px;
       margin: 0 0 0 65px;
     }
+
     .p-time {
       position: relative;
       margin: -15px 0 0 65px;
     }
+
     p.summary {
       margin: 20px 0 0 65px;
       font-size: 14px;
       height: 30px;
       overflow: hidden;
     }
+
     .post-more {
       display: none;
     }
   }
+
   .post-list hr {
     margin-top: 20px;
   }

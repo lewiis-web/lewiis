@@ -14,17 +14,11 @@
               <!-- 下载按钮 -->
               <div class="post-like">
                 <i class="el-icon-download"></i>
-                <el-popconfirm
-                  confirm-button-text="好的"
-                  cancel-button-text="不用了"
-                  icon="el-icon-info"
-                  icon-color="red"
-                  title="确定下载吗？"
-                  @confirm="downLoad"
-                >
+                <el-popconfirm confirm-button-text="好的" cancel-button-text="不用了" icon="el-icon-info" icon-color="red"
+                  title="确定下载吗？" @confirm="downLoad">
                   <span slot="reference">下载</span>
                 </el-popconfirm>
-                
+
               </div>
               <!-- 阅读次数 -->
               <div class="post-like">
@@ -63,6 +57,7 @@ import Banner from "@/components/banner";
 import sectionTitle from "@/components/section-title";
 import menuTree from "@/components/menu-tree";
 import { fetchArticle, addViewsCount } from "../api/post";
+import { env } from "process";
 // 引入docx-preview插件
 let docx = require("docx-preview");
 window.JSZip = require("jszip");
@@ -94,10 +89,12 @@ export default {
       addViewsCount({ articleId: this.article.id })
         .then((res) => {
           if (res.message === "成功") {
-            this.$message({
-              message: "这篇博客的热度嗖地一下加了一点儿！",
-              type: "success",
-            });
+            setTimeout(() => {
+              this.$message({
+                message: "这篇博客的热度嗖地一下加了一点儿！",
+                type: "success",
+              });
+            }, 3000);
           }
         })
         .catch((err) => {
@@ -109,7 +106,7 @@ export default {
       this.$axios({
         method: "get",
         responseType: "blob", // 因为是流文件，所以要指定blob类型
-        url: `http://127.0.0.1:8889/api/getDoc?articleName=${articleName}`, // 自己的服务器，提供的一个word下载文件接口
+        url: `${process.env.VUE_APP_BASE_API}/getDoc?articleName=${articleName}`, // 自己的服务器，提供的一个word下载文件接口
       }).then(({ data }) => {
         docx.renderAsync(data, this.$refs.file); // 渲染到页面
       });
@@ -119,7 +116,7 @@ export default {
       this.$axios({
         method: "get",
         responseType: "blob", // 因为是流文件，所以要指定blob类型
-        url: `http://127.0.0.1:8889/api/getDoc?articleName=${this.article.content}`, // 自己的服务器，提供的一个word下载文件接口
+        url: `${process.env.VUE_APP_BASE_API}/getDoc?articleName=${this.article.content}`, // 自己的服务器，提供的一个word下载文件接口
       }).then(({ data }) => {
         const blob = new Blob([data]); // 把得到的结果用流对象转一下
         var a = document.createElement("a"); //创建一个<a></a>标签
@@ -132,11 +129,12 @@ export default {
       });
     },
   },
-  mounted() {},
+  mounted() { },
   created() {
     fetchArticle({ articleId: this.$route.params.id }).then((res) => {
       this.article = res.data[0];
       this.goPreview(this.article.content);
+      this.addViewsCount()
     });
   },
 };
@@ -144,16 +142,20 @@ export default {
 <style scoped lang="less">
 .site-content {
   position: relative;
+
   .site-main {
     padding: 80px 0 0 0;
   }
 }
+
 article.hentry {
   .mavon {
     margin-top: 10px;
+
     ::v-deep .docx-wrapper {
       background: #fff !important;
-      & > section.docx {
+
+      &>section.docx {
         background: white;
         box-shadow: 0 0 10px rgb(0 0 0 / 50%);
         margin-bottom: 30px;
@@ -161,6 +163,7 @@ article.hentry {
       }
     }
   }
+
   .entry-header {
     .entry-title {
       font-size: 23px;
@@ -192,8 +195,7 @@ article.hentry {
     }
   }
 
-  .entry-content {
-  }
+  .entry-content {}
 
   footer.post-footer {
     width: 100%;
@@ -201,18 +203,22 @@ article.hentry {
     margin-top: 30px;
     height: 65px;
     position: relative;
+
     .download {
       span {
         // cursor: pointer;
       }
     }
+
     i {
       font-size: 18px;
       margin-right: 5px;
     }
+
     .post-like {
       float: right;
       margin: 7px 0 0 20px;
+
       & span:hover {
         cursor: pointer;
         color: red;
@@ -233,12 +239,15 @@ article.hentry {
       -webkit-border-radius: 100%;
       -moz-border-radius: 100%;
       border: 1px solid #2b2b2b;
+
       &:hover {
         border: 1px solid goldenrod;
+
         span {
           color: goldenrod;
         }
       }
+
       span {
         color: #2b2b2b;
         padding: 10px;
@@ -258,9 +267,11 @@ article.hentry {
         border: 1px solid #ddd;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         border-radius: 3px;
+
         &.show {
           display: block;
         }
+
         li {
           float: left;
         }
@@ -268,6 +279,7 @@ article.hentry {
         img {
           width: 100px;
         }
+
         p {
           text-align: center;
           font-size: 15px;
@@ -298,11 +310,13 @@ article.hentry {
       margin: 7px 0 0 20px;
       float: left;
       text-transform: uppercase;
+
       a:hover {
         color: #ff6d6d;
       }
     }
   }
+
   .open-message {
     margin: 50px 0;
     position: relative;
@@ -311,6 +325,7 @@ article.hentry {
     border-radius: 3px;
     font-size: 14px;
     color: #fff;
+
     &:after {
       content: "";
       border-left: 10px solid transparent;
@@ -320,12 +335,14 @@ article.hentry {
       top: -8px;
       left: 48%;
     }
+
     p {
       margin: 10px 0;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     a {
       color: #a0dad0;
       padding: 0 5px;

@@ -6,9 +6,7 @@
       <div class="notify">
         <div class="search-result" v-if="hideSlogan">
           <span v-if="searchWords">搜索结果："{{ searchWords }}" 相关文章</span>
-          <span v-else-if="category"
-            >分类 "{{ category | filterCategory }}" 相关文章</span
-          >
+          <span v-else-if="category">分类 "{{ category | filterCategory }}" 相关文章</span>
         </div>
         <quote v-else>{{ notice }}</quote>
       </div>
@@ -29,9 +27,9 @@
       <!--文章列表-->
       <main class="site-main" :class="{ search: hideSlogan }">
         <section-title v-if="!hideSlogan">推荐</section-title>
-        <template v-for="item in postList">
+        <div v-for="item in postList">
           <post :post="item" :key="item.id"></post>
-        </template>
+        </div>
       </main>
 
       <!--加载更多-->
@@ -78,10 +76,8 @@ export default {
         return "前端";
       } else if (val === "backend") {
         return "后端";
-      } else if (val === "sql") {
-        return "数据库";
       } else if (val === "essays") {
-        return "随笔";
+        return "杂谈";
       }
     },
   },
@@ -129,7 +125,7 @@ export default {
         .then((res) => {
           this.features = res.data || [];
         })
-        .catch((err) => {});
+        .catch((err) => { });
     },
     fetchList() {
       fetchList({
@@ -141,7 +137,7 @@ export default {
           this.currPage = res.data.page;
           this.hasNextPage = res.data.hasNextPage;
         })
-        .catch((err) => {});
+        .catch((err) => { });
     },
     loadMore() {
       fetchList({ page: this.currPage + 1 }).then((res) => {
@@ -158,11 +154,13 @@ export default {
       let wel = new Date().getHours()
       wel = wel < 6 ? "凌晨好" : wel < 9 ? "早上好" : wel < 12 ? "上午好" : wel < 14 ? "中午好" : wel < 17 ? "下午好" : wel < 19 ? "傍晚好" : wel < 22 ? "晚上好" : "夜里好"
       // 调用接口保存访客信息
-      saveVisitorInfo(visitorInfo).then(()=>{
-        this.$message({
-          message:`${wel},感谢大佬的来访，身体健康，恭喜发财！`,
-          duration:5000
-        });
+      saveVisitorInfo(visitorInfo).then(() => {
+        setTimeout(() => {
+          this.$message({
+            message: `${wel},感谢大佬的来访，身体健康，恭喜发财！`,
+            duration: 5000
+          });
+        }, 3000);
       })
     },
   },
@@ -179,7 +177,8 @@ export default {
   .notify {
     margin: 60px 0;
     border-radius: 3px;
-    & > div {
+
+    &>div {
       padding: 20px;
     }
   }
@@ -221,6 +220,7 @@ export default {
 
 .more {
   margin: 50px 0;
+
   .more-btn {
     width: 100px;
     height: 40px;
@@ -231,6 +231,7 @@ export default {
     border-radius: 20px;
     margin: 0 auto;
     cursor: pointer;
+
     &:hover {
       color: #8fd0cc;
       border: 1px dashed #8fd0cc;
