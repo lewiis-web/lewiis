@@ -59,6 +59,8 @@ import menuTree from "@/components/menu-tree";
 import { fetchArticle, addViewsCount } from "../api/post";
 import { env } from "process";
 // 引入docx-preview插件
+import { Loading } from "element-ui";
+let loading;
 let docx = require("docx-preview");
 window.JSZip = require("jszip");
 
@@ -109,6 +111,7 @@ export default {
         url: `${process.env.VUE_APP_BASE_API}/getDoc?articleName=${articleName}`, // 自己的服务器，提供的一个word下载文件接口
       }).then(({ data }) => {
         docx.renderAsync(data, this.$refs.file); // 渲染到页面
+        loading.close();//关闭loading
       });
     },
     // 下载
@@ -131,6 +134,11 @@ export default {
   },
   mounted() { },
   created() {
+    loading = Loading.service({ //开始loading加载动画
+      lock: true,
+      text: "报告文件加载中...",
+      background: "rgba(0, 0, 0, 0)",
+    });
     fetchArticle({ articleId: this.$route.params.id }).then((res) => {
       this.article = res.data[0];
       this.goPreview(this.article.content);
