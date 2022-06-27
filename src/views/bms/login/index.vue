@@ -96,16 +96,13 @@ export default {
         password: this.ruleForm.password,
         username: this.ruleForm.username
       });
-      console.log("res",res);
-      // if (res.data.result_code === 0) {
-      //   _cookie.setCookie("token", res.data.data.token);
-      //   _cookie.setCookie("user", JSON.stringify(res.data.data.user));
-      //   _cookie.setCookie("role", res.data.data.role);
-      //   this.$router.push({ path: "/bms/home" });
-
-      // } else {
-      //   this.$message.error(res.data.result_msg);
-      // }
+      if (res.code === 200) {
+        _cookie.setCookie("token", res.currentUser.token);
+        _cookie.setCookie("username", JSON.stringify(res.currentUser.username));
+        this.$router.push({ path: "/bms/home" });
+      } else {
+        this.$message.error(res.msg);
+      }
     },
     async getNews(k) {
       let res = await this.$http.get(
