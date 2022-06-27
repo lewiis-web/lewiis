@@ -27,8 +27,8 @@
       <!--文章列表-->
       <main class="site-main" :class="{ search: hideSlogan }">
         <section-title v-if="!hideSlogan">推荐</section-title>
-        <div v-for="item in postList">
-          <post :post="item" :key="item.id"></post>
+        <div v-for="item in postList" :key="item.id">
+          <post :post="item" ></post>
         </div>
       </main>
 
@@ -124,6 +124,7 @@ export default {
       fetchFocus()
         .then((res) => {
           this.features = res.data || [];
+          console.log(this.features);
         })
         .catch((err) => { });
     },
@@ -141,7 +142,11 @@ export default {
     },
     loadMore() {
       fetchList({ page: this.currPage + 1 }).then((res) => {
+        // for (const item of res.data.items || []) {
+        //   this.postList.push(item)
+        // }
         this.postList = this.postList.concat(res.data.items || []);
+        // console.log("新的列表",this.postList);
         this.currPage = res.data.page;
         this.hasNextPage = res.data.hasNextPage;
       });

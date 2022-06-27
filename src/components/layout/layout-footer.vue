@@ -19,11 +19,11 @@
 						style="text-decoration:none;"><img
 							src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png" /></a>
 				</div>
-				<div><a target="_blank" class="out-link" href="http://bms.lewiis.top">☞后台管理</a></div>
+				<div><a target="_blank" class="out-link" href="/bms/login">☞后台管理</a></div>
 			</div>
 		</div>
 		<div class="copyright">Copyright © 2021 by <a target="_blank" class="out-link"
-				href="https://lewiis.gitee.io/">Lewiis</a> . All rights reserved.</div>
+				href="http://lewiis.top/">Lewiis</a> . All rights reserved.</div>
 	</div>
 </template>
 
@@ -60,6 +60,7 @@
 
 <style scoped lang="less">
 	#layout-footer {
+		height: 180px;
 		padding: 2%;
 		border-top: 1px solid #F7F7F7;
 		font-size: 13px;

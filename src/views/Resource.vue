@@ -145,6 +145,9 @@ export default {
 
 .tabname {
   margin-top: 10px;
+  .el-tab-pane{
+    line-height: 1.5em;
+  }
 }
 
 .state {

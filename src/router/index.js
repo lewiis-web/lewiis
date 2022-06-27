@@ -46,6 +46,20 @@ const routes = [
         name: 'resource',
         component: () => import('../views/Resource.vue'),
         meta: { title: '资源'}
+    },
+    // 后台登录页
+    {
+        path: '/bms/login',
+        name: '/bms/login',
+        component: () => import('../views/bms/login'),
+        meta: { title: '后台管理系统登录'}
+    },
+    // 后台首页
+    {
+        path: '/bms/home',
+        name: '/bms/home',
+        component: () => import('../views/bms/home'),
+        meta: { title: '后台管理系统登录'}
     }
 ]
 
