@@ -18,16 +18,18 @@ export default {
     layoutBody,
     layoutFooter,
     Loading,
-  }
+  },
+  computed: {
+  },
 };
 </script>
 <style lang="less">
 #app {
   font-size: 17px;
   color: #6f6f6f;
-  cursor: url('./assets/cursor/pointer.png'),pointer;
+  cursor: url("./assets/cursor/pointer.png"), pointer;
 }
-a{
-  cursor: url('./assets/cursor/person.png'),pointer;
+a {
+  cursor: url("./assets/cursor/person.png"), pointer;
 }
 </style>

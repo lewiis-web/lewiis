@@ -99,7 +99,7 @@ export default {
       if (res.code === 200) {
         _cookie.setCookie("token", res.currentUser.token);
         _cookie.setCookie("username", JSON.stringify(res.currentUser.username));
-        this.$router.push({ path: "/bms/home" });
+        this.$router.push({ path: "/bms" });
       } else {
         this.$message.error(res.msg);
       }

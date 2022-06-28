@@ -19,7 +19,7 @@
 						style="text-decoration:none;"><img
 							src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png" /></a>
 				</div>
-				<div><a target="_blank" class="out-link" href="/bms/login">☞后台管理</a></div>
+				<div><a target="_self" class="out-link" href="/bms/login">☞后台管理</a></div>
 			</div>
 		</div>
 		<div class="copyright">Copyright © 2021 by <a target="_blank" class="out-link"

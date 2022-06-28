@@ -11,11 +11,15 @@ const state = {
     loading: false,
     runTimeInterval: '',
     socials: '',
-    websiteInfo: ''
+    websiteInfo: '',
+    bms:false
 }
 const mutations = {
     SET_LOADING: (state, v) => {
         state.loading = v;
+    },
+    SET_BMS: (state, v) => {
+        state.bms = v;
     },
     SET_SOCIALS: (state, v) => {
         state.socials = v;
@@ -35,6 +39,9 @@ const mutations = {
 const actions = {
     setLoading: ({commit}, v) => {
         commit('SET_LOADING', v);
+    },
+    setBms: ({commit}, v) => {
+        commit('SET_BMS', v);
     },
     initComputeTime: ({commit}) => {
         commit('GET_RUNTIME_INTERVAL');
@@ -72,6 +79,7 @@ const actions = {
 }
 const getters = {
     loading: state => state.loading,
+    bms: state => state.bms,
     runTimeInterval: state => state.runTimeInterval,
     notice: state => state.websiteInfo?state.websiteInfo.notice:''
 }
