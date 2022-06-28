@@ -1,5 +1,5 @@
 <template>
-  <div>资源管理</div>
+  <h1>留言管理</h1>
 </template>
 
 <script>

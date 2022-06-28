@@ -3,21 +3,22 @@
     <el-container class="outbox">
       <el-aside :width="isCollapse ? '64px' : '240px'">
         <el-menu
-          default-active="1-4-1"
           class="el-menu-vertical-demo"
           :collapse="isCollapse"
           background-color="#21252b"
           text-color="#fff"
           active-text-color="#ffd04b"
           :collapse-transition="false"
+          :router="true"
         >
-          <el-menu-item index="0">
+          <el-menu-item index="/bms/home">
             <div class="logo">
               <img src="@/assets/icons/logo.png" alt="logo" width="36" />
               <h1 v-show="!isCollapse">博客后台管理系统</h1>
             </div>
           </el-menu-item>
-          <el-submenu index="1">
+
+          <!-- <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span slot="title">导航一</span>
@@ -34,18 +35,15 @@
               <span slot="title">选项4</span>
               <el-menu-item index="1-4-1">选项1</el-menu-item>
             </el-submenu>
-          </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
+          </el-submenu> -->
+
+          <el-menu-item
+            v-for="item in menu"
+            :key="item.path"
+            :index="item.path"
+          >
+            <i :class="item.meta.icon"></i>
+            <span slot="title">{{ item.meta.title }}</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -60,14 +58,18 @@
                   :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"
                 ></i></div
             ></el-col>
-            <el-col :span="4" :offset="16"
+            <el-col :span="6" :offset="14"
               ><div class="grid-content avatar">
                 <el-dropdown @command="handleCommand" placement="bottom">
-                  <el-avatar
-                    shape="square"
-                    size="medium"
-                    :src="avatarUrl"
-                  ></el-avatar>
+                  <span class="el-dropdown-link">
+                    <el-avatar
+                      shape="square"
+                      size="medium"
+                      :src="currentUser.avatar"
+                    ></el-avatar>
+                    {{ currentUser.username
+                    }}<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="a">个人中心</el-dropdown-item>
                     <el-dropdown-item command="b">退出登录</el-dropdown-item>
@@ -78,7 +80,9 @@
           </el-row>
         </el-header>
         <el-main id="bms">
-          <router-view name="bms" />
+          <div class="main-content">
+            <router-view name="bms" />
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -86,18 +90,31 @@
 </template>
 
 <script>
+import { _cookie } from "@/utils/token";
 export default {
   data() {
     return {
       isCollapse: false,
+      currentUser: {},
+      menu: [],
     };
   },
   components: {},
-  created() {},
+  created() {
+    this.currentUser = JSON.parse(_cookie.getCookie("user"));
+    console.log(this.$router);
+    let menu = this.$router.options.routes.find((item) => {
+      return item.name === "bms";
+    });
+    this.menu = menu.children;
+  },
   mounted() {},
   methods: {
     collapseControl() {
       this.isCollapse = !this.isCollapse;
+    },
+    handleCommand(command) {
+      this.$message("click on item " + command);
     },
   },
 };
@@ -113,7 +130,7 @@ export default {
   .outbox {
     width: 100%;
     height: 100%;
-    background-color: aquamarine;
+    // background-color: aquamarine;
     .el-aside {
       .el-menu-vertical-demo:not(.el-menu--collapse) {
         width: 240px;
@@ -147,6 +164,8 @@ export default {
         height: 60px;
         margin: 0;
         padding: 0;
+        box-shadow: 0px 15px 10px -12px #ccc;
+        border-left: none;
         .grid-content {
           .fold {
             margin-left: 24px;
@@ -160,18 +179,33 @@ export default {
           display: flex;
           justify-content: flex-end;
           margin-right: 48px;
-          .el-dropdown{
+          .el-dropdown {
             height: 60px;
-            .el-avatar--medium{
-              margin-top: 12px;
+            .el-dropdown-link {
+              line-height: 60px;
+              .el-avatar--medium {
+                vertical-align: middle;
+              }
             }
           }
         }
-
+      }
+      #bms {
+        background-color: rgb(241, 238, 238);
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        .main-content {
+          width: 98%;
+          height: 97%;
+          padding: 8px;
+          background-color: #fff;
+          margin-left: 1%;
+          margin-top: 1%;
+          border-radius: 6px;
+        }
       }
     }
-
-
   }
 }
 </style>

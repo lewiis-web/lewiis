@@ -94,12 +94,11 @@ export default {
     async login() {
       let res = await login({
         password: this.ruleForm.password,
-        username: this.ruleForm.username
+        username: this.ruleForm.username,
       });
       if (res.code === 200) {
-        _cookie.setCookie("token", res.currentUser.token);
-        _cookie.setCookie("username", JSON.stringify(res.currentUser.username));
-        this.$router.push({ path: "/bms" });
+        _cookie.setCookie("user", JSON.stringify(res.currentUser));
+        this.$router.push({ path: "/bms/home" });
       } else {
         this.$message.error(res.msg);
       }
