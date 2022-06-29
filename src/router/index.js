@@ -110,6 +110,15 @@ const routes = [
         },
         meta: { title: "留言列表",icon:"el-icon-chat-dot-square" },
       },
+      {
+        path: "personalCenter",
+        name: "personalCenter",
+        components: {
+          bms: () => import("@/views/bms/personalCenter"),
+        },
+        meta: { title: "个人中心",icon:"el-icon-chat-dot-square" },
+        invisible:true
+      },
     ],
   },
 ];

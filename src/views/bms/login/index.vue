@@ -63,6 +63,7 @@ export default {
   data() {
     return {
       isPassing: false,
+      isExpired:true,
       msg: "",
       ruleForm: {
         username: "",
@@ -77,6 +78,19 @@ export default {
   },
   components: {
     dragVerify,
+  },
+  created() {
+    // 调用接口验证当前token是否有效（前端验证）
+			this.isExpired = _cookie.getCookie('user') ? false : true
+			if (this.isExpired) {
+				_cookie.removeCookie('user')
+			}else{
+        console.log('身份验证通过，即将进入后台首页！');
+        this.$message.info('身份验证通过，即将进入后台首页！')
+        setTimeout(() => {
+          this.$router.push('/bms/home')
+        }, 3000);
+      }
   },
   mounted() {},
   methods: {

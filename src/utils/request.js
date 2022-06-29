@@ -1,10 +1,11 @@
 import axios from "axios";
 import store from "@/store";
+import { Message } from 'element-ui';
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
-  timeout: 20000,
+  timeout: 30000,
 });
 
 // request interceptor
@@ -24,6 +25,7 @@ service.interceptors.response.use(
     return res;
   },
   (error) => {
+    Message.error(error)
     return Promise.reject(error);
   }
 );

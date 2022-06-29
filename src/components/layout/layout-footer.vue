@@ -28,12 +28,14 @@
 </template>
 
 <script>
+import { _cookie } from "@/utils/token";
 	import sectionTitle from '@/components/section-title'
 	export default {
 		name: "layout-footer",
 		data() {
 			return {
-				socials: []
+				socials: [],
+				isExpired:true
 			}
 		},
 		components: {
