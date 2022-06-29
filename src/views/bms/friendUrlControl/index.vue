@@ -4,11 +4,9 @@
       <p>友情链接</p>
     </article>
     <div class="firstLine">
-      <el-button type="primary" @click="dialogFormVisible = true"
-        >添加角色</el-button
-      >
+      <el-button type="primary" @click="addFriend">添加友链</el-button>
       <el-dialog
-        title="添加链接"
+        :title="dialogTitle"
         :visible.sync="dialogFormVisible"
         :append-to-body="true"
         width="30%"
@@ -30,7 +28,13 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addFriendUrl">确 定</el-button>
+          <el-button
+            type="primary"
+            @click="
+              dialogTitle === '添加友链' ? addFriendUrl() : updateFriendUrl()
+            "
+            >确 定</el-button
+          >
         </div>
       </el-dialog>
       <el-input
@@ -72,10 +76,28 @@
       >
       </el-table-column>
 
-      <el-table-column width="100" label="">
+      <el-table-column label="操作" align="center">
         <template slot-scope="scope">
-          <a :href="scope.row.path" target="_blank" style="color: #ff6d6d"
-            >查看详情</a
+          <el-link
+            type="primary"
+            :underline="false"
+            @click="updateFriend(scope.row)"
+            >编辑</el-link
+          >
+          <el-link
+            type="danger"
+            :underline="false"
+            @click="deleteFriendUrl(scope.row.id)"
+            style="margin-left: 12px"
+            >删除</el-link
+          >
+          <el-link
+            type="info"
+            :underline="false"
+            style="margin-left: 12px"
+            :href="scope.row.path"
+            target="_blank"
+            >查看详情</el-link
           >
         </template>
       </el-table-column>
@@ -95,7 +117,12 @@
 </template>
 <script>
 import { _cookie } from "@/utils/token";
-import { fetchFriendsList,addFriendUrl } from "@/api/friend";
+import {
+  fetchFriendsList,
+  addFriendUrl,
+  deleteFriendUrl,
+  updateFriendUrl,
+} from "@/api/friend";
 export default {
   data() {
     return {
@@ -119,6 +146,8 @@ export default {
         path: "",
       },
       total: 10,
+      dialogTitle: "添加友链",
+      operateId: "",
     };
   },
   computed: {},
@@ -142,6 +171,15 @@ export default {
       } else {
         return "";
       }
+    },
+    addFriend() {
+      this.dialogTitle = "添加友链";
+      this.dialogFormVisible = true;
+      this.form = {
+        siteName: "",
+        description: "",
+        path: "",
+      };
     },
     async addFriendUrl() {
       this.dialogFormVisible = false;
@@ -169,6 +207,35 @@ export default {
     handleCurrentChange(val) {
       this.queryData.pageNo = val;
       this.fetchFriendsList();
+    },
+    async deleteFriendUrl(id) {
+      let res = await deleteFriendUrl({ id });
+      if (res.code === 201) {
+        this.$message.success(res.msg);
+        this.fetchFriendsList();
+      } else {
+        this.$message.error(res.msg);
+      }
+    },
+    async updateFriendUrl() {
+      this.dialogFormVisible = false;
+      let res = await updateFriendUrl({ id: this.operateId, ...this.form });
+      if (res.code === 201) {
+        this.$message.success(res.msg);
+        this.fetchFriendsList();
+      } else {
+        this.$message.error(res.msg);
+      }
+    },
+    updateFriend(row) {
+      this.operateId = row.id;
+      this.dialogFormVisible = true;
+      this.dialogTitle = "编辑友链";
+      this.form = {
+        siteName: row.siteName,
+        description: row.description,
+        path: row.path,
+      };
     },
   },
 };
