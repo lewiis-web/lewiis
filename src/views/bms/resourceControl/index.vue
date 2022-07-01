@@ -9,28 +9,28 @@
         :title="dialogTitle"
         :visible.sync="dialogFormVisible"
         :append-to-body="true"
-        width="30%"
+        width="40%"
       >
-        <el-form :model="form">
-          <el-form-item label="资源名称" :required="true">
+        <el-form :model="form" label-position="left" label-width="100px">
+          <el-form-item label="资源名称：" :required="true">
             <el-input v-model="form.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="百度网盘">
+          <el-form-item label="百度网盘：">
             <el-input v-model="form.baidu" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="夸克网盘">
+          <el-form-item label="夸克网盘：">
             <el-input v-model="form.kuake" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="阿里云盘">
+          <el-form-item label="阿里云盘：">
             <el-input v-model="form.aliyun" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="蓝奏云盘">
+          <el-form-item label="蓝奏云盘：">
             <el-input v-model="form.lanzouyun" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="天翼云盘">
+          <el-form-item label="天翼云盘：">
             <el-input v-model="form.tianyiyun" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="网址">
+          <el-form-item label="网址：">
             <el-input v-model="form.website" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
@@ -69,16 +69,8 @@
       <el-table-column type="index" label="序号" width="99" align="center">
       </el-table-column>
       <el-table-column
-        prop="siteName"
+        prop="name"
         label="站点名称"
-        align="center"
-        :show-overflow-tooltip="true"
-      >
-      </el-table-column>
-
-      <el-table-column
-        prop="description"
-        label="站点描述"
         align="center"
         :show-overflow-tooltip="true"
       >
@@ -125,12 +117,12 @@
 </template>
 <script>
 import { _cookie } from "@/utils/token";
-// import {
-//   fetchFriendsList,
-//   addResource,
-//   deleteResource,
-//   updateResource,
-// } from "@/api/friend";
+import {
+  fetchResourceList,
+  addResource,
+  deleteResource,
+  updateResource,
+} from "@/api/resource";
 export default {
   data() {
     return {
@@ -149,26 +141,30 @@ export default {
       },
       characterName: "",
       form: {
-        siteName: "",
-        description: "",
-        path: "",
+        name: "",
+        baidu: "",
+        kuake: "",
+        aliyun:"",
+        tianyiyun:"",
+        lanzouyun:"",
+        website:""
       },
       total: 10,
-      dialogTitle: "添加友链",
+      dialogTitle: "添加资源",
       operateId: "",
     };
   },
   computed: {},
   created() {
-    this.fetchFriendsList();
+    this.fetchResourceList();
   },
   mounted() {},
   methods: {
-    async fetchFriendsList() {
-      let res = await fetchFriendsList(this.queryData);
+    async fetchResourceList() {
+      let res = await fetchResourceList(this.queryData);
       if (res.code === 200) {
         this.tableData = res.data;
-        this.total = res.total;
+        this.total = res.totalCount;
       } else {
         this.$message.error(res.msg);
       }
@@ -181,7 +177,7 @@ export default {
       }
     },
     addFriend() {
-      this.dialogTitle = "添加友链";
+      this.dialogTitle = "添加资源";
       this.dialogFormVisible = true;
       this.form = {
         siteName: "",
@@ -195,32 +191,32 @@ export default {
       if (res.code === 201) {
         this.$message({
           type: "success",
-          message: "友情链接添加成功!",
+          message: "独家资源添加成功!",
         });
-        this.fetchFriendsList();
+        this.fetchResourceList();
       } else {
         this.$message({
           type: "error",
-          message: "友情链接添加失败!",
+          message: "独家资源添加失败!",
         });
       }
     },
     searchRole() {
-      this.fetchFriendsList();
+      this.fetchResourceList();
     },
     handleSizeChange(val) {
       this.queryData.pageSize = val;
-      this.fetchFriendsList();
+      this.fetchResourceList();
     },
     handleCurrentChange(val) {
       this.queryData.pageNo = val;
-      this.fetchFriendsList();
+      this.fetchResourceList();
     },
     async deleteResource(id) {
       let res = await deleteResource({ id });
       if (res.code === 201) {
         this.$message.success(res.msg);
-        this.fetchFriendsList();
+        this.fetchResourceList();
       } else {
         this.$message.error(res.msg);
       }
@@ -230,7 +226,7 @@ export default {
       let res = await updateResource({ id: this.operateId, ...this.form });
       if (res.code === 201) {
         this.$message.success(res.msg);
-        this.fetchFriendsList();
+        this.fetchResourceList();
       } else {
         this.$message.error(res.msg);
       }
@@ -238,7 +234,7 @@ export default {
     updateFriend(row) {
       this.operateId = row.id;
       this.dialogFormVisible = true;
-      this.dialogTitle = "编辑友链";
+      this.dialogTitle = "编辑资源";
       this.form = {
         siteName: row.siteName,
         description: row.description,

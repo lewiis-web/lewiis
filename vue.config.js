@@ -3,6 +3,7 @@ const path = require("path");
 module.exports = {
   devServer: {
     port: 8888,
+    hot:true
   },
   lintOnSave: false,
   configureWebpack: {
