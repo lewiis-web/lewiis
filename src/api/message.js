@@ -7,3 +7,11 @@ export function addMessage(data) {
     data,
   });
 }
+
+export function fetchMessageList(data) {
+  return request({
+    url: "/bms/message/list",
+    method: "post",
+    data,
+  });
+}

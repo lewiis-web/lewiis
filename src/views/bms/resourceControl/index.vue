@@ -91,14 +91,6 @@
             style="margin-left: 12px"
             >删除</el-link
           >
-          <el-link
-            type="info"
-            :underline="false"
-            style="margin-left: 12px"
-            :href="scope.row.path"
-            target="_blank"
-            >查看详情</el-link
-          >
         </template>
       </el-table-column>
     </el-table>
@@ -144,10 +136,10 @@ export default {
         name: "",
         baidu: "",
         kuake: "",
-        aliyun:"",
-        tianyiyun:"",
-        lanzouyun:"",
-        website:""
+        aliyun: "",
+        tianyiyun: "",
+        lanzouyun: "",
+        website: "",
       },
       total: 10,
       dialogTitle: "添加资源",
@@ -225,6 +217,7 @@ export default {
       this.dialogFormVisible = false;
       let res = await updateResource({ id: this.operateId, ...this.form });
       if (res.code === 201) {
+        console.log(res);
         this.$message.success(res.msg);
         this.fetchResourceList();
       } else {
@@ -235,11 +228,7 @@ export default {
       this.operateId = row.id;
       this.dialogFormVisible = true;
       this.dialogTitle = "编辑资源";
-      this.form = {
-        siteName: row.siteName,
-        description: row.description,
-        path: row.path,
-      };
+      this.form = row;
     },
   },
 };

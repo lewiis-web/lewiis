@@ -100,12 +100,11 @@
                   v-model="question"
                 ></textarea>
               </div>
-              
+
               <div class="form-item">
                 <label></label>
                 <button @click="onSubmit">提交</button>
               </div>
-
             </div>
           </div>
         </div>
@@ -126,7 +125,7 @@ export default {
       question: "我想加入Lewiis的个人博客-友情链接中,感谢您的支持!",
       blogName: "",
       blogHomePage: "",
-      personalIntroduction:""
+      personalIntroduction: "",
     };
   },
   components: {
@@ -141,13 +140,12 @@ export default {
       addMessage({
         email: this.email,
         msg: this.question,
-        avatarUrl: this.avatarUrl,
         blogName: this.blogName,
         blogHomePage: this.blogHomePage,
-        personalIntroduction:this.personalIntroduction
-      }).then(() => {
+        personalIntroduction: this.personalIntroduction,
+      }).then((res) => {
         this.$message({
-          message: "恭喜你,留言成功!",
+          message: res.msg,
           type: "success",
         });
         // 清空输入框的内容
@@ -155,7 +153,7 @@ export default {
           (this.question = ""),
           (this.blogName = ""),
           (this.blogHomePage = "");
-      (this.personalIntroduction = "")
+        this.personalIntroduction = "";
       });
     },
     fetchAvatarUrl() {
