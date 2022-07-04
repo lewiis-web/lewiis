@@ -35,11 +35,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button
-            type="primary"
-            @click="dialogTitle === '添加资源' ? addMessage() : updateMessage()"
-            >确 定</el-button
-          >
+          <el-button type="primary" @click="addMessage">确 定</el-button>
         </div>
       </el-dialog>
       <el-input
@@ -62,13 +58,6 @@
       :data="tableData"
       :header-cell-style="getRowClass"
     >
-      <el-table-column
-        prop="id"
-        label="序号"
-        align="center"
-        :show-overflow-tooltip="true"
-      >
-      </el-table-column>
       <el-table-column
         prop="email"
         label="邮箱"
@@ -112,10 +101,11 @@
       <el-table-column label="操作" align="center">
         <template slot-scope="scope">
           <el-link
+            :disabled="scope.row.isPassed === 1"
             type="primary"
             :underline="false"
-            @click="updateFriend(scope.row)"
-            >编辑</el-link
+            @click="passMessage(scope.row.id)"
+            >审核通过</el-link
           >
           <el-link
             type="danger"
@@ -146,7 +136,7 @@ import {
   fetchMessageList,
   addMessage,
   deleteMessage,
-  updateMessage,
+  passMessage,
 } from "@/api/message";
 export default {
   data() {
@@ -246,22 +236,14 @@ export default {
         this.$message.error(res.msg);
       }
     },
-    async updateMessage() {
-      this.dialogFormVisible = false;
-      let res = await updateMessage({ id: this.operateId, ...this.form });
+    async passMessage(id) {
+      let res = await passMessage({ id });
       if (res.code === 201) {
-        console.log(res);
         this.$message.success(res.msg);
         this.fetchMessageList();
       } else {
         this.$message.error(res.msg);
       }
-    },
-    updateFriend(row) {
-      this.operateId = row.id;
-      this.dialogFormVisible = true;
-      this.dialogTitle = "编辑资源";
-      this.form = row;
     },
   },
 };
