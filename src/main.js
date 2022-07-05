@@ -8,6 +8,7 @@ import "./assets/css/style.less";
 import "./assets/font/iconfont.css";
 import { parseTime } from "./utils";
 import axios from "axios";
+// import * as Echarts from "echarts";
 
 // 引入mavonEditor编辑器
 import mavonEditor from "mavon-editor";
@@ -15,6 +16,7 @@ import "mavon-editor/dist/css/index.css";
 Vue.use(mavonEditor);
 
 Vue.prototype.$axios = axios;
+// Vue.prototype.$echarts = Echarts;
 Vue.config.productionTip = false;
 Vue.filter("parseTime", (v) => parseTime(v, "{y}-{m}-{d}"));
 // 加入百度统计
