@@ -26,3 +26,12 @@ export function fetchBmsHomeInfo() {
     params: {},
   });
 }
+
+// 获取后台首页博客扇形图数据（博客浏览量前9名+其他）
+export function fetchPieList() {
+  return request({
+    url: "/bms/article/pie/list",
+    method: "get",
+    params: {},
+  });
+}

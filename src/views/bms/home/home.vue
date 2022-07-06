@@ -36,7 +36,7 @@
     </el-row>
     <el-row>
       <el-col :span="24"><div class="grid-content "> 
-
+        <pie></pie>
         </div></el-col>
     </el-row>
   </div>
@@ -45,6 +45,7 @@
 <script>
 import { fetchBmsHomeInfo } from "@/api/site";
 import DataCard from "@/components/bms/data-card.vue";
+import Pie from './components/pie.vue';
 export default {
   data() {
     return {
@@ -53,6 +54,7 @@ export default {
   },
   components: {
     DataCard,
+    Pie,
   },
   computed: {},
   created() {
