@@ -1,7 +1,7 @@
 <template>
   <div class="111">
     <div class="Echarts">
-      <div id="main" style="width: 100%; height: 600px"></div>
+      <div id="main" style="width: 100%; height: 800px"></div>
     </div>
   </div>
 </template>
@@ -29,19 +29,19 @@ export default {
         { value: 20, name: "rose 1" },
         { value: 30, name: "rose 2" },
         { value: 50, name: "rose 3" },
-      ], //贾克斯返回的数据
+      ], //ajax返回的数据
     };
   },
   created() {
-    this.fetchPieList()
+    this.fetchPieList();
   },
   watch: {
-    oldata:{
-      immediate:true,
-      handler(){
-        this.updateEcharts()
-      }
-    }
+    oldata: {
+      immediate: true,
+      handler() {
+        this.updateEcharts();
+      },
+    },
   },
   mounted() {
     this.myChart = echarts.init(document.getElementById("main"));
@@ -50,7 +50,7 @@ export default {
   methods: {
     async fetchPieList() {
       let ret = await fetchPieList();
-      this.oldata = ret.data
+      this.oldata = ret.data;
     },
     updateEcharts() {
       // 指定图表的配置项和数据
@@ -62,8 +62,6 @@ export default {
           show: true,
           feature: {
             mark: { show: true },
-            dataView: { show: true, readOnly: false },
-            restore: { show: true },
             saveAsImage: { show: true },
           },
         },
@@ -83,7 +81,7 @@ export default {
                 formatter: "{b}:\n{d}%",
                 textStyle: {
                   fontWeight: "normal",
-                  fontSize: 15,
+                  fontSize: 18,
                 },
               },
             },

@@ -95,18 +95,18 @@ export default {
       this.isCollapse = !this.isCollapse;
     },
     handleCommand(command) {
-      if (command === 'a') {
+      if (command === "a") {
         // 跳转到个人中心页面
-        this.$router.push('/bms/personalCenter')
-      } else if(command === 'b') {
+        this.$router.push("/bms/personalCenter");
+      } else if (command === "b") {
         // 退出登录
-        this.logout()
+        this.logout();
       }
     },
-    logout(){
-      _cookie.removeCookie('user')
-      this.$router.push('/')
-    }
+    logout() {
+      _cookie.removeCookie("user");
+      this.$router.push("/");
+    },
   },
 };
 </script>
@@ -188,11 +188,13 @@ export default {
         box-sizing: border-box;
         .main-content {
           width: 98%;
-          height: 97%;
+          // height: 97%;
+          min-height: 97%;
           padding: 8px;
           background-color: #fff;
           margin-left: 1%;
-          margin-top: 1%;
+          margin-top: 12px;
+          margin-bottom: 12px;
           border-radius: 6px;
         }
       }
