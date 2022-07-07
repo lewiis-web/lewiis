@@ -160,7 +160,7 @@ export default {
       let res = await fetchFriendsList(this.queryData);
       if (res.code === 200) {
         this.tableData = res.data;
-        this.total = res.total;
+        this.total = res.totalCount;
       } else {
         this.$message.error(res.msg);
       }

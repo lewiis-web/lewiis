@@ -61,7 +61,7 @@ export default {
       articles: [],
       queryData: {
         pageNo: 1,
-        pageSize: 3,
+        pageSize: 10,
         keyword: "",
         category:""
       },
@@ -140,6 +140,7 @@ export default {
   .elPagination {
     position: absolute;
     right: 24px;
+    bottom: -48px;
   }
 }
 </style>

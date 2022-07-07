@@ -35,9 +35,10 @@
       ></el-col>
     </el-row>
     <el-row>
-      <el-col :span="24"><div class="grid-content "> 
-        <pie></pie>
-        </div></el-col>
+      <el-col :span="24"
+        ><div class="grid-content">
+          <pie></pie></div
+      ></el-col>
     </el-row>
   </div>
 </template>
@@ -45,7 +46,7 @@
 <script>
 import { fetchBmsHomeInfo } from "@/api/site";
 import DataCard from "@/components/bms/data-card.vue";
-import Pie from './components/pie.vue';
+import Pie from "./components/pie.vue";
 export default {
   data() {
     return {
@@ -59,11 +60,17 @@ export default {
   computed: {},
   created() {
     this.fetchBmsHomeInfo();
+    // this.fetchIp();
   },
   methods: {
     async fetchBmsHomeInfo() {
       let res = await fetchBmsHomeInfo();
       this.info = res.data;
+    },
+    fetchIp() {
+      this.$axios.get("/fetchIp").then((response) => {
+        console.log(response);
+      });
     },
   },
 };

@@ -1,5 +1,3 @@
-
-
 <template>
   <div id="login">
     <div class="from">
