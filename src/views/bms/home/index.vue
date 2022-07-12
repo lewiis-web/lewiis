@@ -52,7 +52,7 @@
                     }}<i class="el-icon-arrow-down el-icon--right"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="a">个人中心</el-dropdown-item>
+                    <!-- <el-dropdown-item command="a">个人中心</el-dropdown-item> -->
                     <el-dropdown-item command="b">退出登录</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -83,7 +83,6 @@ export default {
   components: {},
   created() {
     this.currentUser = JSON.parse(_cookie.getCookie("user"));
-    console.log(this.$router);
     let menu = this.$router.options.routes.find((item) => {
       return item.name === "bms";
     });
@@ -104,7 +103,7 @@ export default {
       }
     },
     logout() {
-      _cookie.removeCookie("user");
+      _cookie.removeCookie();
       this.$router.push("/");
     },
   },
