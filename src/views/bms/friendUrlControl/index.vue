@@ -116,7 +116,6 @@
   </div>
 </template>
 <script>
-import { _cookie } from "@/utils/token";
 import {
   fetchFriendsList,
   addFriendUrl,

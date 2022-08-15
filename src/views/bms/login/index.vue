@@ -83,7 +83,6 @@ export default {
 			if (this.isExpired) {
 				_cookie.removeCookie('user')
 			}else{
-        console.log('身份验证通过，即将进入后台首页！');
         this.$message.info('身份验证通过，即将进入后台首页！')
         setTimeout(() => {
           this.$router.push('/bms/home')

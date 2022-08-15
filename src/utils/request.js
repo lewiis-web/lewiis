@@ -1,14 +1,15 @@
 import axios from "axios";
-import store from "@/store";
 import { Message } from "element-ui";
 import { _cookie } from "./token";
+
+const user = JSON.parse(_cookie.getCookie("user"))
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
   timeout: 30000,
   headers: {
-    authorization: `Bearer ${JSON.parse(_cookie.getCookie("user")).token}`,
+    authorization: `Bearer ${user ? user.token : ''}`,
   },
 });
 
@@ -25,8 +26,7 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   (response) => {
-    const res = response.data;
-    return res;
+    return response.data;
   },
   (error) => {
     Message.error(error);
