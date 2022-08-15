@@ -65,8 +65,8 @@ export default {
       overflow: hidden;
 
       &:hover {
-        transform: scale(1.1, 1.1);
-        filter: contrast(130%);
+        transform: scale(1.8, 1.8);
+        filter: contrast(150%);
       }
     }
   }
