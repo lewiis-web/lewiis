@@ -15,7 +15,7 @@
       <div class="top-feature" v-if="!hideSlogan">
         <section-title>
           <div style="display: flex; align-items: flex-end">
-            聚焦<small-ico></small-ico>
+            {{$t('index.focus')}}<small-ico></small-ico>
           </div>
         </section-title>
         <div class="feature-content">
@@ -26,7 +26,7 @@
       </div>
       <!--文章列表-->
       <main class="site-main" :class="{ search: hideSlogan }">
-        <section-title v-if="!hideSlogan">推荐</section-title>
+        <section-title v-if="!hideSlogan">{{$t('index.recommend')}}</section-title>
         <div v-for="item in postList" :key="item.id">
           <post :post="item" ></post>
         </div>
@@ -72,12 +72,12 @@ export default {
   },
   filters: {
     filterCategory(val) {
-      if (val === "fontend") {
-        return "前端";
-      } else if (val === "backend") {
-        return "后端";
+      if (val === "technology") {
+        return "技术";
+      } else if (val === "life") {
+        return "生活";
       } else if (val === "essays") {
-        return "杂谈";
+        return "随便唠唠";
       }
     },
   },

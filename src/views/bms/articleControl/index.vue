@@ -53,7 +53,6 @@
 <script>
 import Post from "@/components/post";
 import { fetchArticleList } from "@/api/post";
-import { fetchCategory } from "@/api/category";
 
 export default {
   data() {
@@ -76,7 +75,6 @@ export default {
   },
   created() {
     this.fetchArticleList();
-    this.fetchCategory();
   },
   mounted() {},
   methods: {
@@ -89,14 +87,6 @@ export default {
         this.$message.error(res.msg);
       }
     },
-    async fetchCategory() {
-      let res = await fetchCategory();
-      if (res.status === 200) {
-        this.blogTypeOptions = res.data;
-      } else {
-        this.$message.error(res.msg);
-      }
-    },
     handleSizeChange(val) {
       this.queryData.pageSize = val;
       this.fetchArticleList();
@@ -105,9 +95,6 @@ export default {
       this.queryData.pageNo = val;
       this.fetchArticleList();
     },
-    // uploadArticle() {
-    //   console.log("上传文章");
-    // },
     searchBlog(){
       this.fetchArticleList()
     }

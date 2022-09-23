@@ -6,7 +6,7 @@
         <div class="focusinfo">
           <!-- 头像 -->
           <div class="header-tou">
-            <router-link to="/"><img :src="websiteInfo.avatar" /></router-link>
+            <router-link to="/"><img :src="websiteInfo.avatar" width="100" height="100" /></router-link>
           </div>
           <!-- 简介 -->
           <div class="header-info">
@@ -136,9 +136,10 @@ export default {
   text-align: center;
   img {
     width: 80px;
-    height: auto;
+    height: 80px;
     border-radius: 50%;
     border: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
   }
   .header-info {
     width: 60%;

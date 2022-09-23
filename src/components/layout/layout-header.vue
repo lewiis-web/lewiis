@@ -1,47 +1,51 @@
 <template>
-  <div
-    id="layout-header"
-    :class="{ fixed: fixed, hidden: hidden }"
-    @click.stop="mobileShow = false"
-  >
+  <div id="layout-header" :class="{ fixed: fixed, hidden: hidden }" @click.stop="mobileShow = false">
     <div class="site-logo">
       <router-link to="/">
         <img src="@/assets/site-logo.svg" alt="" />
-        <p class="site-name">Lewiis的个人博客</p>
+        <p class="site-name">{{$t('index.title')}}</p>
       </router-link>
     </div>
     <div class="menus-btn" @click.stop="mobileShow = !mobileShow">Menus</div>
-    <div
-      class="site-menus"
-      :class="{ mobileShow: mobileShow }"
-      @click.stop="mobileShow = !mobileShow"
-    >
-      <div class="menu-item header-search"><header-search /></div>
-      <div class="menu-item"><router-link to="/">首页</router-link></div>
+    <div class="site-menus" :class="{ mobileShow: mobileShow }" @click.stop="mobileShow = !mobileShow">
+      <div class="menu-item header-search">
+        <header-search />
+      </div>
+      <div class="menu-item">
+        <router-link to="/">{{$t('index.menu.home')}}</router-link>
+      </div>
       <div class="menu-item hasChild">
-        <a href="#">博客</a>
-        <div class="childMenu" v-if="category.length">
-          <div class="sub-menu" v-for="item in category" :key="item.title">
-            <router-link :to="`${item.href}`">{{
-              item.title
-            }}</router-link>
+        <a href="#">{{$t('index.menu.blog')}}</a>
+        <div class="childMenu" v-if="$t('index.category').length">
+          <div class="sub-menu" v-for="item in $t('index.category')" :key="item.title">
+            <router-link :to="`${item.href}`">{{item.title}}</router-link>
           </div>
         </div>
       </div>
       <div class="menu-item">
-        <router-link to="/friend">友情链接</router-link>
+        <router-link to="/friend">{{$t('index.menu.friend')}}</router-link>
       </div>
       <div class="menu-item">
-        <router-link to="/resource">独家资源</router-link>
+        <router-link to="/resource">{{$t('index.menu.resource')}}</router-link>
       </div>
-      <div class="menu-item"><router-link to="/about">关于</router-link></div>
+      <div class="menu-item">
+        <router-link to="/about">{{$t('index.menu.about')}}</router-link>
+      </div>
+      <div class="menu-item hasChild">
+        <a href="#"><img src="@/assets/icons/language.png" alt="" width="20" height="20"
+            style="vertical-align: middle;"></a>
+        <div class="childMenu">
+          <div class="sub-menu" v-for="item in langTypes" :key="item.type">
+            <a @click="toggleLang(item.type)">{{item.title}}</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import HeaderSearch from "@/components/header-search";
-import { fetchCategory } from "@/api/category";
 export default {
   name: "layout-header",
   components: { HeaderSearch },
@@ -50,13 +54,19 @@ export default {
       lastScrollTop: 0,
       fixed: false,
       hidden: false,
-      category: [],
       mobileShow: false,
+      langTypes: []
     };
   },
   mounted() {
     window.addEventListener("scroll", this.watchScroll);
-    this.fetchCategory();
+    // 获取语言类型
+    for (const key in this.$t("index.menu.languages")) {
+      this.langTypes.push({
+        type: key,
+        title: this.$t("index.menu.languages")[key],
+      });
+    }
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.watchScroll);
@@ -78,15 +88,16 @@ export default {
       }
       this.lastScrollTop = scrollTop;
     },
-    fetchCategory() {
-      fetchCategory()
-        .then((res) => {
-          this.category = res.data;
-        })
-        .catch((err) => {
-          
-        });
-    },
+    toggleLang(type) {
+      if (type === "en") {
+        localStorage.setItem("lang", "en_US")
+      } else if (type === "zh") {
+        localStorage.setItem("lang", "zh_CN")
+      }else{
+        localStorage.setItem("lang", "zh_CN")
+      }
+      window.location.reload();
+    }
   },
 };
 </script>
@@ -107,9 +118,11 @@ export default {
   -moz-transition: 0.3s all linear;
   -o-transition: 0.3s all ease;
   -ms-transition: 0.3s all ease;
+
   &.hidden {
     top: -100px;
   }
+
   &.fixed {
     background-color: #ffffff;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -131,10 +144,12 @@ export default {
     top: -10px;
   }
 }
+
 .menus-btn {
   display: none;
   visibility: hidden;
 }
+
 .site-menus {
   display: flex;
   align-items: center;
@@ -145,24 +160,29 @@ export default {
     line-height: 50px;
     text-align: center;
     position: relative;
+
     a {
       padding: 12px 10px;
       color: #545454;
       font-weight: 500;
       font-size: 16px;
+
       &:hover {
         color: #ff6d6d;
       }
     }
+
     &:not(:last-child) {
       margin-right: 15px;
     }
+
     &.hasChild:hover .childMenu {
       opacity: 1;
       visibility: visible;
       transform: translateY(-5px);
     }
   }
+
   .childMenu {
     width: 130px;
     background-color: #fdfdfd;
@@ -179,6 +199,7 @@ export default {
     -moz-transition: 0.6s all linear;
     -o-transition: 0.6s all ease;
     -ms-transition: 0.6s all ease;
+
     &:before,
     &:after {
       content: "";
@@ -191,14 +212,17 @@ export default {
       top: -8px;
       left: 20px;
     }
+
     &:before {
       top: -9px;
       border-bottom: 8px solid #ddd;
     }
+
     .sub-menu {
       height: 40px;
       line-height: 40px;
       position: relative;
+
       &:not(:last-child):after {
         /*position: absolute;*/
         content: "";
@@ -212,19 +236,23 @@ export default {
     }
   }
 }
+
 @media (max-width: 960px) {
   #layout-header {
     padding: 0 20px;
   }
 }
+
 @media (max-width: 600px) {
   #layout-header {
     padding: 0 10px;
   }
+
   .menus-btn {
     display: block;
     visibility: visible;
   }
+
   .site-menus {
     position: absolute;
     display: none;
@@ -235,13 +263,16 @@ export default {
     top: 80px;
     z-index: -9;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
     .menu-item {
       position: relative;
       height: unset;
+
       &:not(:last-child) {
         margin-right: 0;
       }
     }
+
     .childMenu {
       position: relative;
       width: 100%;
@@ -251,6 +282,7 @@ export default {
       visibility: visible;
       border: none;
       box-shadow: none;
+
       &:before,
       &:after {
         content: "";
@@ -263,6 +295,7 @@ export default {
       }
     }
   }
+
   .site-menus.mobileShow {
     display: inline-block;
     visibility: visible;

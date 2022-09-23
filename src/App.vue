@@ -19,8 +19,15 @@ export default {
     layoutFooter,
     Loading,
   },
-  computed: {
-  },
+  mounted() {
+    let lang = window.localStorage.getItem("lang")
+    if (lang === "en_US") {
+      this.$i18n.locale = "en"
+    }else if (lang === "zh_CN"){
+      this.$i18n.locale = "zh"
+      this.locale = null
+    }
+  }
 };
 </script>
 <style lang="less">

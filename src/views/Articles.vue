@@ -42,7 +42,7 @@
               <!-- 文章标签 -->
               <div class="post-tags">
                 <i class="iconfont iconcategory"></i>
-                <router-link to="/category/fontend">前端</router-link>
+                <router-link to="/category/technology">技术</router-link>
               </div>
             </footer>
           </section-title>

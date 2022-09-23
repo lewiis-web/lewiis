@@ -9,15 +9,15 @@
         </div>
       </div>
       <div class="footer-item">
-        <div style="font-size: 17px; font-weight: bold">资源</div>
+        <div style="font-size: 17px; font-weight: bold">{{$t('index.footer.title')}}</div>
         <div>
           <a target="_blank" class="out-link" href="https://www.soinside.com/"
-            >修BUG来这里</a
+            >{{$t('index.footer.resource[0]')}}</a
           >
         </div>
         <div>
           <a target="_blank" class="out-link" href="https://es6.ruanyifeng.com/"
-            >阮一峰的ES6教程</a
+            >{{$t('index.footer.resource[1]')}}</a
           >
         </div>
         <div>
@@ -25,12 +25,12 @@
             target="_blank"
             class="out-link"
             href="https://space.bilibili.com/478692215"
-            >晓舟老师带你学前端</a
+            >{{$t('index.footer.resource[2]')}}</a
           >
         </div>
       </div>
       <div class="footer-item">
-        <div>本站已苟活 {{ runTimeInterval }}</div>
+        <div>{{$t("index.footer.runTime")}}：{{ runTimeInterval }}</div>
         <div>
           <a
             target="_blank"
@@ -41,7 +41,10 @@
           /></a>
         </div>
         <div>
-          <a target="_self" class="out-link" @click="goBms">☞后台管理</a>
+          <a target="_self" class="out-link" @click="goBms">☞{{$t('index.footer.admin')}}</a>
+        </div>
+        <div>
+          <a href="https://beian.miit.gov.cn/" target="_blank" class="out-link">晋ICP备2022002774号-1</a>
         </div>
       </div>
     </div>
@@ -151,6 +154,4 @@ export default {
     }
   }
 }
-
-/*****/
 </style>

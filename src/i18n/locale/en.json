@@ -1,0 +1,50 @@
+{
+  "index": {
+    "title": "Lewiis' Personal Blog",
+    "menu": {
+      "home": "Home",
+      "blog": "Blog",
+      "friend": "Friend Url",
+      "resource": "Exclusive Resource",
+      "about": "About",
+      "languages": {
+        "en":"English",
+        "zh": "Chinese"
+      }
+    },
+    "category": [
+      {
+        "title": "Technology",
+        "href": "/category/technology"
+      },
+      {
+        "title": "Life",
+        "href": "/category/life"
+      },
+      {
+        "title": "Essays",
+        "href": "/category/essays"
+      }
+    ],
+    "focus": "Focus",
+    "recommend": "Recommend",
+    "footer": {
+      "title": "Resource",
+      "resource": [
+        "Dry Bug Here",
+        "Ruan Yifeng's ES6 Tutorial",
+        "Teacher Xiaozhou"
+      ],
+      "runTime": "Alleys",
+      "timeQuantifiers": {
+        "year": "year",
+        "month":"month",
+        "day":"day",
+        "hour":"hour",
+        "minute":"minute",
+        "seconds":"seconds"
+      },
+      "admin":"admin"
+    }
+  }
+}
