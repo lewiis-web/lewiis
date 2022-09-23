@@ -3,23 +3,19 @@
     <div class="site-content">
       <section-title>
         <div class="friend-header">
-          <div class="title">友链</div>
+          <div class="title">{{$t('index.friendUrl.title')}}</div>
           <div class="apply">
-            <router-link to="/about#Guestbook">+ 加入</router-link>
+            <router-link to="/about#Guestbook">+ {{$t('index.friendUrl.join')}}</router-link>
           </div>
         </div>
       </section-title>
-      <!---说明--->
       <div class="statement">
-        <!-- <p>首先将需要接入本博客站点，然后给我<router-link to="/about#Guestbook">留言</router-link>提供您站点的如下信息：</p> -->
         <quote>
-          <p>站点名称：{{ websiteInfo.name }}</p>
-          <p>站点链接：{{ websiteInfo.domain }}</p>
-          <p>简短描述：{{ websiteInfo.desc }}</p>
+          <p>{{$t('index.friendUrl.siteName')}}：{{ websiteInfo.name }}</p>
+          <p>{{$t('index.friendUrl.siteUrl')}}：{{ websiteInfo.domain }}</p>
+          <p>{{$t('index.friendUrl.desc')}}：{{ websiteInfo.desc }}</p>
         </quote>
-        <!-- <p>接入成功后将会以邮件的方式通知。</p> -->
       </div>
-      <!----->
       <hr />
       <div class="friend-list animate">
         <div class="friend-item" v-for="item in list" :key="item.id">

@@ -1,46 +1,67 @@
 {
-  "index": {
-    "title": "Lewiis的个人博客",
-    "menu": {
-      "home": "首页",
-      "blog": "博客",
-      "friend": "友情链接",
-      "resource": "独家资源",
-      "about": "关于",
-      "languages": {
-        "en":"英语",
-        "zh": "简体中文"
-      }
-    },
-    "category": [
-      {
-        "title":"技术",
-        "href":"/category/technology"
-      },
-      {
-        "title":"生活",
-        "href":"/category/life"
-      },
-      {
-        "title":"随便唠唠",
-        "href":"/category/essays"
-      }
-    ],
-    "focus":"聚焦",
-    "recommend":"推荐",
-    "footer":{
-      "title":"资源",
-      "resource":["修BUG来这里","阮一峰的ES6教程","晓舟老师带你学前端"],
-      "runTime":"本站已苟活",
-      "timeQuantifiers": {
-        "year": "年",
-        "month":"月",
-        "day":"日",
-        "hour":"时",
-        "minute":"分",
-        "seconds":"秒"
-      },
-      "admin":"后台管理"
-    }
-  }
+	"index": {
+		"title": "Lewiis的个人博客",
+		"menu": {
+			"home": "首页",
+			"blog": "博客",
+			"friend": "友情链接",
+			"resource": "独家资源",
+			"about": "关于",
+			"languages": {
+				"en": "English",
+				"zh": "简体中文"
+			}
+		},
+		"category": [{
+				"title": "技术",
+				"href": "/category/technology"
+			},
+			{
+				"title": "生活",
+				"href": "/category/life"
+			},
+			{
+				"title": "随便唠唠",
+				"href": "/category/essays"
+			}
+		],
+		"focus": "聚焦",
+		"recommend": "推荐",
+		"footer": {
+			"title": "资源",
+			"resource": ["修BUG来这里", "阮一峰的ES6教程", "晓舟老师带你学前端"],
+			"runTime": "本站已苟活",
+			"timeQuantifiers": {
+				"year": "年",
+				"month": "月",
+				"day": "日",
+				"hour": "时",
+				"minute": "分",
+				"seconds": "秒"
+			},
+			"admin": "后台管理"
+		},
+		"friendUrl": {
+			"title":"友链",
+			"join":"加入",
+			"siteName":"站点名称",
+			"siteUrl":"站点链接",
+			"desc":"简短描述"
+		},
+		"resource":{
+			"placeholder":"搜索资源从这里开始···",
+			"name":"资源名称"
+		},
+		"about":{
+			"title":"关于博客",
+			"message":"Give me a message",
+			"email":"Email",
+			"name":"Blog Name",
+			"homepage":"Blog Home Page",
+			"personalProfile":"Personal Profile",
+			"content":"content",
+			"contents":"I want to join Lewiis personal blog links, thank you for your support",
+			"submit":"Submit"
+		}
+	}
 }

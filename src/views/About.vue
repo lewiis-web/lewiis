@@ -3,7 +3,7 @@
     <div class="site-content">
       <div class="content-warp">
         <div class="about-site about-info">
-          <section-title><span>❤</span>关于博客</section-title>
+          <section-title><span>❤</span>{{$t('index.about.title')}}</section-title>
           <div class="info-card">
             <p>Lewiis</p>
             <!-- 2022/6/3毕业离校
@@ -38,11 +38,11 @@
           </div>
         </div>
         <div class="about-me about-info">
-          <section-title id="Guestbook"><span>❤</span>给我留言</section-title>
+          <section-title id="Guestbook"><span>❤</span>{{$t('index.about.message')}}</section-title>
           <div class="info-card">
             <div class="contactForm">
               <div class="form-item">
-                <label for="mail">邮箱：</label>
+                <label for="mail">{{$t('index.about.email')}}：</label>
                 <input
                   class="v"
                   type="email"
@@ -54,7 +54,7 @@
               </div>
 
               <div class="form-item">
-                <label for="mail">名称：</label>
+                <label for="mail">{{$t('index.about.name')}}：</label>
                 <input
                   class="v"
                   type="text"
@@ -66,7 +66,7 @@
               </div>
 
               <div class="form-item">
-                <label for="mail">主页：</label>
+                <label for="mail">{{$t('index.about.homepage')}}：</label>
                 <input
                   class="v"
                   type="text"
@@ -78,7 +78,7 @@
               </div>
 
               <div class="form-item">
-                <label for="mail">个人简介：</label>
+                <label for="mail">{{$t('index.about.personalProfile')}}：</label>
                 <input
                   class="v"
                   type="text"
@@ -90,7 +90,7 @@
               </div>
 
               <div class="form-item">
-                <label for="content">内容：</label>
+                <label for="content">{{$t('index.about.content')}}：</label>
                 <textarea
                   rows="5"
                   class="v"
@@ -103,7 +103,7 @@
 
               <div class="form-item">
                 <label></label>
-                <button @click="onSubmit">提交</button>
+                <button @click="onSubmit">{{$t('index.about.submit')}}</button>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default {
     return {
       list: [],
       email: "",
-      question: "我想加入Lewiis的个人博客-友情链接中,感谢您的支持!",
+      question: this.$t('index.about.contents'),
       blogName: "",
       blogHomePage: "",
       personalIntroduction: "",

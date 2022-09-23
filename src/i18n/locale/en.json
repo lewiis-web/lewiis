@@ -9,7 +9,7 @@
       "about": "About",
       "languages": {
         "en":"English",
-        "zh": "Chinese"
+        "zh": "简体中文"
       }
     },
     "category": [
@@ -45,6 +45,28 @@
         "seconds":"seconds"
       },
       "admin":"admin"
-    }
+    },
+		"friendUrl": {
+			"title":"Friend URL",
+			"join":"Join",
+			"siteName":"Site Name",
+			"siteUrl":"Site URL",
+			"desc":"Short Description"
+		},
+		"resource":{
+			"placeholder":"Search resources start from here···",
+			"name":"Resource Name"
+		},
+		"about":{
+			"title":"About Blog",
+			"message":"Give me a message",
+			"email":"Email",
+			"name":"Blog Name",
+			"homepage":"Blog Home Page",
+			"personalProfile":"Personal Profile",
+			"content":"content",
+			"contents":"I want to join Lewiis personal blog links, thank you for your support",
+			"submit":"Submit"
+		}
   }
 }

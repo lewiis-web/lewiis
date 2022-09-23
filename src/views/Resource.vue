@@ -3,9 +3,9 @@
     <div class="site-content">
       <section-title>
         <div class="friend-header">
-          <div class="title">独家资源</div>
+          <div class="title">{{$t('index.menu.resource')}}</div>
           <div class="apply">
-            <el-input v-model="queryForm.title" placeholder="资源搜索从这里开始···" class="search_input"></el-input>
+            <el-input v-model="queryForm.title" :placeholder="$t('index.resource.placeholder')" class="search_input"></el-input>
             <el-button icon="el-icon-search" circle class="search_btn" @click="handleQuery"></el-button>
           </div>
         </div>
@@ -13,7 +13,7 @@
 
       <div class="statement" v-for="item in list" :key="item.id">
         <quote>
-          <p>资源名称：{{ item.name }}</p>
+          <p>{{$t('index.resource.name')}}：{{ item.name }}</p>
         </quote>
         <el-tabs type="border-card" class="tabname">
           <el-tab-pane v-if="item.baidu === '' || item.baidu === null" label="百度网盘">{{ item.baidu }}</el-tab-pane>
