@@ -103,8 +103,9 @@ export default {
       }
     },
     logout() {
-      _cookie.removeCookie();
-      this.$router.push("/");
+      // 清空所有cookie
+			_cookie.clearAllCookies()
+      this.$router.push("/bms/login");
     },
   },
 };
