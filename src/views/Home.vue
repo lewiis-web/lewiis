@@ -74,8 +74,8 @@ export default {
     filterCategory(val) {
       if (val === "technology") {
         return "技术";
-      } else if (val === "life") {
-        return "生活";
+      } else if (val === "reading") {
+        return "读书小记";
       } else if (val === "essays") {
         return "随便唠唠";
       }
