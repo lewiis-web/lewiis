@@ -74,7 +74,7 @@
 				overflow: hidden;
 
 				&:hover {
-					transform: scale(1.8, 1.8);
+					transform: scale(1.2, 1.2);
 					filter: contrast(150%);
 				}
 			}
