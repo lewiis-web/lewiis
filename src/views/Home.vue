@@ -35,7 +35,7 @@
 
 			<!-- 分页 -->
 			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-				:current-page="searchCondition.page" :page-sizes="[5,10, 20, 50]" :page-size="searchCondition.size"
+				:current-page="searchCondition.pageNum" :page-sizes="[5,10, 20, 50]" :page-size="searchCondition.pageSize"
 				layout="total, sizes, prev, pager, next, jumper" :total="total">
 			</el-pagination>
 		</div>
@@ -67,8 +67,8 @@
 				features: [],
 				postList: [],
 				searchCondition: {
-					page: 1,
-					size: 10,
+					pageNum: 1,
+					pageSize: 10,
 					category:"",
 					keyword:""
 				},
@@ -148,12 +148,12 @@
 				})
 			},
 			handleSizeChange(val) {
-				this.searchCondition.page = 1
-				this.searchCondition.size = val
+				this.searchCondition.pageNum = 1
+				this.searchCondition.pageSize = val
 				this.fetchList()
 			},
 			handleCurrentChange(val) {
-				this.searchCondition.page = val
+				this.searchCondition.pageNum = val
 				this.fetchList()
 			}
 		},
