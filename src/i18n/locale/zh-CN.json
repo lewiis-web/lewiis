@@ -54,14 +54,14 @@
 		},
 		"about":{
 			"title":"关于博客",
-			"message":"Give me a message",
-			"email":"Email",
-			"name":"Blog Name",
-			"homepage":"Blog Home Page",
-			"personalProfile":"Personal Profile",
-			"content":"content",
-			"contents":"I want to join Lewiis personal blog links, thank you for your support",
-			"submit":"Submit"
+			"message":"留言",
+			"email":"邮箱",
+			"name":"博客名称",
+			"homepage":"博客主页",
+			"personalProfile":"个人简介",
+			"content":"内容",
+			"contents":"我想加入Lewiis的个人博客，谢谢你的支持！",
+			"submit":"提交"
 		}
 	}
 }

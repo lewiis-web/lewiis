@@ -3,48 +3,36 @@
     <div class="footer-main">
       <div class="footer-item" v-if="socials.length">
         <div v-for="item in socials" :key="item.id">
-          <a target="_blank" class="out-link" :href="item.href"
-            ><i class="iconfont" :class="item.icon"></i>{{ item.title }}</a
-          >
+          <a target="_blank" class="out-link" :href="item.href"><i class="iconfont" :class="item.icon"></i>{{ item.title
+          }}</a>
         </div>
       </div>
       <div class="footer-item">
-        <div style="font-size: 17px; font-weight: bold">{{$t('index.footer.title')}}</div>
-        <div>
-          <a target="_blank" class="out-link" href="https://www.soinside.com/"
-            >{{$t('index.footer.resource[0]')}}</a
-          >
+        <div style="font-size: 17px; font-weight: bold">
+          {{ $t("index.footer.title") }}
         </div>
         <div>
-          <a target="_blank" class="out-link" href="https://es6.ruanyifeng.com/"
-            >{{$t('index.footer.resource[1]')}}</a
-          >
+          <a target="_blank" class="out-link" href="https://www.soinside.com/">{{ $t("index.footer.resource[0]") }}</a>
         </div>
         <div>
-          <a
-            target="_blank"
-            class="out-link"
-            href="https://space.bilibili.com/478692215"
-            >{{$t('index.footer.resource[2]')}}</a
-          >
+          <a target="_blank" class="out-link" href="https://es6.ruanyifeng.com/">{{ $t("index.footer.resource[1]")
+          }}</a>
+        </div>
+        <div>
+          <a target="_blank" class="out-link" href="https://space.bilibili.com/478692215">{{
+              $t("index.footer.resource[2]")
+          }}</a>
         </div>
       </div>
       <div class="footer-item">
-        <div>{{$t("index.footer.runTime")}}：{{ runTimeInterval }}</div>
+        <div>{{ $t("index.footer.runTime") }}：{{ runTimeInterval }}</div>
         <div>
-          <a
-            target="_blank"
-            href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=YFFYUVlWU1FXVVkgERFOAw8N"
-            style="text-decoration: none"
-            ><img
-              src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png"
-          /></a>
+          <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=YFFYUVlWU1FXVVkgERFOAw8N"
+            style="text-decoration: none"><img
+              src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_01.png" /></a>
         </div>
         <div>
-          <a target="_self" class="out-link" @click="goBms">☞{{$t('index.footer.admin')}}</a>
-        </div>
-        <div>
-          <a href="https://beian.miit.gov.cn/" target="_blank" class="out-link">晋ICP备2022002774号-1</a>
+          <a target="_self" class="out-link" @click="goBms">☞{{ $t("index.footer.admin") }}</a>
         </div>
       </div>
     </div>
@@ -52,6 +40,8 @@
       Copyright © 2021 by
       <a target="_blank" class="out-link" href="http://lewiis.top/">Lewiis</a> .
       All rights reserved.
+      <br><br>
+      <a href="https://beian.miit.gov.cn/" target="_blank">晋ICP备2022002774号-1</a>
     </div>
   </div>
 </template>
@@ -112,7 +102,7 @@ export default {
     .footer-item {
       flex: 1;
 
-      & > div:not(:last-child) {
+      &>div:not(:last-child) {
         margin-bottom: 10px;
       }
 
@@ -147,7 +137,7 @@ export default {
         align-items: center;
         flex-wrap: wrap;
 
-        & > div {
+        &>div {
           margin-bottom: 10px;
         }
       }
