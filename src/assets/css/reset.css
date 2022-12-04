@@ -144,4 +144,5 @@ a:active {
 html,
 body {
 	cursor: url("../cursor/pointer.png"), pointer;
+	filter: grayscale(0.95);
 }
