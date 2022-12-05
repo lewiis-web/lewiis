@@ -58,7 +58,7 @@ const routes = [
   {
     path: "/bms",
     name: "bms",
-    redirect: '/bms/home',
+    redirect: "/bms/home",
     component: () => import("@/views/bms/home"),
     meta: { title: "后台管理系统首页" },
     children: [
@@ -68,7 +68,7 @@ const routes = [
         components: {
           bms: () => import("@/views/bms/home/home.vue"),
         },
-        meta: { title: "首页",icon:"el-icon-menu" },
+        meta: { title: "首页", icon: "el-icon-menu" },
       },
       {
         path: "userControl",
@@ -76,7 +76,7 @@ const routes = [
         components: {
           bms: () => import("@/views/bms/userControl"),
         },
-        meta: { title: "用户管理",icon:"el-icon-s-custom" },
+        meta: { title: "用户管理", icon: "el-icon-s-custom" },
       },
       {
         path: "articleControl",
@@ -84,7 +84,7 @@ const routes = [
         components: {
           bms: () => import("@/views/bms/articleControl"),
         },
-        meta: { title: "博客文章",icon:"el-icon-tickets" },
+        meta: { title: "博客文章", icon: "el-icon-tickets" },
       },
       {
         path: "friendUrlControl",
@@ -92,7 +92,7 @@ const routes = [
         components: {
           bms: () => import("@/views/bms/friendUrlControl"),
         },
-        meta: { title: "友情链接",icon:"el-icon-s-home" },
+        meta: { title: "友情链接", icon: "el-icon-s-home" },
       },
       {
         path: "resourceControl",
@@ -100,7 +100,7 @@ const routes = [
         components: {
           bms: () => import("@/views/bms/resourceControl"),
         },
-        meta: { title: "独家资源",icon:"el-icon-coin" },
+        meta: { title: "独家资源", icon: "el-icon-coin" },
       },
       {
         path: "gossipControl",
@@ -108,7 +108,7 @@ const routes = [
         components: {
           bms: () => import("@/views/bms/gossipControl"),
         },
-        meta: { title: "留言列表",icon:"el-icon-chat-dot-square" },
+        meta: { title: "留言列表", icon: "el-icon-chat-dot-square" },
       },
       {
         path: "personalCenter",
@@ -116,8 +116,8 @@ const routes = [
         components: {
           bms: () => import("@/views/bms/personalCenter"),
         },
-        meta: { title: "个人中心",icon:"el-icon-chat-dot-square" },
-        invisible:true
+        meta: { title: "个人中心", icon: "el-icon-chat-dot-square" },
+        invisible: true,
       },
     ],
   },
@@ -130,13 +130,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let title = "Lewiis的个人博客";
-  if (to.meta.params) {
-    title = `${to.meta.title}:${to.params[to.meta.params] || ""} - ${title}`;
-  } else {
-    title = `${to.meta.title} - ${title}`;
-  }
-  document.title = title;
   if (to.path !== from.path) {
     if (to.path.indexOf("bms" === -1) && from.path.indexOf("bms") === -1) {
       store.dispatch("setLoading", true);

@@ -1,11 +1,11 @@
 import request from "@/utils/request";
 
 // 获取文章列表
-export function fetchList(params) {
+export function fetchList(data) {
   return request({
     url: "/post/list",
-    method: "get",
-    params: params,
+    method: "post",
+    data,
   });
 }
 

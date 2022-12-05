@@ -1,221 +1,239 @@
 <template>
-  <article class="post post-list">
-    <div class="post-entry">
-      <div class="feature">
-        <router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }">
-          <img :src="post.banner" />
-        </router-link>
-      </div>
-      <h1 class="entry-title">
-        <router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }">{{ post.title }}
-        </router-link>
-      </h1>
-      <div class="p-time">
-        <i class="iconfont iconmeditor-time"> </i> {{ post.pubTime
+	<article class="post post-list">
+		<div class="post-entry">
+			<div class="feature">
+				<router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }">
+					<img :src="post.banner" />
+				</router-link>
+			</div>
+			<h1 class="entry-title">
+				<router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }">
+					{{ post.title }}
+				</router-link>
+			</h1>
+			<div class="p-time">
+				<i class="iconfont iconmeditor-time"> </i> {{ conversePubTime(post.pubTime)
         }}<i v-if="post.viewsCount >= 1500" class="iconfont iconfire" style="margin-left: 5px; color: #ff6d6d"></i>
-      </div>
-      <p class="summary">{{ post.summary }}</p>
-      <footer class="entry-footer">
-        <div class="post-more">
-          <router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }"><i
-              class="iconfont iconfish-li" style="font-size: 25px"></i></router-link>
-        </div>
-        <div class="info-meta">
-          <div class="views">
-            <span><i class="iconfont iconeyes"></i>{{ post.viewsCount }} 热度</span>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <hr />
-  </article>
+			</div>
+			<p class="summary">{{ post.summary }}</p>
+			<footer class="entry-footer">
+				<div class="post-more">
+					<router-link :to="{ path: `/article/${post.id}`, query: { id: post.id, content: post.content } }"><i
+							class="iconfont iconfish-li" style="font-size: 25px"></i></router-link>
+				</div>
+				<div class="info-meta">
+					<div class="views">
+						<span><i class="iconfont iconeyes"></i>{{ post.viewsCount }} 热度</span>
+					</div>
+				</div>
+			</footer>
+		</div>
+		<hr />
+	</article>
 </template>
 
 <script>
-export default {
-  name: "post",
-  props: {
-    post: {
-      type: Object,
-    },
-  },
-};
+	import * as dayjs from 'dayjs'
+	export default {
+		name: "post",
+		props: {
+			post: {
+				type: Object,
+			},
+		},
+		computed:{
+			conversePubTime(){
+				return (pubTime)=>{
+					return dayjs(pubTime).format('YYYY-MM-DD HH:mm:ss')
+				}
+			}
+		}
+	};
 </script>
 
 <style scoped lang="less">
-.post {
-  margin: 0 0 4% 0;
-  position: relative;
-}
+	.post {
+		margin: 0 0 4% 0;
+		position: relative;
+	}
 
-.post-entry {
-  .feature {
-    position: absolute;
-    margin-top: 10px;
+	.post-entry {
+		.feature {
+			position: absolute;
+			margin-top: 10px;
 
-    img {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 50%;
-      padding: 2px;
-      border: 1px solid #dadada;
-      position: relative;
-      transition: all 0.2s linear;
-      overflow: hidden;
+			img {
+				width: 100px;
+				height: 100px;
+				object-fit: cover;
+				border-radius: 50%;
+				padding: 2px;
+				border: 1px solid #dadada;
+				position: relative;
+				transition: all 0.2s linear;
+				overflow: hidden;
 
-      &:hover {
-        transform: scale(1.8, 1.8);
-        filter: contrast(150%);
-      }
-    }
-  }
+				&:hover {
+					transform: scale(1.2, 1.2);
+					filter: contrast(150%);
+				}
+			}
+		}
 
-  .entry-title {
-    font-size: 21px;
-    font-weight: 600;
-    line-height: 50px;
-    margin: 0 0 0 17%;
-    position: relative;
-    z-index: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    width: 70%;
-    color: #737373;
+		.entry-title {
+			font-size: 21px;
+			font-weight: 600;
+			line-height: 50px;
+			margin: 0 0 0 17%;
+			position: relative;
+			z-index: 1;
 
-    & a:hover {
-      color: #8fd0cc;
-    }
-  }
+			color: #737373;
 
-  .p-time {
-    position: absolute;
-    right: 0;
-    top: 16px;
-    font-size: 12px;
-    color: #989898;
-    letter-spacing: 1px;
-    font-family: din, "Hiragino Sans GB", "Microsoft Yahei", Arial, sans-serif;
-    display: flex;
-    align-items: center;
-  }
+			& a:hover {
+				color: #8fd0cc;
+			}
 
-  p.summary {
-    min-height: 60px;
-    margin: 0 0 0 17%;
-    font-size: 15px;
-    color: #6f6f6f;
-    letter-spacing: 1px;
-    line-height: 30px;
-  }
+			a {
+				display: inline-block;
+				width: 65%;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
 
-  footer.entry-footer {
-    margin: 0 0 0 17%;
-    list-style: none;
+		.p-time {
+			position: absolute;
+			right: 0;
+			top: 16px;
+			font-size: 12px;
+			color: #989898;
+			letter-spacing: 1px;
+			font-family: din, "Hiragino Sans GB", "Microsoft Yahei", Arial, sans-serif;
+			display: flex;
+			align-items: center;
+		}
 
-    .post-more {
-      margin-top: 10px;
-      text-align: right;
-      color: #a0dad0;
+		p.summary {
+			min-height: 60px;
+			margin: 0 0 0 18%;
+			font-size: 16px;
+			color: #6f6f6f;
+			letter-spacing: 1px;
+			line-height: 2rem;
+			display: -webkit-box;
+			overflow: hidden;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
+		}
 
-      a:hover {
-        color: #737373;
-      }
-    }
+		footer.entry-footer {
+			margin: 0 0 0 17%;
+			list-style: none;
 
-    .info-meta {
-      margin-top: 10px;
-      font-family: din, "Hiragino Sans GB", "Microsoft Yahei", Arial, sans-serif;
-      position: absolute;
-      top: 20px;
-      opacity: 0;
-      padding-top: 8px;
-      border-top: 1px solid #ddd;
-      -webkit-transform: translate3d(-150px, 0, 0);
-      transform: translate3d(-150px, 0, 0);
-      visibility: hidden;
-      transition: 0.7s all ease;
-      -webkit-transition: 0.6s all ease;
-      -moz-transition: 0.6s all linear;
-      -o-transition: 0.6s all ease;
-      -ms-transition: 0.6s all ease;
+			.post-more {
+				margin-top: 10px;
+				text-align: right;
+				color: #a0dad0;
 
-      span,
-      a {
-        color: #b3b3b3;
-        font-size: 12px;
-      }
+				a:hover {
+					color: #737373;
+				}
+			}
 
-      i {
-        margin-top: 3px;
-        margin-right: 10px;
-        float: left;
-      }
-    }
+			.info-meta {
+				margin-top: 10px;
+				font-family: din, "Hiragino Sans GB", "Microsoft Yahei", Arial, sans-serif;
+				position: absolute;
+				top: 20px;
+				opacity: 0;
+				padding-top: 8px;
+				border-top: 1px solid #ddd;
+				-webkit-transform: translate3d(-150px, 0, 0);
+				transform: translate3d(-150px, 0, 0);
+				visibility: hidden;
+				transition: 0.7s all ease;
+				-webkit-transition: 0.6s all ease;
+				-moz-transition: 0.6s all linear;
+				-o-transition: 0.6s all ease;
+				-ms-transition: 0.6s all ease;
 
-    .comnum {
-      float: left;
-    }
-  }
-}
+				span,
+				a {
+					color: #b3b3b3;
+					font-size: 12px;
+				}
 
-.post-entry:hover footer.entry-footer .info-meta {
-  -webkit-transform: translate3d(-230px, 0, 0);
-  transform: translate3d(-230px, 0, 0);
-  opacity: 1;
-  visibility: visible;
-}
+				i {
+					margin-top: 3px;
+					margin-right: 10px;
+					float: left;
+				}
+			}
 
-.post hr {
-  width: 30%;
-  height: 1px;
-  margin: 0 auto;
-  border: 0;
-  background: #efefef;
-}
+			.comnum {
+				float: left;
+			}
+		}
+	}
 
-/*******/
-@media (max-width: 1060px) {
-  .info-meta {
-    display: none;
-  }
-}
+	.post-entry:hover footer.entry-footer .info-meta {
+		-webkit-transform: translate3d(-230px, 0, 0);
+		transform: translate3d(-230px, 0, 0);
+		opacity: 1;
+		visibility: visible;
+	}
 
-@media (max-width: 800px) {
-  .post-entry {
-    .feature img {
-      width: 50px;
-      height: 50px;
-    }
+	.post hr {
+		width: 30%;
+		height: 1px;
+		margin: 0 auto;
+		border: 0;
+		background: #efefef;
+	}
 
-    .entry-title {
-      font-size: 16px;
-      line-height: 30px;
-      margin: 0 0 0 65px;
-    }
+	/*******/
+	@media (max-width: 1060px) {
+		.info-meta {
+			display: none;
+		}
+	}
 
-    .p-time {
-      position: relative;
-      margin: -15px 0 0 65px;
-    }
+	@media (max-width: 800px) {
+		.post-entry {
+			.feature img {
+				width: 50px;
+				height: 50px;
+			}
 
-    p.summary {
-      margin: 20px 0 0 65px;
-      font-size: 14px;
-      height: 30px;
-      overflow: hidden;
-    }
+			.entry-title {
+				font-size: 16px;
+				line-height: 30px;
+				margin: 0 0 0 65px;
+			}
 
-    .post-more {
-      display: none;
-    }
-  }
+			.p-time {
+				position: relative;
+				margin: -15px 0 0 65px;
+			}
 
-  .post-list hr {
-    margin-top: 20px;
-  }
-}
+			p.summary {
+				margin: 20px 0 0 65px;
+				font-size: 14px;
+				height: 30px;
+				overflow: hidden;
+			}
 
-/******/
+			.post-more {
+				display: none;
+			}
+		}
+
+		.post-list hr {
+			margin-top: 20px;
+		}
+	}
+
+	/******/
 </style>

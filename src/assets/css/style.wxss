@@ -1,0 +1,310 @@
+@import "reset.css";
+* {
+  font-family: miranafont, "Hiragino Sans GB", STXihei, "Microsoft YaHei", SimSun, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 1px;
+}
+[v-cloak] {
+  display: none;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #d81e06;
+}
+::-webkit-scrollbar-track {
+  background-color: #ffffff;
+}
+@keyframes main {
+  0% {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.site-content {
+  margin: 0 auto;
+  padding: 0 10px;
+  max-width: 900px;
+}
+.site-content .themes {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.animate {
+  animation: main 1.5s;
+}
+@media (max-width: 800px) {
+  .site-content {
+    animation: none;
+    padding: 50px 4% 0 4%;
+  }
+}
+/**文章样式**/
+.entry-content {
+  /* BLOCKS
+  =============================================================================*/
+  /* HEADERS
+  =============================================================================*/
+  /* LINKS
+  =============================================================================*/
+  /* LISTS
+  =============================================================================*/
+  /* CODE
+  =============================================================================*/
+  /* QUOTES
+  =============================================================================*/
+  /* HORIZONTAL RULES
+  =============================================================================*/
+  /* TABLES
+  =============================================================================*/
+  /* IMAGES
+  =============================================================================*/
+  /* P
+  =============================================================================*/
+  /**
+  =============================================================================*/
+}
+.entry-content p,
+.entry-content blockquote,
+.entry-content ul,
+.entry-content ol,
+.entry-content dl,
+.entry-content table,
+.entry-content pre {
+  margin: 15px 0;
+}
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6 {
+  color: #4f4f4f;
+  margin: 8px 0 16px;
+  font-weight: 700;
+  position: relative;
+}
+.entry-content h1:hover:before,
+.entry-content h2:hover:before,
+.entry-content h3:hover:before,
+.entry-content h4:hover:before,
+.entry-content h5:hover:before,
+.entry-content h6:hover:before {
+  left: -28px;
+  position: absolute;
+  content: '「 ';
+  color: #ff6d6d;
+}
+.entry-content h1:hover:after,
+.entry-content h2:hover:after,
+.entry-content h3:hover:after,
+.entry-content h4:hover:after,
+.entry-content h5:hover:after,
+.entry-content h6:hover:after {
+  content: ' 」';
+  color: #ff6d6d;
+}
+.entry-content h1 tt,
+.entry-content h1 code,
+.entry-content h2 tt,
+.entry-content h2 code,
+.entry-content h3 tt,
+.entry-content h3 code,
+.entry-content h4 tt,
+.entry-content h4 code,
+.entry-content h5 tt,
+.entry-content h5 code,
+.entry-content h6 tt,
+.entry-content h6 code {
+  font-size: inherit;
+}
+.entry-content h1 {
+  font-size: 28px;
+  line-height: 36px;
+}
+.entry-content h2 {
+  font-size: 24px;
+  line-height: 32px;
+}
+.entry-content h3 {
+  font-size: 22px;
+  line-height: 30px;
+}
+.entry-content h4 {
+  font-size: 20px;
+  line-height: 28px;
+}
+.entry-content h5 {
+  font-size: 18px;
+  line-height: 26px;
+}
+.entry-content h6 {
+  font-size: 16px;
+  line-height: 24px;
+}
+.entry-content a {
+  color: #6795b5;
+  text-decoration: none;
+}
+.entry-content a:active,
+.entry-content a:hover {
+  outline: 0;
+}
+.entry-content a:hover,
+.entry-content a:focus {
+  color: #cb4b16;
+  text-decoration: none;
+}
+.entry-content ul,
+.entry-content ol {
+  padding-left: 30px;
+}
+.entry-content ul li,
+.entry-content ol li {
+  list-style-type: disc;
+  margin: 8px 0 0 32px;
+}
+.entry-content ul ul,
+.entry-content ul ol,
+.entry-content ol ol,
+.entry-content ol ul {
+  margin-bottom: 0;
+}
+.entry-content dl {
+  padding: 0;
+}
+.entry-content dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+.entry-content dl dt:first-child {
+  padding: 0;
+}
+.entry-content dl dt > :first-child {
+  margin-top: 0;
+}
+.entry-content dl dt > :last-child {
+  margin-bottom: 0;
+}
+.entry-content dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+.entry-content dl dd > :first-child {
+  margin-top: 0;
+}
+.entry-content dl dd > :last-child {
+  margin-bottom: 0;
+}
+.entry-content pre,
+.entry-content code,
+.entry-content tt {
+  font-size: 15px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+.entry-content code,
+.entry-content tt {
+  margin: 0 5px;
+  padding: 2px;
+  white-space: nowrap;
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border: 1px solid #eaeaea;
+  border-radius: 3px;
+}
+.entry-content pre > code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  color: #333;
+  border: none;
+  background: transparent;
+}
+.entry-content pre {
+  background-color: #f8f8f8;
+  border: 1px solid #F9F9F9;
+  line-height: 1.5rem;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+.entry-content pre code,
+.entry-content pre tt {
+  background-color: transparent;
+  border: none;
+}
+.entry-content blockquote {
+  border-left: 4px solid #A0DAD0;
+  background-color: #ebeef5;
+  border-radius: 3px;
+  padding: 15px 20px;
+  margin: 15px 0;
+  color: #777;
+}
+.entry-content blockquote > :first-child {
+  margin-top: 0;
+}
+.entry-content blockquote > :last-child {
+  margin-bottom: 0;
+}
+.entry-content hr {
+  margin: 24px 0;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  clear: both;
+}
+.entry-content table {
+  margin: 0 auto;
+}
+.entry-content table th {
+  font-weight: bold;
+}
+.entry-content table th,
+.entry-content table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+.entry-content table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+.entry-content table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+.entry-content img {
+  max-width: 100%;
+}
+.entry-content p {
+  font-size: 16px;
+  color: #4d4d4d;
+  font-weight: 400;
+  line-height: 26px;
+}
+@media (max-width: 800px) {
+  .entry-content ul,
+  .entry-content ol {
+    padding-left: 10px;
+    margin: 0;
+  }
+  .entry-content ul li,
+  .entry-content ol li {
+    list-style: inside;
+    margin: 0;
+  }
+}

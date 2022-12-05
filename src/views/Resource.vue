@@ -5,7 +5,7 @@
         <div class="friend-header">
           <div class="title">{{$t('index.menu.resource')}}</div>
           <div class="apply">
-            <el-input v-model="queryForm.title" :placeholder="$t('index.resource.placeholder')" class="search_input"></el-input>
+            <el-input v-model="queryForm.keyword" :placeholder="$t('index.resource.placeholder')" class="search_input"></el-input>
             <el-button icon="el-icon-search" circle class="search_btn" @click="handleQuery"></el-button>
           </div>
         </div>
@@ -34,7 +34,7 @@
 
       <el-pagination
         background
-        :current-page="queryForm.pageNo"
+        :current-page="queryForm.pageNum"
         :layout="layout"
         :page-size="queryForm.pageSize"
         :total="total"
@@ -56,9 +56,9 @@ export default {
       websiteInfo: {},
       list: [],
       queryForm: {
-        pageNo: 1,
+        pageNum: 1,
         pageSize: 10,
-        title: "",
+        keyword: "",
       },
       layout: "total, sizes, prev, pager, next, jumper",
       total: 0,
@@ -76,8 +76,8 @@ export default {
     },
     fetchResource() {
       fetchResource(this.queryForm).then((res) => {
-        this.list = res.data;
-        this.total = res.totalCount
+        this.list = res.data.list;
+        this.total = res.data.total
       });
     },
     handleSizeChange(val) {
@@ -85,11 +85,11 @@ export default {
       this.fetchResource();
     },
     handleCurrentChange(val) {
-      this.queryForm.pageNo = val;
+      this.queryForm.pageNum = val;
       this.fetchResource();
     },
     handleQuery(){
-      this.queryForm.pageNo = 1
+      this.queryForm.pageNum = 1
       this.fetchResource()
     }
   },
@@ -131,7 +131,9 @@ export default {
   }
 }
 .el-pagination{
-  margin: 20px 0 5px 18%;
+  display: flex;
+	justify-content: center;
+	margin-bottom: 24px;
 }
 .statement {
   margin: 30px 0 10px 0;
