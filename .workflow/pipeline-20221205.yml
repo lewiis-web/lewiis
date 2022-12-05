@@ -27,7 +27,7 @@ stages:
         artifacts:
           - name: BUILD_ARTIFACT
             path:
-              - /www/wwwroot/http
+              - ~/www/wwwroot/http
         caches:
           - ~/.npm
           - ~/.yarn
