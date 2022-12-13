@@ -69,7 +69,7 @@ export default {
     },
     fetchIp() {
       this.$axios.get("/fetchIp").then((response) => {
-        console.log(response);
+        
       });
     },
   },

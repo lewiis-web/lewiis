@@ -162,7 +162,7 @@ export default {
     },
     async switchFlag(event, row) {
       let res = await deleteUser({ isDeleted: event, id: row.id });
-      console.log(res);
+      
       if (res.code === 201) {
         this.$message({
           type: "success",

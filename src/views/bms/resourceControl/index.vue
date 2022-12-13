@@ -217,7 +217,7 @@ export default {
       this.dialogFormVisible = false;
       let res = await updateResource({ id: this.operateId, ...this.form });
       if (res.code === 201) {
-        console.log(res);
+        
         this.$message.success(res.msg);
         this.fetchResourceList();
       } else {
