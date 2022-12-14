@@ -144,5 +144,6 @@ a:active {
 html,
 body {
 	cursor: url("../cursor/pointer.png"), pointer;
-	filter: grayscale(0.95);
+  /* 是否开启悼念模式 */
+	/* filter: grayscale(0.95); */
 }

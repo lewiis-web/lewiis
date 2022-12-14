@@ -160,7 +160,7 @@ article.hentry {
   .mavon {
     margin-top: 10px;
 
-    ::v-deep .docx-wrapper {
+    :deep(.docx-wrapper) {
       background: #fff !important;
 
       &>section.docx {

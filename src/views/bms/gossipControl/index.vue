@@ -271,7 +271,7 @@ export default {
       color: #fff;
       border-color: #409eff;
     }
-    & /deep/ .el-dialog {
+    & :deep(.el-dialog) {
       width: 30% !important;
     }
   }
@@ -280,8 +280,8 @@ export default {
     right: 24px;
     margin-top: 24px;
   }
-  & ::v-deep .cell,
-  .el-tooltip {
+  & :deep(.cell),
+  :deep(.el-tooltip) {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

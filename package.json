@@ -5,10 +5,10 @@
   "scripts": {
     "dev": "vue-cli-service serve --mode development",
     "test": "vue-cli-service serve --mode test",
-    "prod": "vue-cli-service serve --mode production",
+    "prod": "vue-cli-service serve --mode prod",
     "build:development": "vue-cli-service build --mode development",
     "build:test": "vue-cli-service build --mode test",
-    "build:prod": "vue-cli-service build --mode production",
+    "build:prod": "vue-cli-service build --mode prod",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "axios": "^0.25.0",
     "comment-message-editor": "^1.0.1",
     "core-js": "^3.6.4",
+    "dayjs": "^1.11.7",
     "docx-preview": "^0.1.4",
     "echarts": "^4.9.0",
     "element-ui": "^2.15.6",
