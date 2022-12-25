@@ -27,6 +27,14 @@ export function addViewsCount(data) {
   });
 }
 
+// 文章下载量+1
+export function addDownloadsCount(articleId) {
+  return request({
+    url: `/article/downloadscount/add/${articleId}`,
+    method: "put",
+  });
+}
+
 // 文章列表（筛选 分页）
 export function fetchArticleList(data) {
   return request({

@@ -14,8 +14,7 @@
               <!-- 下载按钮 -->
               <div class="post-like">
                 <i class="el-icon-download"></i>
-                <el-popconfirm confirm-button-text="好的" cancel-button-text="不用了" icon="el-icon-info" icon-color="red"
-                  title="确定下载吗？" @confirm="downLoad">
+                <el-popconfirm confirm-button-text="好的" cancel-button-text="不用了" icon="el-icon-info" icon-color="red" title="确定下载吗？" @confirm="downLoad">
                   <span slot="reference">下载</span>
                 </el-popconfirm>
 
@@ -56,7 +55,7 @@
 import Banner from "@/components/banner";
 import sectionTitle from "@/components/section-title";
 import menuTree from "@/components/menu-tree";
-import { fetchArticle, addViewsCount } from "../api/post";
+import { fetchArticle, addViewsCount, addDownloadsCount } from "../api/post";
 import { env } from "process";
 // 引入docx-preview插件
 import { Loading } from "element-ui";
@@ -116,6 +115,7 @@ export default {
     },
     // 下载
     downLoad() {
+      // 下载文件
       this.$axios({
         method: "get",
         responseType: "blob", // 因为是流文件，所以要指定blob类型
@@ -130,7 +130,17 @@ export default {
         a.click(); // 模拟点击了a标签，会触发a标签的href的读取，浏览器就会自动下载了
         a.remove(); // 一次性的，用完就删除a标签
       });
+      // 调用接口增加文章下载数量
+      this.increaseDownloadsCount(this.article.id)
     },
+    // 文章下载量+1
+    async increaseDownloadsCount(articleId) {
+      try {
+        await addDownloadsCount(articleId)
+      } catch (error) {
+        this.$message.error(error)
+      }
+    }
   },
   mounted() { },
   created() {
@@ -163,7 +173,7 @@ article.hentry {
     :deep(.docx-wrapper) {
       background: #fff !important;
 
-      &>section.docx {
+      & > section.docx {
         background: white;
         box-shadow: 0 0 10px rgb(0 0 0 / 50%);
         margin-bottom: 30px;
@@ -180,7 +190,7 @@ article.hentry {
       margin: 0.67em 0;
 
       &:before {
-        content: "#";
+        content: '#';
         margin-right: 6px;
         color: #d82e16;
         font-size: 20px;
@@ -203,7 +213,8 @@ article.hentry {
     }
   }
 
-  .entry-content {}
+  .entry-content {
+  }
 
   footer.post-footer {
     width: 100%;
@@ -298,7 +309,7 @@ article.hentry {
 
       .donate_inner:after,
       .donate_inner:before {
-        content: "";
+        content: '';
         position: absolute;
         left: 0;
         bottom: 45%;
@@ -335,7 +346,7 @@ article.hentry {
     color: #fff;
 
     &:after {
-      content: "";
+      content: '';
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
       border-bottom: 10px solid #2b2b2b;
