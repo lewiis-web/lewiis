@@ -1,6 +1,11 @@
 import request from "@/utils/request";
 
-// 登录
+/**
+ * 登录
+ * @method POST
+ * @param {string} username 用户名
+ * @param {string} password 密码  
+ */
 export function login(data) {
   return request({
     url: "/login",
