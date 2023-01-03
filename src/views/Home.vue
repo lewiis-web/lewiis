@@ -5,15 +5,28 @@
 			<!--通知栏-->
 			<div class="notify">
 				<div class="search-result" v-if="hideSlogan">
-					<span v-if="searchCondition.keyword">搜索结果："{{ searchCondition.keyword }}" 相关文章</span>
-					<span v-else-if="searchCondition.category">分类 "{{ searchCondition.category | filterCategory }}" 相关文章</span>
+					<span v-if="searchCondition.keyword"
+						>搜索结果："{{ searchCondition.keyword }}" 相关文章</span
+					>
+					<span v-else-if="searchCondition.category"
+						>分类 "{{ searchCondition.category | filterCategory }}"
+						相关文章</span
+					>
 				</div>
 				<quote v-else>{{ notice }}</quote>
 			</div>
 
 			<!-- 各个主题 -->
 			<div class="themes">
-				<mochi-box shiba="ume" mood="happy" blush left-eye="laugh" right-eye="laugh" left-ear="down" right-ear="down">
+				<mochi-box
+					shiba="ume"
+					mood="happy"
+					blush
+					left-eye="laugh"
+					right-eye="laugh"
+					left-ear="down"
+					right-ear="down"
+				>
 					<h2>Vue</h2>
 					<h3>
 						<a target="_blank" href="http://lewiis.top/search/vue">Vue2/Vue3</a>
@@ -37,36 +50,71 @@
 				<mochi-box shiba="random">
 					<h2>ECharts</h2>
 					<h3>
-						<a target="_blank" href="http://lewiis.top/search/echarts">ECharts</a>
+						<a target="_blank" href="http://lewiis.top/search/echarts"
+							>ECharts</a
+						>
 					</h3>
 					<p class="shop kotobuki" title="kotobuki">ことぶき米店</p>
 				</mochi-box>
-				<mochi-box shiba="anko" mood="cheeky" left-eye="open" right-eye="laugh" left-ear="flat" right-ear="middle">
+				<mochi-box
+					shiba="anko"
+					mood="cheeky"
+					left-eye="open"
+					right-eye="laugh"
+					left-ear="flat"
+					right-ear="middle"
+				>
 					<h2>MAP</h2>
 					<h3>
 						<a target="_blank" href="http://lewiis.top/search/map">Baidu Map</a>
 					</h3>
 					<p class="shop uemachi" title="uemachi">うえまち団子</p>
 				</mochi-box>
-				<mochi-box shiba="kinako" mood="gleam" blush left-eye="open" right-eye="open" left-ear="middle"
-					right-ear="middle">
+				<mochi-box
+					shiba="kinako"
+					mood="gleam"
+					blush
+					left-eye="open"
+					right-eye="open"
+					left-ear="middle"
+					right-ear="middle"
+				>
 					<h2>Util</h2>
 					<h3>
-						<a target="_blank" href="http://lewiis.top/search/javascript">JavaScript</a>
+						<a target="_blank" href="http://lewiis.top/search/javascript"
+							>JavaScript</a
+						>
 					</h3>
 					<p class="shop uemachi" title="uemachi">うえまち団子</p>
 				</mochi-box>
-				<mochi-box shiba="sakura" mood="cute" blush left-eye="shy" right-eye="open" left-ear="down" right-ear="middle">
+				<mochi-box
+					shiba="sakura"
+					mood="cute"
+					blush
+					left-eye="shy"
+					right-eye="open"
+					left-ear="down"
+					right-ear="middle"
+				>
 					<h2>CSS</h2>
 					<h3>
 						<a target="_blank" href="http://lewiis.top/search/css">CSS</a>
 					</h3>
 					<p class="shop uemachi" title="uemachi">うえまち団子</p>
 				</mochi-box>
-				<mochi-box shiba="monaka" mood="content" left-eye="open" right-eye="wink" left-ear="middle" right-ear="flat">
+				<mochi-box
+					shiba="monaka"
+					mood="content"
+					left-eye="open"
+					right-eye="wink"
+					left-ear="middle"
+					right-ear="flat"
+				>
 					<h2>Electron</h2>
 					<h3>
-						<a target="_blank" href="http://lewiis.top/search/electron">Electron</a>
+						<a target="_blank" href="http://lewiis.top/search/electron"
+							>Electron</a
+						>
 					</h3>
 					<p class="shop uemachi" title="uemachi">うえまち団子</p>
 				</mochi-box>
@@ -76,7 +124,7 @@
 			<div class="top-feature" v-if="!hideSlogan">
 				<section-title>
 					<div style="display: flex; align-items: flex-end">
-						{{ $t('index.focus') }}
+						{{ $t("index.focus") }}
 						<small-ico></small-ico>
 					</div>
 				</section-title>
@@ -88,152 +136,159 @@
 			</div>
 			<!--文章列表-->
 			<main class="site-main" :class="{ search: hideSlogan }">
-				<section-title v-if="!hideSlogan">{{ $t('index.recommend') }}</section-title>
+				<section-title v-if="!hideSlogan">{{
+					$t("index.recommend")
+				}}</section-title>
 				<div v-for="item in postList" :key="item.id">
 					<post :post="item"></post>
 				</div>
 			</main>
 
 			<!-- 分页 -->
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-				:current-page="searchCondition.pageNum" :page-sizes="[5, 10, 20, 50]" :page-size="searchCondition.pageSize"
-				layout="total, sizes, prev, pager, next, jumper" :total="total">
+			<el-pagination
+				@size-change="handleSizeChange"
+				@current-change="handleCurrentChange"
+				:current-page="searchCondition.pageNum"
+				:page-sizes="[5, 10, 20, 50]"
+				:page-size="searchCondition.pageSize"
+				layout="total, sizes, prev, pager, next, jumper"
+				:total="total"
+			>
 			</el-pagination>
 		</div>
 	</div>
 </template>
 
 <script>
-	import Banner from "@/components/banner";
-	import Feature from "@/components/feature";
-	import sectionTitle from "@/components/section-title";
-	import Post from "@/components/post";
-	import SmallIco from "@/components/small-ico";
-	import Quote from "@/components/quote";
-	import MochiBox from "@/components/MochiBox"
-	import {
-		fetchFocus
-	} from "@/api/focus";
-	import {
-		fetchList
-	} from "@/api/post";
-	import {
-		saveVisitorInfo
-	} from "@/api/visitor"
+import Banner from "@/components/banner";
+import Feature from "@/components/feature";
+import sectionTitle from "@/components/section-title";
+import Post from "@/components/post";
+import SmallIco from "@/components/small-ico";
+import Quote from "@/components/quote";
+import MochiBox from "@/components/MochiBox";
+import { fetchFocus } from "@/api/focus";
+import { fetchList } from "@/api/post";
 import MochiBoxVue from "../components/MochiBox.vue";
 
-	export default {
-		name: "Home",
-		props: ["cate", "words"],
-		data() {
-			return {
-				features: [],
-				postList: [],
-				searchCondition: {
-					pageNum: 1,
-					pageSize: 10,
-					category:"",
-					keyword:""
-				},
-				total: 0,
-			};
+export default {
+	name: "Home",
+	props: ["cate", "words"],
+	data() {
+		return {
+			features: [],
+			postList: [],
+			searchCondition: {
+				pageNum: 1,
+				pageSize: 10,
+				category: "",
+				keyword: "",
+			},
+			total: 0,
+		};
+	},
+	components: {
+		Banner,
+		Feature,
+		sectionTitle,
+		Post,
+		SmallIco,
+		Quote,
+		MochiBox,
+		MochiBoxVue,
+	},
+	watch: {
+		$route: {
+			deep: true,
+			immediate: true,
+			handler() {
+				this.searchCondition.category = this.$route.params.cate;
+				this.searchCondition.keyword = this.$route.params.words;
+				this.fetchList();
+			},
 		},
-		components: {
-			Banner,
-			Feature,
-			sectionTitle,
-			Post,
-			SmallIco,
-			Quote,
-			MochiBox
-		},
-		watch:{
-			$route:{
-				deep:true,
-				immediate:true,
-				handler(){
-					this.searchCondition.category = this.$route.params.cate
-					this.searchCondition.keyword = this.$route.params.words
-					this.fetchList()
-				}
+	},
+	filters: {
+		filterCategory(val) {
+			if (val === "technology") {
+				return "技术";
+			} else if (val === "reading") {
+				return "读书小记";
+			} else if (val === "essays") {
+				return "随便唠唠";
 			}
 		},
-		filters: {
-			filterCategory(val) {
-				if (val === "technology") {
-					return "技术";
-				} else if (val === "reading") {
-					return "读书小记";
-				} else if (val === "essays") {
-					return "随便唠唠";
-				}
-			},
+	},
+	computed: {
+		hideSlogan() {
+			return this.searchCondition.category || this.searchCondition.keyword;
 		},
-		computed: {
-			hideSlogan() {
-				return this.searchCondition.category || this.searchCondition.keyword;
-			},
-			notice() {
-				return this.$store.getters.notice;
-			}
+		notice() {
+			return this.$store.getters.notice;
 		},
-		methods: {
-			fetchFocus() {
-				fetchFocus()
-					.then((res) => {
-						this.features = res.data || [];
-					})
-					.catch((err) => {});
-			},
-			fetchList() {
-				fetchList(this.searchCondition)
-					.then((res) => {
-						this.postList = res.data.list || [];
-						this.total = res.data.total
-					})
-					.catch((err) => {});
-			},
-			saveVisitorInfo() {
-				let visitorInfo = JSON.parse(localStorage.getItem("visitorInfo"));
-				visitorInfo = Object.assign({}, visitorInfo, {
-					type: "Lewiis的个人博客",
-				});
-				let wel = new Date().getHours()
-				wel = wel < 6 ? "凌晨好" : wel < 9 ? "早上好" : wel < 12 ? "上午好" : wel < 14 ? "中午好" : wel < 17 ? "下午好" : wel <
-					19 ? "傍晚好" : wel < 22 ? "晚上好" : "夜里好"
-				// 调用接口保存访客信息
-				saveVisitorInfo(visitorInfo).then(() => {
-					setTimeout(() => {
-						this.$message({
-							message: `${wel},感谢大佬的来访，身体健康，恭喜发财！`,
-							duration: 1000
-						});
-					}, 3000);
+	},
+	methods: {
+		fetchFocus() {
+			fetchFocus()
+				.then((res) => {
+					this.features = res.data || [];
 				})
-			},
-			handleSizeChange(val) {
-				this.searchCondition.pageNum = 1
-				this.searchCondition.pageSize = val
-				this.fetchList()
-			},
-			handleCurrentChange(val) {
-				this.searchCondition.pageNum = val
-				this.fetchList()
-			}
+				.catch((err) => {});
 		},
-		mounted() {
-			this.fetchFocus();
+		fetchList() {
+			fetchList(this.searchCondition)
+				.then((res) => {
+					this.postList = res.data.list || [];
+					this.total = res.data.total;
+				})
+				.catch((err) => {});
+		},
+		saveVisitorInfo() {
+			let visitorInfo = JSON.parse(localStorage.getItem("visitorInfo"));
+			visitorInfo = Object.assign({}, visitorInfo, {
+				type: "Lewiis的个人博客",
+			});
+			let wel = new Date().getHours();
+			wel =
+				wel < 6
+					? "凌晨好"
+					: wel < 9
+					? "早上好"
+					: wel < 12
+					? "上午好"
+					: wel < 14
+					? "中午好"
+					: wel < 17
+					? "下午好"
+					: wel < 19
+					? "傍晚好"
+					: wel < 22
+					? "晚上好"
+					: "夜里好";
+			this.$message({
+				message: `${wel},感谢大佬的来访，身体健康，恭喜发财！`,
+				duration: 1000,
+			});
+		},
+		handleSizeChange(val) {
+			this.searchCondition.pageNum = 1;
+			this.searchCondition.pageSize = val;
 			this.fetchList();
-			this.saveVisitorInfo();
 		},
-		created() {
-			
-		}
-	};
+		handleCurrentChange(val) {
+			this.searchCondition.pageNum = val;
+			this.fetchList();
+		},
+	},
+	mounted() {
+		this.fetchFocus();
+		this.fetchList();
+		this.saveVisitorInfo();
+	},
+};
 </script>
 <style scoped lang="less">
 .site-content {
-
 	.notify {
 		margin: 60px 0;
 		border-radius: 3px;
@@ -242,10 +297,9 @@ import MochiBoxVue from "../components/MochiBox.vue";
 			width: 100%;
 			display: flex;
 			justify-content: space-between;
-
 		}
 
-		&>div {
+		& > div {
 			padding: 20px;
 		}
 	}
@@ -270,7 +324,6 @@ import MochiBoxVue from "../components/MochiBox.vue";
 		display: flex;
 		justify-content: space-between;
 		position: relative;
-
 	}
 }
 
