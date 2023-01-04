@@ -15,21 +15,6 @@
 				</div>
 				<quote v-else>{{ notice }}</quote>
 			</div>
-
-			<!--焦点图-->
-			<!-- <div class="top-feature" v-if="!hideSlogan">
-				<section-title>
-					<div style="display: flex; align-items: flex-end">
-						{{ $t("index.focus") }}
-						<small-ico></small-ico>
-					</div>
-				</section-title>
-				<div class="feature-content">
-					<div class="feature-item" v-for="item in features" :key="item.id">
-						<Feature :data="item"></Feature>
-					</div>
-				</div>
-			</div> -->
 			<!--文章列表-->
 			<main class="site-main" :class="{ search: hideSlogan }">
 				<section-title v-if="!hideSlogan">
@@ -123,7 +108,14 @@ export default {
 	},
 	methods: {
 		fetchList() {
-			fetchList(this.searchCondition)
+			let { pageNum, pageSize, category, keyword } = this.searchCondition;
+			fetchList({
+				pageNum,
+				pageSize,
+				keyword,
+				category:
+					category === "technology" ? 1 : category === "reading" ? 2 : 3,
+			})
 				.then((res) => {
 					this.postList = res.data.list || [];
 					this.total = res.data.total;
