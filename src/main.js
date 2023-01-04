@@ -15,6 +15,10 @@ import axios from "axios";
 import mavonEditor from "mavon-editor";
 import "mavon-editor/dist/css/index.css";
 Vue.use(mavonEditor);
+// 引入vue-clipboard2
+import VueClipboard from "vue-clipboard2";
+VueClipboard.config.autoSetContainer = true; // add this line
+Vue.use(VueClipboard);
 
 Vue.prototype.$axios = axios;
 // Vue.prototype.$echarts = Echarts;
@@ -22,19 +26,19 @@ Vue.config.productionTip = false;
 Vue.filter("parseTime", (v) => parseTime(v, "{y}-{m}-{d}"));
 // 加入百度统计
 router.beforeEach((to, from, next) => {
-  if (to.path) {
-    if (window._hmt) {
-      window._hmt.push(["_trackPageview", "/#" + to.fullPath]);
-    }
-  }
-  next();
+	if (to.path) {
+		if (window._hmt) {
+			window._hmt.push(["_trackPageview", "/#" + to.fullPath]);
+		}
+	}
+	next();
 });
 
 Vue.use(ElementUI);
 
 new Vue({
-  router,
-  store,
-  i18n,
-  render: (h) => h(App),
+	router,
+	store,
+	i18n,
+	render: (h) => h(App),
 }).$mount("#app");

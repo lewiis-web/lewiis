@@ -1,10 +1,10 @@
 module.exports = {
 	devServer: {
 		port: 8888,
-		// hot: true,
+		hot: true,
 		open: true,
 	},
-	lintOnSave: false,
+	lintOnSave: true,
 	configureWebpack: {
 		module: {
 			rules: [

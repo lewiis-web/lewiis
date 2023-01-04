@@ -16,112 +16,8 @@
 				<quote v-else>{{ notice }}</quote>
 			</div>
 
-			<!-- 各个主题 -->
-			<div class="themes">
-				<mochi-box
-					shiba="ume"
-					mood="happy"
-					blush
-					left-eye="laugh"
-					right-eye="laugh"
-					left-ear="down"
-					right-ear="down"
-				>
-					<h2>Vue</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/vue">Vue2/Vue3</a>
-					</h3>
-					<p class="shop kotobuki" title="kotobuki">ことぶき米店</p>
-				</mochi-box>
-				<mochi-box shiba="sesame" mood="drool" left-ear="up" right-ear="up">
-					<h2>React</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/react">React</a>
-					</h3>
-					<p class="shop kotobuki" title="kotobuki">ことぶき米店</p>
-				</mochi-box>
-				<mochi-box shiba="tuna" mood="" left-ear="up" right-ear="middle">
-					<h2>MySQL</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/mysql">MySQL</a>
-					</h3>
-					<p class="shop kotobuki" title="kotobuki">ことぶき米店</p>
-				</mochi-box>
-				<mochi-box shiba="random">
-					<h2>ECharts</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/echarts"
-							>ECharts</a
-						>
-					</h3>
-					<p class="shop kotobuki" title="kotobuki">ことぶき米店</p>
-				</mochi-box>
-				<mochi-box
-					shiba="anko"
-					mood="cheeky"
-					left-eye="open"
-					right-eye="laugh"
-					left-ear="flat"
-					right-ear="middle"
-				>
-					<h2>MAP</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/map">Baidu Map</a>
-					</h3>
-					<p class="shop uemachi" title="uemachi">うえまち団子</p>
-				</mochi-box>
-				<mochi-box
-					shiba="kinako"
-					mood="gleam"
-					blush
-					left-eye="open"
-					right-eye="open"
-					left-ear="middle"
-					right-ear="middle"
-				>
-					<h2>Util</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/javascript"
-							>JavaScript</a
-						>
-					</h3>
-					<p class="shop uemachi" title="uemachi">うえまち団子</p>
-				</mochi-box>
-				<mochi-box
-					shiba="sakura"
-					mood="cute"
-					blush
-					left-eye="shy"
-					right-eye="open"
-					left-ear="down"
-					right-ear="middle"
-				>
-					<h2>CSS</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/css">CSS</a>
-					</h3>
-					<p class="shop uemachi" title="uemachi">うえまち団子</p>
-				</mochi-box>
-				<mochi-box
-					shiba="monaka"
-					mood="content"
-					left-eye="open"
-					right-eye="wink"
-					left-ear="middle"
-					right-ear="flat"
-				>
-					<h2>Electron</h2>
-					<h3>
-						<a target="_blank" href="http://lewiis.top/search/electron"
-							>Electron</a
-						>
-					</h3>
-					<p class="shop uemachi" title="uemachi">うえまち団子</p>
-				</mochi-box>
-			</div>
-
 			<!--焦点图-->
-			<div class="top-feature" v-if="!hideSlogan">
+			<!-- <div class="top-feature" v-if="!hideSlogan">
 				<section-title>
 					<div style="display: flex; align-items: flex-end">
 						{{ $t("index.focus") }}
@@ -133,12 +29,15 @@
 						<Feature :data="item"></Feature>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!--文章列表-->
 			<main class="site-main" :class="{ search: hideSlogan }">
-				<section-title v-if="!hideSlogan">{{
-					$t("index.recommend")
-				}}</section-title>
+				<section-title v-if="!hideSlogan">
+					<div style="display: flex; align-items: flex-end">
+						{{ $t("index.recommend") }}
+						<small-ico></small-ico>
+					</div>
+				</section-title>
 				<div v-for="item in postList" :key="item.id">
 					<post :post="item"></post>
 				</div>
@@ -166,10 +65,7 @@ import sectionTitle from "@/components/section-title";
 import Post from "@/components/post";
 import SmallIco from "@/components/small-ico";
 import Quote from "@/components/quote";
-import MochiBox from "@/components/MochiBox";
-import { fetchFocus } from "@/api/focus";
 import { fetchList } from "@/api/post";
-import MochiBoxVue from "../components/MochiBox.vue";
 
 export default {
 	name: "Home",
@@ -194,8 +90,6 @@ export default {
 		Post,
 		SmallIco,
 		Quote,
-		MochiBox,
-		MochiBoxVue,
 	},
 	watch: {
 		$route: {
@@ -228,13 +122,6 @@ export default {
 		},
 	},
 	methods: {
-		fetchFocus() {
-			fetchFocus()
-				.then((res) => {
-					this.features = res.data || [];
-				})
-				.catch((err) => {});
-		},
 		fetchList() {
 			fetchList(this.searchCondition)
 				.then((res) => {
@@ -281,7 +168,6 @@ export default {
 		},
 	},
 	mounted() {
-		this.fetchFocus();
 		this.fetchList();
 		this.saveVisitorInfo();
 	},
@@ -328,7 +214,7 @@ export default {
 }
 
 .site-main {
-	padding-top: 80px;
+	padding-top: 0px;
 
 	&.search {
 		padding-top: 0;
