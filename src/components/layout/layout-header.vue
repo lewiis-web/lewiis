@@ -28,13 +28,11 @@
 			</div>
 			<div class="menu-item hasChild">
 				<a href="#">{{ $t("index.menu.blog") }}</a>
-				<div class="childMenu" v-if="$t('index.category').length">
-					<div
-						class="sub-menu"
-						v-for="item in $t('index.category')"
-						:key="item.title"
-					>
-						<router-link :to="`${item.href}`">{{ item.title }}</router-link>
+				<div class="childMenu" v-if="categories.length > 0">
+					<div class="sub-menu" v-for="item in categories" :key="item.id">
+						<router-link :to="calculateUrl(item)">{{
+							calculateTitle(item)
+						}}</router-link>
 					</div>
 				</div>
 			</div>
@@ -70,6 +68,8 @@
 
 <script>
 import HeaderSearch from "@/components/header-search";
+import { fetchCategories } from "@/api/category";
+
 export default {
 	name: "layout-header",
 	components: { HeaderSearch },
@@ -80,7 +80,28 @@ export default {
 			hidden: false,
 			mobileShow: false,
 			langTypes: [],
+			categories: [],
 		};
+	},
+	computed: {
+		calculateUrl() {
+			return (item) => {
+				return `/category/${item.title_en}`;
+			};
+		},
+		calculateTitle() {
+			return (item) => {
+				const lang = localStorage.getItem("lang");
+				if (lang === "en_US") {
+					return item.title_en;
+				} else {
+					return item.title;
+				}
+			};
+		},
+	},
+	created() {
+		this.getCategories();
 	},
 	mounted() {
 		window.addEventListener("scroll", this.watchScroll);
@@ -121,6 +142,17 @@ export default {
 				localStorage.setItem("lang", "zh_CN");
 			}
 			window.location.reload();
+		},
+		// 获取所有分类
+		async getCategories() {
+			try {
+				const res = await fetchCategories();
+				if (res.status == 200) {
+					this.categories = res.data;
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
 		},
 	},
 };

@@ -89,12 +89,27 @@ export default {
 	},
 	filters: {
 		filterCategory(val) {
+			const lang = localStorage.getItem("lang");
 			if (val === "technology") {
-				return "技术";
-			} else if (val === "reading") {
-				return "读书小记";
-			} else if (val === "essays") {
-				return "随便唠唠";
+				if (lang === "en_US") {
+					return "technology";
+				} else {
+					return "技术";
+				}
+			}
+			if (val === "reading") {
+				if (lang === "en_US") {
+					return "reading";
+				} else {
+					return "读书小记";
+				}
+			}
+			if (val === "essays") {
+				if (lang === "en_US") {
+					return "essays";
+				} else {
+					return "随便唠唠";
+				}
 			}
 		},
 	},
@@ -114,7 +129,13 @@ export default {
 				pageSize,
 				keyword,
 				category:
-					category === "technology" ? 1 : category === "reading" ? 2 : 3,
+					category === "technology"
+						? 1
+						: category === "reading"
+						? 2
+						: category === "essays"
+						? 3
+						: "",
 			})
 				.then((res) => {
 					this.postList = res.data.list || [];
