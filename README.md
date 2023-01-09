@@ -12,7 +12,7 @@
 - [x] 分类/分类文章
 - [x] 主页
 - [x] 文章列表
-- [x] 文章详情（展示后台的word文件）
+- [x] 文章详情（展示后台的word文件 or markdown）
 - [x] 友情链接
 - [x] 关于页/留言
 - [x] 站点运行时间
@@ -60,7 +60,7 @@ or
 yarn run build:prod
 ```
 
-## 灵感来源
+## 友情链接
 
 - [fengziy的个人博客](https://www.fengziy.cn/)
 - [黄茂昌个人博客](https://www.hmchang.com/)
