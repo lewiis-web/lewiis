@@ -33,17 +33,29 @@ yarn
 ## 启动服务
 
 ```
+// 开发模式启动
 npm run dev
 or
 yarn run dev
+
+// 生产模式启动
+npm run prod
+or
+yarn run prod
 ```
 
 ## 编译打包
 
 ```
-npm run build
+// 开发模式打包
+npm run build:development
 or
-yarn run build
+yarn run build:development
+
+// 生产模式打包
+npm run build:prod
+or
+yarn run build:prod
 ```
 
 ## 灵感来源
