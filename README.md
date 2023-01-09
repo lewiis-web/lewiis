@@ -28,6 +28,8 @@
 npm install
 or
 yarn
+or
+cnpm install(需要配置cnpm)
 ```
 
 ## 启动服务
