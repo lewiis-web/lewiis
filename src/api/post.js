@@ -10,11 +10,10 @@ export function fetchList(data) {
 }
 
 // 获取文章详情
-export function fetchArticle(params) {
+export function fetchArticle(id) {
 	return request({
-		url: "/post/article",
+		url: `/article/detail/${id}`,
 		method: "get",
-		params: params,
 	});
 }
 

@@ -11,10 +11,20 @@ import { parseTime } from "./utils";
 import axios from "axios";
 // import * as Echarts from "echarts";
 
-// 引入mavonEditor编辑器
-import mavonEditor from "mavon-editor";
-import "mavon-editor/dist/css/index.css";
-Vue.use(mavonEditor);
+// 引入v-md-editor
+import VMdPreview from "@kangc/v-md-editor/lib/preview";
+import "@kangc/v-md-editor/lib/style/preview.css";
+import githubTheme from "@kangc/v-md-editor/lib/theme/github.js";
+import "@kangc/v-md-editor/lib/theme/style/github.css";
+import createCopyCodePlugin from "@kangc/v-md-editor/lib/plugins/copy-code/index";
+import "@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css";
+VMdPreview.use(createCopyCodePlugin());
+// highlightjs
+import hljs from "highlight.js";
+VMdPreview.use(githubTheme, {
+	Hljs: hljs,
+});
+Vue.use(VMdPreview);
 // 引入vue-clipboard2
 import VueClipboard from "vue-clipboard2";
 VueClipboard.config.autoSetContainer = true; // add this line

@@ -6,7 +6,8 @@
 					<!-- 文章内容 -->
 					<div class="mavon">
 						<!-- 预览文件的地方（用于渲染） -->
-						<div ref="file"></div>
+						<div v-if="!article.article_type" ref="file"></div>
+						<v-md-preview v-else :text="article.content"></v-md-preview>
 					</div>
 					<!-- 文章底部 -->
 					<section-title>
@@ -72,6 +73,7 @@ import {
 import { env } from "process";
 // 引入docx-preview插件
 import { Loading } from "element-ui";
+
 let loading;
 let docx = require("docx-preview");
 window.JSZip = require("jszip");
@@ -84,12 +86,10 @@ export default {
 			comments: [],
 			menus: [],
 			article: {},
-			articalContent: "",
 			toolbars: {
 				navigation: true,
 				readmodel: true,
 				htmlcode: true, // 展示html源码
-				help: true, // 帮助
 			},
 		};
 	},
@@ -116,16 +116,19 @@ export default {
 					this.$message.error(err);
 				});
 		},
-		// 预览
-		goPreview(articleName) {
+		// docx预览
+		goPreview(article) {
 			this.$axios({
 				method: "get",
 				responseType: "blob", // 因为是流文件，所以要指定blob类型
-				url: `${process.env.VUE_APP_BASE_API}/getDoc?articleName=${articleName}`, // 自己的服务器，提供的一个word下载文件接口
-			}).then(({ data }) => {
-				docx.renderAsync(data, this.$refs.file); // 渲染到页面
-				loading.close(); //关闭loading
-			});
+				url: `${process.env.VUE_APP_BASE_API}/getDoc?articleName=${article.content}`, // 自己的服务器，提供的一个word下载文件接口
+			})
+				.then(({ data }) => {
+					docx.renderAsync(data, this.$refs.file); // 渲染到页面
+				})
+				.finally(() => {
+					loading.close(); //关闭loading
+				});
 		},
 		// 下载
 		downLoad() {
@@ -172,6 +175,24 @@ export default {
 				this.$message.error(error);
 			}
 		},
+		// 获取文章详情
+		async getArticle() {
+			try {
+				const res = await fetchArticle(this.$route.params.id);
+				if (res.status == 200) {
+					this.article = res.data;
+					if (!this.article.article_type) {
+						this.goPreview(this.article);
+					} else {
+						loading.close();
+					}
+					this.addViewsCount();
+					this.appendArticleLog(0);
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
 	},
 	mounted() {},
 	created() {
@@ -181,12 +202,10 @@ export default {
 			text: "报告文件加载中...",
 			background: "rgba(0, 0, 0, 0)",
 		});
-		fetchArticle({ articleId: this.$route.params.id }).then((res) => {
-			this.article = res.data[0];
-			this.goPreview(this.article.content);
-			this.addViewsCount();
-			this.appendArticleLog(0);
-		});
+		this.getArticle();
+	},
+	beforeDestroy() {
+		loading.close();
 	},
 };
 </script>
@@ -201,7 +220,7 @@ export default {
 
 article.hentry {
 	.mavon {
-		margin-top: 10px;
+		margin-top: 24px;
 
 		:deep(.docx-wrapper) {
 			background: #fff !important;

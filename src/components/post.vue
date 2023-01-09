@@ -5,7 +5,6 @@
 				<router-link
 					:to="{
 						path: `/article/${post.id}`,
-						query: { id: post.id, content: post.content },
 					}"
 				>
 					<img :src="post.banner" />
@@ -15,7 +14,6 @@
 				<router-link
 					:to="{
 						path: `/article/${post.id}`,
-						query: { id: post.id, content: post.content },
 					}"
 				>
 					{{ post.title }}
@@ -25,7 +23,7 @@
 				<i class="iconfont iconmeditor-time"> </i>
 				{{ conversePubTime(post.pubTime)
 				}}<i
-					v-if="post.viewsCount >= 1500"
+					v-if="post.viewsCount >= 100"
 					class="iconfont iconfire"
 					style="margin-left: 5px; color: #ff6d6d"
 				></i>
@@ -36,7 +34,6 @@
 					<router-link
 						:to="{
 							path: `/article/${post.id}`,
-							query: { id: post.id, content: post.content },
 						}"
 						><i class="iconfont iconfish-li" style="font-size: 25px"></i
 					></router-link>
