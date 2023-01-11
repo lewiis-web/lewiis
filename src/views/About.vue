@@ -40,7 +40,7 @@
 									type="email"
 									name="mail"
 									id="mail"
-									placeholder="请输入你的邮箱"
+									:placeholder="$t('index.about.pi-email')"
 									v-model="email"
 								/>
 							</div>
@@ -52,7 +52,7 @@
 									type="text"
 									name="blogName"
 									id="blogName"
-									placeholder="请输入你的博客名称"
+									:placeholder="$t('index.about.pi-blogName')"
 									v-model="blogName"
 								/>
 							</div>
@@ -64,7 +64,7 @@
 									type="text"
 									name="blogHomePage"
 									id="blogHomePage"
-									placeholder="请输入你的博客主页地址"
+									:placeholder="$t('index.about.pi-homepage')"
 									v-model="blogHomePage"
 								/>
 							</div>
@@ -78,7 +78,7 @@
 									type="text"
 									name="personalIntroduction"
 									id="personalIntroduction"
-									placeholder="请输入你的个人简介"
+									:placeholder="$t('index.about.pi-profile')"
 									v-model="personalIntroduction"
 								/>
 							</div>

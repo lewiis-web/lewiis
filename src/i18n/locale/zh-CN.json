@@ -61,7 +61,12 @@
 			"personalProfile":"个人简介",
 			"content":"内容",
 			"contents":"我想加入Lewiis的个人博客，谢谢你的支持！",
-			"submit":"提交"
+			"submit":"提交",
+      "comment":"评论区",
+      "pi-email":"请输入你的邮箱",
+      "pi-blogName":"请输入你的博客名称",
+      "pi-homepage":"请输入你的博客主页",
+      "pi-profile":"请输入你的个人简介"
 		}
 	}
 }

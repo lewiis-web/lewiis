@@ -66,7 +66,12 @@
 			"personalProfile":"Personal Profile",
 			"content":"content",
 			"contents":"I want to join Lewiis personal blog links, thank you for your support",
-			"submit":"Submit"
+			"submit":"Submit",
+      "comment":"Comment",
+      "pi-email":"Please enter your email",
+      "pi-blogName":"Please enter your blog name",
+      "pi-homepage":"Please enter your blog page",
+      "pi-profile":"Please enter your profile"
 		}
   }
 }
