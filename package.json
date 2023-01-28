@@ -17,6 +17,7 @@
     "core-js": "^3.6.4",
     "dayjs": "^1.11.7",
     "docx-preview": "^0.1.4",
+    "downloadjs": "^1.4.7",
     "echarts": "^4.9.0",
     "element-ui": "^2.15.6",
     "html-loader": "^3.1.0",
