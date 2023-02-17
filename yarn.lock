@@ -7609,6 +7609,11 @@ vue-i18n@8.27.1:
   resolved "https://repo.huaweicloud.com/repository/npm/vue-i18n/-/vue-i18n-8.27.1.tgz#fe660f6c14793ae404d6a715875d772594a3324f"
   integrity sha512-lWrGm4F25qReJ7XxSnFVb2h3PfW54ldnM4C+YLBGGJ75+Myt/kj4hHSTKqsyDLamvNYpvINMicSOdW+7yuqgIQ==
 
+vue-jsonp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmmirror.com/vue-jsonp/-/vue-jsonp-2.0.0.tgz#3bfac56bb72941a2511c11e1a123b876f03427f7"
+  integrity sha512-Mzd9GNeuKP5hHFDWZNMWOsCuMILSkA6jo2l4A02wheFz3qqBzH7aSEFTey1BRCZCLizlaf1EqJ5YUtF392KspA==
+
 vue-loader@^17.0.0:
   version "17.0.1"
   resolved "https://registry.npmmirror.com/vue-loader/-/vue-loader-17.0.1.tgz#c0ee8875e0610a0c2d13ba9b4d50a9c8442e7a3a"
@@ -7631,6 +7636,11 @@ vue-showdown@^3.1.0:
     "@types/showdown" "^2.0.0"
     showdown "^2.0.3"
     vue "^3.0.0"
+
+vue-skycons@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.npmmirror.com/vue-skycons/-/vue-skycons-4.2.0.tgz#f594eca9c4a74489ef6bbe20802d48742126b53c"
+  integrity sha512-Zbw9lHXNjorpzReEqsyvPty3NIY2GCMKKZmGLpt+XKUrxEJvqVcPA+OwMxhnIgZvqiZH7b+tvHeGtq2ximf8Vg==
 
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.3:
   version "4.1.3"

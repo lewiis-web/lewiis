@@ -10,7 +10,8 @@ import "./assets/font/iconfont.css";
 import { parseTime } from "./utils";
 import axios from "axios";
 // import * as Echarts from "echarts";
-
+// 引入天气组件
+import Skycon from "vue-skycons";
 // 引入v-md-editor
 import VMdPreview from "@kangc/v-md-editor/lib/preview";
 import "@kangc/v-md-editor/lib/style/preview.css";
@@ -43,6 +44,7 @@ router.beforeEach((to, from, next) => {
 	}
 	next();
 });
+Vue.component("skycon", Skycon);
 
 Vue.use(ElementUI);
 
