@@ -20,17 +20,8 @@
 			:class="{ mobileShow: mobileShow }"
 			@click.stop="mobileShow = !mobileShow"
 		>
-			<div class="weather menu-item hasChild">
-				<a href="#" title="天气"
-					><skycon
-						style="margin-top: 13px"
-						color="#545454"
-						condition="clear-day"
-						size="24"
-				/></a>
-				<div class="childMenu">
-					<weather-card></weather-card>
-				</div>
+			<div class="weather menu-item">
+				<weather-card></weather-card>
 			</div>
 			<div class="menu-item header-search">
 				<header-search />
@@ -82,7 +73,6 @@
 import HeaderSearch from "@/components/header-search";
 import WeatherCard from "@/components/weather-card";
 import { fetchCategories } from "@/api/category";
-import { fetchWeather } from "@/api/weather";
 
 export default {
 	name: "layout-header",
@@ -116,7 +106,6 @@ export default {
 	},
 	created() {
 		this.getCategories();
-		this.getWeather();
 	},
 	mounted() {
 		window.addEventListener("scroll", this.watchScroll);
@@ -165,14 +154,6 @@ export default {
 				if (res.status == 200) {
 					this.categories = res.data;
 				}
-			} catch (error) {
-				this.$message.error(error);
-			}
-		},
-		async getWeather() {
-			try {
-				const ret = await fetchWeather();
-				console.log("天气信息", ret);
 			} catch (error) {
 				this.$message.error(error);
 			}

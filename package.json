@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@kangc/v-md-editor": "^1.7.11",
+    "animated-weather-icon": "^1.2.0",
     "animejs": "^3.2.0",
     "axios": "^0.25.0",
     "comment-message-editor": "^1.0.1",

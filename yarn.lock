@@ -1233,6 +1233,13 @@
   resolved "https://registry.npmmirror.com/@polka/url/-/url-1.0.0-next.21.tgz#5de5a2385a35309427f6011992b544514d559aa1"
   integrity sha512-a5Sab1C4/icpTZVzZc5Ghpz88yQtGOyNqYXcZgOssB2uuAr+wF/MvN6bgtW32q7HHrvBki+BsZ0OuNv6EV3K9g==
 
+"@qntm-code/utils@^2.7.0":
+  version "2.12.0"
+  resolved "https://registry.npmmirror.com/@qntm-code/utils/-/utils-2.12.0.tgz#d9312e2cf6964cd4e5f9d1a3c74c9e8131d7eb60"
+  integrity sha512-wthm65KKrXWODBsnHr2/3iazT/WXyVZaCiU3wZUh30n2MqNU72Ms5yZO2OXZQ0e7oCLeonbgukjl4lQllj7icw==
+  dependencies:
+    viewport-details "^3.0.1"
+
 "@sideway/address@^4.1.3":
   version "4.1.4"
   resolved "https://registry.npmmirror.com/@sideway/address/-/address-4.1.4.tgz#03dccebc6ea47fdc226f7d3d1ad512955d4783f0"
@@ -2084,6 +2091,14 @@ ajv@^8.0.0, ajv@^8.8.0:
     json-schema-traverse "^1.0.0"
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
+
+animated-weather-icon@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmmirror.com/animated-weather-icon/-/animated-weather-icon-1.2.0.tgz#264d20f1b9e2b9294df064956d507e54ed4d141b"
+  integrity sha512-bAXps/kHJHHViQcc9+TyuMQlHnrjW5hI4bLOHkxeYsPgduz1KwY1aZnfvTBTkK+4SKze6kJXVSbcw2ZHgiUnLQ==
+  dependencies:
+    "@qntm-code/utils" "^2.7.0"
+    uuid "^9.0.0"
 
 animejs@^3.2.0:
   version "3.2.1"
@@ -7579,6 +7594,11 @@ uuid@^8.3.2:
   resolved "https://repo.huaweicloud.com/repository/npm/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
+uuid@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npmmirror.com/uuid/-/uuid-9.0.0.tgz#592f550650024a38ceb0c562f2f6aa435761efb5"
+  integrity sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://repo.huaweicloud.com/repository/npm/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"
@@ -7591,6 +7611,11 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://repo.huaweicloud.com/repository/npm/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
+
+viewport-details@^3.0.1:
+  version "3.0.3"
+  resolved "https://registry.npmmirror.com/viewport-details/-/viewport-details-3.0.3.tgz#af1d3f910ed78268efbffa76a0bfbb9ed2477b68"
+  integrity sha512-GuEeyNlL2RXzP35lbAB5XR8oEkmaT1CZQsINWU/bp6I/IJV4eDQHwSr6y8wdntW7UYJkxos6MuFhKzIohjHIHg==
 
 vue-clipboard2@^0.3.3:
   version "0.3.3"
