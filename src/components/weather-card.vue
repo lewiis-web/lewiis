@@ -19,6 +19,7 @@ import {
 	AnimatedWeatherTimes,
 } from "animated-weather-icon";
 import dayjs from "dayjs";
+import districtJson from "@/assets/json/district.json";
 
 export default {
 	data() {
@@ -29,9 +30,11 @@ export default {
 		};
 	},
 	created() {
-		this.getPos();
+		// this.getPos();
+		this.getPosByBaidu();
 	},
 	methods: {
+		// web API获取经纬度位置信息(只能用于https或本地测试)
 		getPos() {
 			navigator.geolocation.getCurrentPosition(
 				(pos) => {
@@ -59,6 +62,31 @@ export default {
 					maximumAge: 0,
 				}
 			);
+		},
+		// 百度地图 API获取经纬度位置信息
+		getPosByBaidu() {
+			const that = this;
+			this.$nextTick(function () {
+				try {
+					const geolocation = new BMap.Geolocation();
+					geolocation.getCurrentPosition(function (r) {
+						if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+							const { district = null } = r.address;
+							const districtObj = districtJson.find((item) => {
+								return district.indexOf(item.district) >= 0;
+							});
+							if (districtObj) {
+								const districtCode = districtObj.districtcode
+									? districtObj.districtcode
+									: "330212";
+								that.getWeather(districtCode);
+							}
+						}
+					});
+				} catch (err) {
+					this.$message.error(err);
+				}
+			});
 		},
 		// 根据经纬度获取所在区县代码
 		async getAreaByLocation(lng, lat) {
