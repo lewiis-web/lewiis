@@ -31,7 +31,8 @@ export default {
 	},
 	created() {
 		// this.getPos();
-		this.getPosByBaidu();
+		// this.getPosByBaidu();
+		this.getWeather("330212");
 	},
 	methods: {
 		// web API获取经纬度位置信息(只能用于https或本地测试)
