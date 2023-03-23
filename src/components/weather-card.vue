@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { loadBMap } from "@/utils/location";
 import { fetchAreaByLocation, fetchWeather } from "@/api/weather";
 import { weatherIcon } from "@/utils/weather";
 import {
@@ -31,8 +32,10 @@ export default {
 	},
 	created() {
 		// this.getPos();
-		// this.getPosByBaidu();
-		this.getWeather("330212");
+		window.initBaiduMapScript = () => {
+			this.getPosByBaidu();
+		};
+		loadBMap("initBaiduMapScript");
 	},
 	methods: {
 		// web API获取经纬度位置信息(只能用于https或本地测试)
