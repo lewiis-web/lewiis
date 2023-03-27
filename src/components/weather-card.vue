@@ -36,7 +36,9 @@ export default {
 		// 	this.getPosByBaidu();
 		// };
 		// loadBMap("initBaiduMapScript");
-		this.getWeather("330212");
+		let area_code = this.$store.state.websiteInfo.area_code;
+		area_code = area_code ? area_code.split("*")[2] : "330212";
+		this.getWeather(area_code);
 	},
 	methods: {
 		// web API获取经纬度位置信息(只能用于https或本地测试)
