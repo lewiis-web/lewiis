@@ -14,6 +14,7 @@
 import { loadBMap } from "@/utils/location";
 import { fetchAreaByLocation, fetchWeather } from "@/api/weather";
 import { weatherIcon } from "@/utils/weather";
+import { fetchSiteInfo } from "@/api/site";
 import {
 	AnimatedWeatherIcon,
 	AnimatedWeatherTypes,
@@ -36,11 +37,23 @@ export default {
 		// 	this.getPosByBaidu();
 		// };
 		// loadBMap("initBaiduMapScript");
-		let area_code = this.$store.state.websiteInfo.area_code;
-		area_code = area_code ? area_code.split("*")[2] : "330212";
-		this.getWeather(area_code);
+		this.getSiteInfo();
 	},
 	methods: {
+		async getSiteInfo() {
+			try {
+				const res = await fetchSiteInfo();
+				if (res.status == 200) {
+					let area_code = res.data.area_code;
+					area_code = area_code ? area_code.split("*")[2] : "141102";
+					this.getWeather(area_code);
+				} else {
+					this.$message.error(res.msg);
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
 		// web API获取经纬度位置信息(只能用于https或本地测试)
 		getPos() {
 			navigator.geolocation.getCurrentPosition(
