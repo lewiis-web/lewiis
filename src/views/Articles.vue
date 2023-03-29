@@ -1,55 +1,63 @@
 <template>
-  <div class="articles">
-    <div class="site-content animate">
-      <main class="site-main">
-        <article class="hentry">
-          <!-- 文章内容 -->
-          <div class="mavon">
-            <!-- 预览文件的地方（用于渲染） -->
-            <div v-if="!article.article_type" ref="file"></div>
-            <v-md-preview v-else :text="article.content"></v-md-preview>
-          </div>
-          <!-- 文章底部 -->
-          <section-title>
-            <footer class="post-footer">
-              <!-- 下载按钮 -->
-              <div class="post-like">
-                <i class="el-icon-download"></i>
-                <el-popconfirm confirm-button-text="好的" cancel-button-text="不用了" icon="el-icon-info" icon-color="red"
-                  title="确定下载吗？" @confirm="downLoad(article)">
-                  <span slot="reference">下载</span>
-                </el-popconfirm>
-              </div>
-              <!-- 阅读次数 -->
-              <div class="post-like">
-                <i class="el-icon-view"></i>
-                <span>{{ article.viewsCount }}</span>
-              </div>
-              <!-- 赞助按钮 -->
-              <div class="donate" @click="showDonate = !showDonate">
-                <span>赏</span>
-                <ul class="donate_inner" :class="{ show: showDonate }">
-                  <li class="wedonate">
-                    <img src="https://s4.ax1x.com/2022/01/28/7xvu80.png" />
-                    <p>微信</p>
-                  </li>
-                  <li class="alidonate">
-                    <img src="https://s4.ax1x.com/2022/01/28/7xvK2V.jpg" />
-                    <p>支付宝</p>
-                  </li>
-                </ul>
-              </div>
-              <!-- 文章标签 -->
-              <div class="post-tags">
-                <i class="iconfont iconcategory"></i>
-                <router-link to="/category/technology">技术</router-link>
-              </div>
-            </footer>
-          </section-title>
-        </article>
-      </main>
-    </div>
-  </div>
+	<div class="articles">
+		<div class="site-content animate">
+			<main class="site-main">
+				<article class="hentry">
+					<!-- 文章内容 -->
+					<div class="mavon">
+						<!-- 预览文件的地方（用于渲染） -->
+						<div v-if="!article.article_type" ref="file"></div>
+						<v-md-preview v-else :text="article.content"></v-md-preview>
+					</div>
+					<!-- 文章底部 -->
+					<section-title>
+						<footer class="post-footer">
+							<!-- 下载按钮 -->
+							<div class="post-like">
+								<i class="el-icon-download"></i>
+								<el-popconfirm
+									confirm-button-text="好的"
+									cancel-button-text="不用了"
+									icon="el-icon-info"
+									icon-color="red"
+									title="确定下载吗？"
+									@confirm="downLoad(article)"
+								>
+									<span slot="reference">下载</span>
+								</el-popconfirm>
+							</div>
+							<!-- 阅读次数 -->
+							<div class="post-like">
+								<i class="el-icon-view"></i>
+								<span>{{ article.viewsCount }}</span>
+							</div>
+							<!-- 赞助按钮 -->
+							<div class="donate" @click="showDonate = !showDonate">
+								<span>赏</span>
+								<ul class="donate_inner" :class="{ show: showDonate }">
+									<li class="wedonate">
+										<img src="https://s4.ax1x.com/2022/01/28/7xvu80.png" />
+										<p>微信</p>
+									</li>
+									<li class="alidonate">
+										<img src="https://s4.ax1x.com/2022/01/28/7xvK2V.jpg" />
+										<p>支付宝</p>
+									</li>
+								</ul>
+							</div>
+							<!-- 文章标签 -->
+							<div class="post-tags">
+								<i class="iconfont iconcategory"></i>
+								<router-link to="/category/technology">技术</router-link>
+							</div>
+						</footer>
+					</section-title>
+					<!-- 评论区 -->
+					<!-- <comment></comment> -->
+				</article>
+			</main>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -58,6 +66,7 @@ const { UAParser } = require("ua-parser-js");
 import Banner from "@/components/banner";
 import sectionTitle from "@/components/section-title";
 import menuTree from "@/components/menu-tree";
+import Comment from "@/components/comment";
 import {
 	fetchArticle,
 	addViewsCount,
@@ -91,6 +100,7 @@ export default {
 		Banner,
 		sectionTitle,
 		menuTree,
+		Comment,
 	},
 	methods: {
 		// 文章访问量+1
@@ -127,7 +137,11 @@ export default {
 		// 下载
 		downLoad(article) {
 			if (article.article_type) {
-				require("downloadjs")(article.content, `${article.title}.md`, "text/plain");
+				require("downloadjs")(
+					article.content,
+					`${article.title}.md`,
+					"text/plain"
+				);
 			} else {
 				// 下载文件
 				this.$axios({
@@ -209,212 +223,213 @@ export default {
 </script>
 <style scoped lang="less">
 .site-content {
-  position: relative;
+	position: relative;
 
-  .site-main {
-    padding: 80px 0 0 0;
-  }
+	.site-main {
+		padding: 80px 0 0 0;
+	}
 }
 
 article.hentry {
-  .mavon {
-    margin-top: 24px;
+	.mavon {
+		margin-top: 24px;
 
-    :deep(.docx-wrapper) {
-      background: #fff !important;
+		:deep(.docx-wrapper) {
+			background: #fff !important;
 
-      &>section.docx {
-        background: white;
-        box-shadow: 0 0 10px rgb(0 0 0 / 50%);
-        margin-bottom: 30px;
-        padding: 24px;
-      }
-    }
-  }
+			& > section.docx {
+				background: white;
+				box-shadow: 0 0 10px rgb(0 0 0 / 50%);
+				margin-bottom: 30px;
+				padding: 24px;
+			}
+		}
+	}
 
-  .entry-header {
-    .entry-title {
-      font-size: 23px;
-      font-weight: 600;
-      color: #737373;
-      margin: 0.67em 0;
+	.entry-header {
+		.entry-title {
+			font-size: 23px;
+			font-weight: 600;
+			color: #737373;
+			margin: 0.67em 0;
 
-      &:before {
-        content: "#";
-        margin-right: 6px;
-        color: #d82e16;
-        font-size: 20px;
-        font-weight: 600;
-      }
-    }
+			&:before {
+				content: "#";
+				margin-right: 6px;
+				color: #d82e16;
+				font-size: 20px;
+				font-weight: 600;
+			}
+		}
 
-    hr {
-      height: 1px;
-      border: 0;
-      background: #efefef;
-      margin: 15px 0;
-    }
+		hr {
+			height: 1px;
+			border: 0;
+			background: #efefef;
+			margin: 15px 0;
+		}
 
-    .breadcrumbs {
-      font-size: 14px;
-      color: #d2d2d2;
-      text-decoration: none;
-      margin-bottom: 30px;
-    }
-  }
+		.breadcrumbs {
+			font-size: 14px;
+			color: #d2d2d2;
+			text-decoration: none;
+			margin-bottom: 30px;
+		}
+	}
 
-  .entry-content {}
+	.entry-content {
+	}
 
-  footer.post-footer {
-    width: 100%;
-    padding: 20px 10px;
-    margin-top: 30px;
-    height: 65px;
-    position: relative;
+	footer.post-footer {
+		width: 100%;
+		padding: 20px 10px;
+		margin-top: 30px;
+		height: 65px;
+		position: relative;
 
-    .download {
-      span {
-        // cursor: pointer;
-      }
-    }
+		.download {
+			span {
+				// cursor: pointer;
+			}
+		}
 
-    i {
-      font-size: 18px;
-      margin-right: 5px;
-    }
+		i {
+			font-size: 18px;
+			margin-right: 5px;
+		}
 
-    .post-like {
-      float: right;
-      margin: 7px 0 0 20px;
+		.post-like {
+			float: right;
+			margin: 7px 0 0 20px;
 
-      & span:hover {
-        cursor: pointer;
-        color: red;
-        font-weight: 500;
-      }
-    }
+			& span:hover {
+				cursor: pointer;
+				color: red;
+				font-weight: 500;
+			}
+		}
 
-    .post-share {
-      float: right;
-      list-style: none;
-      margin-right: 20px;
-    }
+		.post-share {
+			float: right;
+			list-style: none;
+			margin-right: 20px;
+		}
 
-    .donate {
-      float: left;
-      line-height: 36px;
-      border-radius: 100%;
-      -webkit-border-radius: 100%;
-      -moz-border-radius: 100%;
-      border: 1px solid #2b2b2b;
+		.donate {
+			float: left;
+			line-height: 36px;
+			border-radius: 100%;
+			-webkit-border-radius: 100%;
+			-moz-border-radius: 100%;
+			border: 1px solid #2b2b2b;
 
-      &:hover {
-        border: 1px solid goldenrod;
+			&:hover {
+				border: 1px solid goldenrod;
 
-        span {
-          color: goldenrod;
-        }
-      }
+				span {
+					color: goldenrod;
+				}
+			}
 
-      span {
-        color: #2b2b2b;
-        padding: 10px;
-        position: relative;
-        cursor: pointer;
-      }
+			span {
+				color: #2b2b2b;
+				padding: 10px;
+				position: relative;
+				cursor: pointer;
+			}
 
-      .donate_inner {
-        display: none;
-        margin: 0;
-        list-style: none;
-        position: absolute;
-        left: 80px;
-        top: -40px;
-        background: #fff;
-        padding: 10px;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-        border-radius: 3px;
+			.donate_inner {
+				display: none;
+				margin: 0;
+				list-style: none;
+				position: absolute;
+				left: 80px;
+				top: -40px;
+				background: #fff;
+				padding: 10px;
+				border: 1px solid #ddd;
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+				border-radius: 3px;
 
-        &.show {
-          display: block;
-        }
+				&.show {
+					display: block;
+				}
 
-        li {
-          float: left;
-        }
+				li {
+					float: left;
+				}
 
-        img {
-          width: 100px;
-        }
+				img {
+					width: 100px;
+				}
 
-        p {
-          text-align: center;
-          font-size: 15px;
-          color: #d2d2d2;
-          line-height: 1rem;
-        }
-      }
+				p {
+					text-align: center;
+					font-size: 15px;
+					color: #d2d2d2;
+					line-height: 1rem;
+				}
+			}
 
-      .donate_inner:after,
-      .donate_inner:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: 45%;
-        margin-left: -8px;
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-right: 8px solid #fff;
-      }
+			.donate_inner:after,
+			.donate_inner:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				bottom: 45%;
+				margin-left: -8px;
+				border-top: 8px solid transparent;
+				border-bottom: 8px solid transparent;
+				border-right: 8px solid #fff;
+			}
 
-      .donate_inner:before {
-        left: -1px;
-        border-right: 8px solid #ddd;
-      }
-    }
+			.donate_inner:before {
+				left: -1px;
+				border-right: 8px solid #ddd;
+			}
+		}
 
-    .post-tags {
-      margin: 7px 0 0 20px;
-      float: left;
-      text-transform: uppercase;
+		.post-tags {
+			margin: 7px 0 0 20px;
+			float: left;
+			text-transform: uppercase;
 
-      a:hover {
-        color: #ff6d6d;
-      }
-    }
-  }
+			a:hover {
+				color: #ff6d6d;
+			}
+		}
+	}
 
-  .open-message {
-    margin: 50px 0;
-    position: relative;
-    background: #2b2b2b;
-    padding: 10px 30px;
-    border-radius: 3px;
-    font-size: 14px;
-    color: #fff;
+	.open-message {
+		margin: 50px 0;
+		position: relative;
+		background: #2b2b2b;
+		padding: 10px 30px;
+		border-radius: 3px;
+		font-size: 14px;
+		color: #fff;
 
-    &:after {
-      content: "";
-      border-left: 10px solid transparent;
-      border-right: 10px solid transparent;
-      border-bottom: 10px solid #2b2b2b;
-      position: absolute;
-      top: -8px;
-      left: 48%;
-    }
+		&:after {
+			content: "";
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			border-bottom: 10px solid #2b2b2b;
+			position: absolute;
+			top: -8px;
+			left: 48%;
+		}
 
-    p {
-      margin: 10px 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
+		p {
+			margin: 10px 0;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 
-    a {
-      color: #a0dad0;
-      padding: 0 5px;
-    }
-  }
+		a {
+			color: #a0dad0;
+			padding: 0 5px;
+		}
+	}
 }
 </style>
