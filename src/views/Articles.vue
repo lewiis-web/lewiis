@@ -53,7 +53,10 @@
 						</footer>
 					</section-title>
 					<!-- 评论区 -->
-					<!-- <comment></comment> -->
+					<comment
+						:dataSource="commentList"
+						@updateComment="getComment"
+					></comment>
 				</article>
 			</main>
 		</div>
@@ -73,6 +76,7 @@ import {
 	addDownloadsCount,
 	addArticleLog,
 } from "../api/post";
+import { fetchComment } from "../api/comment";
 import { env } from "process";
 // 引入docx-preview插件
 import { Loading } from "element-ui";
@@ -86,7 +90,6 @@ export default {
 	data() {
 		return {
 			showDonate: false,
-			comments: [],
 			menus: [],
 			article: {},
 			toolbars: {
@@ -94,6 +97,8 @@ export default {
 				readmodel: true,
 				htmlcode: true, // 展示html源码
 			},
+			commentList: [],
+			currentArticleId: "",
 		};
 	},
 	components: {
@@ -205,9 +210,23 @@ export default {
 				this.$message.error(error);
 			}
 		},
+		// 门户展示评论列表
+		async getComment() {
+			try {
+				const res = await fetchComment(this.currentArticleId);
+				if (res.status === 200) {
+					this.commentList = res.data;
+				} else {
+					this.$message.error(res.msg);
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
 	},
 	mounted() {},
 	created() {
+		this.currentArticleId = this.$route.params.id;
 		loading = Loading.service({
 			//开始loading加载动画
 			lock: true,
@@ -215,6 +234,7 @@ export default {
 			background: "rgba(0, 0, 0, 0)",
 		});
 		this.getArticle();
+		this.getComment();
 	},
 	beforeDestroy() {
 		loading.close();

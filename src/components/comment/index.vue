@@ -1,44 +1,340 @@
 <template>
 	<div class="comment">
 		<div class="operate">
-			<a @click="openCommentModal">评论</a>
+			<h2>评论</h2>
+			<div class="comment-box">
+				<div class="box-avatar">
+					<el-avatar :size="50"> 游客 </el-avatar>
+				</div>
+				<div class="box-area">
+					<el-input
+						type="textarea"
+						placeholder="请输入评论（Enter换行，Ctrl+Enter发送）"
+						v-model="textarea"
+						maxlength="255"
+						show-word-limit
+						:rows="3"
+					></el-input>
+					<div class="box-footer">
+						<el-popover
+							placement="bottom-start"
+							width="400"
+							trigger="click"
+							popper-class="emoji-list-box"
+						>
+							<ul class="emojis">
+								<li
+									class="emoji-li"
+									v-for="emojiItem in emojiList"
+									:key="emojiItem.codes"
+									@click="selectEmoji(emojiItem, 'comment')"
+								>
+									{{ emojiItem.char }}
+								</li>
+							</ul>
+							<div
+								class="emoji"
+								slot="reference"
+								@mouseenter="handleEmoji('enter')"
+								@mouseleave="handleEmoji('leave')"
+							>
+								<img
+									class="emoji-svg"
+									:src="
+										emojiStatus === 'enter'
+											? require('./icons/emoji-active.svg')
+											: require('./icons/emoji.svg')
+									"
+									alt=""
+								/>
+								<span
+									:style="
+										emojiStatus === 'enter'
+											? { color: '#d81e06' }
+											: { color: '#757575' }
+									"
+									>表情</span
+								>
+							</div>
+						</el-popover>
+
+						<a
+							:class="textarea.trim() ? 'send-btn' : 'disabled'"
+							@click="sendComment"
+							><i class="el-icon-edit" style="margin-right: 6px"></i>发表评论</a
+						>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div
 			class="comment-parent"
-			v-for="parentItem in dataSource"
+			v-for="parentItem in comments"
 			:key="parentItem.comment_id"
 		>
-			<div class="avatar"></div>
+			<div class="avatar">
+				<el-avatar :size="50"> {{ parentItem.comment_user_name }} </el-avatar>
+			</div>
 			<div class="content">
+				<h3 class="comment-title">{{ parentItem.comment_user_name }}</h3>
+				<p class="comment-content">{{ parentItem.comment_content }}</p>
+				<div class="comment-info">
+					<p class="comment-time">{{ parentItem.create_time }}</p>
+					<div class="comment-btn">
+						<div class="praise">
+							<i
+								class="el-icon-thumb"
+								@click="hopComment(parentItem.comment_id, 1)"
+							></i>
+							<span>{{ parentItem.comment_like_count }}</span>
+						</div>
+						<div class="hate">
+							<i
+								class="el-icon-thumb"
+								style="rotate: 180deg; transform: rotateY(180deg)"
+								@click="hopComment(parentItem.comment_id, 0)"
+							></i>
+							<span>{{ parentItem.comment_hate_count }}</span>
+						</div>
+					</div>
+					<a @click="openReplyModal(parentItem)" class="reply">回复</a>
+				</div>
 				<ul class="comment-son">
 					<li
 						v-for="sonItem in parentItem['children']"
 						:key="sonItem.comment_id"
-					></li>
+						class="comment-son-li"
+					>
+						<div class="avatar">
+							<el-avatar :size="36">
+								{{ parentItem.comment_user_name }}
+							</el-avatar>
+						</div>
+						<div class="content">
+							<h3 class="comment-title">
+								{{ sonItem.comment_user_name
+								}}<span
+									style="color: #545454; margin: 0 6px; font-size: 15px"
+									v-show="sonItem.to_comment_son_user_name"
+									>回复</span
+								>
+								<span v-show="sonItem.to_comment_son_user_name">{{
+									sonItem.to_comment_son_user_name
+								}}</span>
+							</h3>
+							<p class="comment-content">{{ sonItem.comment_content }}</p>
+							<div class="comment-info">
+								<p class="comment-time">{{ sonItem.create_time }}</p>
+								<div class="comment-btn">
+									<div class="praise">
+										<i
+											class="el-icon-thumb"
+											@click="hopComment(sonItem.comment_id, 1)"
+										></i>
+										<span>{{ sonItem.comment_like_count }}</span>
+									</div>
+									<div class="hate">
+										<i
+											class="el-icon-thumb"
+											style="rotate: 180deg; transform: rotateY(180deg)"
+											@click="hopComment(sonItem.comment_id, 0)"
+										></i>
+										<span>{{ sonItem.comment_hate_count }}</span>
+									</div>
+								</div>
+								<a @click="openReplyModal(sonItem)" class="reply">回复</a>
+							</div>
+						</div>
+					</li>
 				</ul>
 			</div>
 		</div>
+		<!-- 回复modal -->
+		<el-dialog
+			title="回复"
+			:visible.sync="replyVisible"
+			width="50%"
+			@close="handleClose"
+			:close-on-click-modal="false"
+		>
+			<div class="operate">
+				<div class="comment-box">
+					<div class="box-avatar">
+						<el-avatar :size="50"> 游客 </el-avatar>
+					</div>
+					<div class="box-area">
+						<el-input
+							type="textarea"
+							placeholder="请输入评论（Enter换行，Ctrl+Enter发送）"
+							v-model="replyArea"
+							maxlength="255"
+							show-word-limit
+							:rows="3"
+						></el-input>
+						<div class="box-footer">
+							<el-popover
+								placement="bottom-start"
+								width="400"
+								trigger="click"
+								popper-class="emoji-list-box"
+							>
+								<ul class="emojis">
+									<li
+										class="emoji-li"
+										v-for="emojiItem in emojiList"
+										:key="emojiItem.codes"
+										@click="selectEmoji(emojiItem, 'reply')"
+									>
+										{{ emojiItem.char }}
+									</li>
+								</ul>
+								<div
+									class="emoji"
+									slot="reference"
+									@mouseenter="handleEmoji('enter')"
+									@mouseleave="handleEmoji('leave')"
+								>
+									<img
+										class="emoji-svg"
+										:src="
+											emojiStatus === 'enter'
+												? require('./icons/emoji-active.svg')
+												: require('./icons/emoji.svg')
+										"
+										alt=""
+									/>
+									<span
+										:style="
+											emojiStatus === 'enter'
+												? { color: '#d81e06' }
+												: { color: '#757575' }
+										"
+										>表情</span
+									>
+								</div>
+							</el-popover>
+
+							<a
+								:class="
+									replyArea.trim() ? 'reply-btn' : 'reply-btn reply-disabled'
+								"
+								@click="sendComment"
+								>回复</a
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
-import "./style.less";
+import emojiList from "./emoji.json";
+import { handleHopComment } from "@/api/comment";
+
 export default {
 	props: {
 		dataSource: {
 			type: Array,
-			default: [],
+			default: () => {
+				return [];
+			},
 		},
 	},
 	data() {
 		return {
 			isShowCommentModal: false,
+			textarea: "",
+			nickname: "",
+			email: "",
+			emojiStatus: "",
+			emojiList,
+			comments: [],
+			replyVisible: false,
+			replyArea: "",
 		};
 	},
+	watch: {
+		dataSource: {
+			immediate: true,
+			deep: true,
+			handler(newVal) {
+				this.comments = newVal;
+			},
+		},
+	},
+	created() {
+		this.comments = this.dataSource;
+	},
 	methods: {
-		openCommentModal() {
-			this.isShowCommentModal = true;
+		// 发表评论
+		sendComment() {
+			if (this.textarea.trim()) {
+				console.log("发表评论");
+			}
+		},
+		handleEmoji(status) {
+			this.emojiStatus = status;
+		},
+		// 选择表情
+		selectEmoji(emoji, type) {
+			if (type === "comment") {
+				this.textarea += emoji.char;
+			} else if (type === "reply") {
+				this.replyArea += emoji.char;
+			}
+		},
+		// 回复modal
+		openReplyModal(parentItem) {
+			this.replyVisible = true;
+		},
+		// 关闭modal之前的回调
+		handleClose() {
+			this.replyArea = "";
+		},
+		// 门户点赞/讨厌评论+1(0-讨厌 1-点赞)
+		async hopComment(comment_id, comment_type) {
+			try {
+				const res = await handleHopComment({ comment_id, comment_type });
+				if (res.status == 200) {
+					this.$emit("updateComment");
+				} else {
+					this.$message.error(res.msg);
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
 		},
 	},
 };
 </script>
+
+<style lang="less" scoped>
+@import "./style.less";
+</style>
+
+<style lang="less">
+.emoji-list-box {
+	ul.emojis {
+		box-sizing: border-box;
+		display: flex;
+		flex-wrap: wrap;
+		overflow-x: hidden;
+		overflow-y: auto;
+		height: 220px;
+		li.emoji-li {
+			box-sizing: border-box;
+			width: 28px;
+			height: 28px;
+			text-align: center;
+			line-height: 28px;
+			font-size: 16px;
+			transition: font-size 0.2s;
+		}
+		li.emoji-li:hover {
+			font-size: 20px;
+		}
+	}
+}
+</style>
