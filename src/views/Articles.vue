@@ -31,6 +31,11 @@
 								<i class="el-icon-view"></i>
 								<span>{{ article.viewsCount }}</span>
 							</div>
+							<!-- 评论条数 -->
+							<div class="post-like">
+								<i class="el-icon-chat-dot-round"></i>
+								<span>{{ article.commentsCount }}</span>
+							</div>
 							<!-- 赞助按钮 -->
 							<div class="donate" @click="showDonate = !showDonate">
 								<span>赏</span>
