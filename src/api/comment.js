@@ -22,3 +22,15 @@ export function handleHopComment(data) {
 		data,
 	});
 }
+
+/**
+ * 发表评论
+ * @method put
+ */
+export function publishComment(data) {
+	return request({
+		url: `/comment/publish`,
+		method: "put",
+		data,
+	});
+}

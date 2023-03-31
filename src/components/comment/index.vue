@@ -14,6 +14,7 @@
 						maxlength="255"
 						show-word-limit
 						:rows="3"
+						@keydown.enter.native="keydownSendComment"
 					></el-input>
 					<div class="box-footer">
 						<el-popover
@@ -77,7 +78,9 @@
 			</div>
 			<div class="content">
 				<h3 class="comment-title">{{ parentItem.comment_user_name }}</h3>
-				<p class="comment-content">{{ parentItem.comment_content }}</p>
+				<p class="comment-content">
+					{{ Base64.decode(parentItem.comment_content) }}
+				</p>
 				<div class="comment-info">
 					<p class="comment-time">{{ parentItem.create_time }}</p>
 					<div class="comment-btn">
@@ -107,7 +110,7 @@
 					>
 						<div class="avatar">
 							<el-avatar :size="36">
-								{{ parentItem.comment_user_name }}
+								{{ sonItem.comment_user_name }}
 							</el-avatar>
 						</div>
 						<div class="content">
@@ -122,7 +125,9 @@
 									sonItem.to_comment_son_user_name
 								}}</span>
 							</h3>
-							<p class="comment-content">{{ sonItem.comment_content }}</p>
+							<p class="comment-content">
+								{{ Base64.decode(sonItem.comment_content) }}
+							</p>
 							<div class="comment-info">
 								<p class="comment-time">{{ sonItem.create_time }}</p>
 								<div class="comment-btn">
@@ -142,7 +147,9 @@
 										<span>{{ sonItem.comment_hate_count }}</span>
 									</div>
 								</div>
-								<a @click="openReplyModal(sonItem)" class="reply">回复</a>
+								<a @click="openReplyModal(sonItem, parentItem)" class="reply"
+									>回复</a
+								>
 							</div>
 						</div>
 					</li>
@@ -170,6 +177,7 @@
 							maxlength="255"
 							show-word-limit
 							:rows="3"
+							@keydown.enter.native="keydownReplyComment"
 						></el-input>
 						<div class="box-footer">
 							<el-popover
@@ -218,7 +226,7 @@
 								:class="
 									replyArea.trim() ? 'reply-btn' : 'reply-btn reply-disabled'
 								"
-								@click="sendComment"
+								@click="replyComment()"
 								>回复</a
 							>
 						</div>
@@ -231,7 +239,9 @@
 
 <script>
 import emojiList from "./emoji.json";
-import { handleHopComment } from "@/api/comment";
+import { handleHopComment, publishComment } from "@/api/comment";
+import randomName from "./random-data";
+import { Base64 } from "js-base64";
 
 export default {
 	props: {
@@ -253,6 +263,10 @@ export default {
 			comments: [],
 			replyVisible: false,
 			replyArea: "",
+			currentArticleId: "",
+			Base64,
+			currentParentItem: null,
+			currentItem: null,
 		};
 	},
 	watch: {
@@ -266,12 +280,42 @@ export default {
 	},
 	created() {
 		this.comments = this.dataSource;
+		this.currentArticleId = this.$route.params.id;
 	},
 	methods: {
+		// ctrl+enter发送
+		keydownSendComment(e) {
+			if (e.ctrlKey && e.keyCode == 13) {
+				this.sendComment();
+			}
+		},
+		// ctrl+enter回复
+		keydownReplyComment(e) {
+			if (e.ctrlKey && e.keyCode == 13) {
+				this.replyComment();
+			}
+		},
 		// 发表评论
-		sendComment() {
-			if (this.textarea.trim()) {
-				console.log("发表评论");
+		async sendComment() {
+			try {
+				if (this.textarea.trim()) {
+					//用户点击了ctrl+enter触发
+					const ret = await publishComment({
+						hierarchy: 1,
+						to_article_id: this.currentArticleId * 1,
+						comment_content: this.textarea.trim(),
+						comment_user_name: randomName.getNickName(),
+					});
+					if (ret.status == 200) {
+						this.$message.success("发表成功！");
+						this.textarea = "";
+						this.$emit("updateComment");
+					} else {
+						this.$message.error(ret.msg);
+					}
+				}
+			} catch (error) {
+				this.$message.error(error);
 			}
 		},
 		handleEmoji(status) {
@@ -286,8 +330,44 @@ export default {
 			}
 		},
 		// 回复modal
-		openReplyModal(parentItem) {
+		openReplyModal(row, parentRow) {
 			this.replyVisible = true;
+			this.currentItem = row;
+			if (parentRow) {
+				this.currentParentItem = parentRow;
+			} else {
+				this.currentParentItem = null;
+			}
+		},
+		// 回复评论
+		async replyComment() {
+			try {
+				const res = await publishComment({
+					hierarchy: 2,
+					to_article_id: this.currentArticleId * 1,
+					comment_content: this.replyArea.trim(),
+					comment_user_name: randomName.getNickName(),
+					to_comment_parent_id: this.currentParentItem
+						? this.currentParentItem.comment_id
+						: this.currentItem.comment_id,
+					to_comment_son_id: this.currentParentItem
+						? this.currentItem.comment_id
+						: "",
+					to_comment_son_user_name: this.currentParentItem
+						? this.currentItem.comment_user_name
+						: "",
+				});
+				if (res.status == 200) {
+					this.$message.success("回复成功！");
+					this.$emit("updateComment");
+					this.replyArea = "";
+					this.replyVisible = false;
+				} else {
+					this.$message.error(res.msg);
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
 		},
 		// 关闭modal之前的回调
 		handleClose() {
