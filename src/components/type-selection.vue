@@ -2,11 +2,11 @@
 	<ul class="type_selection">
 		<li
 			v-for="item in DATA"
-			:key="item"
+			:key="item.id"
 			@click="handleClick(item)"
-			:class="item === active ? 'active' : ''"
+			:class="item.id == active ? 'active' : ''"
 		>
-			{{ calculateResourceType(item) }}
+			{{ item.name }}
 		</li>
 	</ul>
 </template>
@@ -27,10 +27,10 @@ export default {
 	},
 	methods: {
 		handleClick(item) {
-			if (item === this.active) {
+			if (item.id == this.active) {
 				this.active = -1;
 			} else {
-				this.active = item;
+				this.active = item.id;
 			}
 			this.$emit("select", this.active);
 		},
@@ -38,30 +38,7 @@ export default {
 	created() {
 		this.DATA = this.dataSource;
 	},
-	computed: {
-		calculateResourceType() {
-			return (type) => {
-				switch (type) {
-					case 0:
-						return "影视";
-					case 1:
-						return "便捷办公";
-					case 2:
-						return "开发工具";
-					case 3:
-						return "娱乐";
-					case 4:
-						return "音乐";
-					case 5:
-						return "Adobe全家桶";
-					case 6:
-						return "学习考试";
-					default:
-						break;
-				}
-			};
-		},
-	},
+	computed: {},
 };
 </script>
 
@@ -71,11 +48,13 @@ ul.type_selection {
 	flex-wrap: wrap;
 
 	li {
+		height: 34px;
 		padding: 8px;
 		border: 1px solid #d81e06;
 		border-radius: 6px;
-		margin: 12px 8px 0 6px;
+		margin: 12px 8px 6px 8px;
 		cursor: url("../assets/cursor/person.png"), pointer;
+		font-size: 16px;
 		font-weight: 600;
 	}
 

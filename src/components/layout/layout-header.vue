@@ -362,4 +362,20 @@ export default {
 		z-index: 99;
 	}
 }
+
+@media (max-width: 1186px) {
+	.site-menus {
+		.weather {
+			display: none;
+		}
+	}
+}
+
+@media (max-width: 600px) {
+	.site-menus {
+		.weather {
+			display: block;
+		}
+	}
+}
 </style>
