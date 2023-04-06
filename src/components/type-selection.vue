@@ -61,8 +61,9 @@ ul.type_selection {
 		padding: 8px;
 		border: 1px solid #d81e06;
 		border-radius: 6px;
-		margin: 12px 8px 0 6px;
+		margin: 12px 8px 6px 8px;
 		cursor: url("../assets/cursor/person.png"), pointer;
+		font-size: 16px;
 		font-weight: 600;
 		font-size: 16px;
 	}

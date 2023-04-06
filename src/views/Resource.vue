@@ -144,7 +144,7 @@ export default {
 						return a.id * 1 - b.id * 1;
 					});
 				} else {
-					this.$message.warning(res.msg);
+					this.$message.success(res.msg);
 				}
 			} catch (error) {
 				this.$message.error(error);
@@ -180,6 +180,7 @@ export default {
 			} else {
 				this.queryForm.resource_type = "";
 			}
+			this.queryForm.pageNum = 1;
 			this.fetchResource();
 		},
 	},
