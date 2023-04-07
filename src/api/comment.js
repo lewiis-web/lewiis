@@ -34,3 +34,15 @@ export function publishComment(data) {
 		data,
 	});
 }
+
+/**
+ * 删除自己的评论(更新isDeleted状态)
+ * @method put
+ */
+export function deleteOwnComment(data) {
+	return request({
+		url: `/comment/own/status/update`,
+		method: "put",
+		data,
+	});
+}

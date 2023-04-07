@@ -4,17 +4,28 @@
 			<h2>评论</h2>
 			<div class="comment-box">
 				<div class="box-avatar">
-					<el-avatar :size="50"> 游客 </el-avatar>
+					<el-avatar
+						v-if="isLogin"
+						:size="50"
+						:src="currentAuthUserInfo.avatar_url"
+					>
+					</el-avatar>
+					<el-avatar v-else :size="50" icon="el-icon-user-solid"> </el-avatar>
 				</div>
 				<div class="box-area">
 					<el-input
 						type="textarea"
-						placeholder="请输入评论（Enter换行，Ctrl+Enter发送）"
+						:placeholder="
+							isLogin
+								? '请输入评论（Enter换行，Ctrl+Enter发送）'
+								: '看完了，登录一下留个评论行不行？'
+						"
 						v-model="textarea"
 						maxlength="255"
 						show-word-limit
 						:rows="3"
 						@keydown.enter.native="keydownSendComment"
+						:disabled="!isLogin"
 					></el-input>
 					<div class="box-footer">
 						<el-popover
@@ -34,6 +45,7 @@
 								</li>
 							</ul>
 							<div
+								v-if="isLogin"
 								class="emoji"
 								slot="reference"
 								@mouseenter="handleEmoji('enter')"
@@ -60,7 +72,8 @@
 						</el-popover>
 
 						<a
-							:class="textarea.trim() ? 'send-btn' : 'disabled'"
+							v-if="isLogin"
+							:class="textarea.trim() && isLogin ? 'send-btn' : 'disabled'"
 							@click="sendComment"
 							><i class="el-icon-edit" style="margin-right: 6px"></i>发表评论</a
 						>
@@ -74,10 +87,13 @@
 			:key="parentItem.comment_id"
 		>
 			<div class="avatar">
-				<el-avatar :size="50"> {{ parentItem.comment_user_name }} </el-avatar>
+				<el-avatar :size="50" :src="parentItem.comment_user_info.avatar">
+				</el-avatar>
 			</div>
 			<div class="content">
-				<h3 class="comment-title">{{ parentItem.comment_user_name }}</h3>
+				<h3 class="comment-title">
+					{{ parentItem.comment_user_info.username }}
+				</h3>
 				<p class="comment-content">
 					{{ Base64.decode(parentItem.comment_content) }}
 				</p>
@@ -100,7 +116,12 @@
 							<span>{{ parentItem.comment_hate_count }}</span>
 						</div>
 					</div>
-					<a @click="openReplyModal(parentItem)" class="reply">回复</a>
+					<a @click="openReplyModal(parentItem)" class="reply" v-if="isLogin"
+						>回复</a
+					>
+					<a @click="deleteComment(parentItem)" class="reply" v-if="isLogin"
+						>删除</a
+					>
 				</div>
 				<ul class="comment-son">
 					<li
@@ -109,16 +130,16 @@
 						class="comment-son-li"
 					>
 						<div class="avatar">
-							<el-avatar :size="36">
-								{{ sonItem.comment_user_name }}
+							<el-avatar :size="36" :src="sonItem.comment_user_info.avatar">
 							</el-avatar>
 						</div>
 						<div class="content">
 							<h3 class="comment-title">
-								{{ sonItem.comment_user_name
+								{{ sonItem.comment_user_info.username
 								}}<span
 									style="color: #545454; margin: 0 6px; font-size: 15px"
 									v-show="sonItem.to_comment_son_user_name"
+									v-if="isLogin"
 									>回复</span
 								>
 								<span v-show="sonItem.to_comment_son_user_name">{{
@@ -147,8 +168,14 @@
 										<span>{{ sonItem.comment_hate_count }}</span>
 									</div>
 								</div>
-								<a @click="openReplyModal(sonItem, parentItem)" class="reply"
+								<a
+									@click="openReplyModal(sonItem, parentItem)"
+									class="reply"
+									v-if="isLogin"
 									>回复</a
+								>
+								<a @click="deleteComment(sonItem)" class="reply" v-if="isLogin"
+									>删除</a
 								>
 							</div>
 						</div>
@@ -160,14 +187,20 @@
 		<el-dialog
 			title="回复"
 			:visible.sync="replyVisible"
-			width="50%"
+			width="30%"
 			@close="handleClose"
 			:close-on-click-modal="false"
 		>
 			<div class="operate">
 				<div class="comment-box">
 					<div class="box-avatar">
-						<el-avatar :size="50"> 游客 </el-avatar>
+						<el-avatar
+							v-if="isLogin"
+							:size="50"
+							:src="currentAuthUserInfo.avatar_url"
+						>
+						</el-avatar>
+						<el-avatar v-else :size="50" icon="el-icon-user-solid"> </el-avatar>
 					</div>
 					<div class="box-area">
 						<el-input
@@ -239,9 +272,14 @@
 
 <script>
 import emojiList from "./emoji.json";
-import { handleHopComment, publishComment } from "@/api/comment";
-import randomName from "./random-data";
+import {
+	handleHopComment,
+	publishComment,
+	deleteOwnComment,
+} from "@/api/comment";
+import { fetchUserInfoByUnpt } from "@/api/user";
 import { Base64 } from "js-base64";
+import { calculateIsLogin, getCurrentOauthUserInfo } from "@/utils/oauth";
 
 export default {
 	props: {
@@ -267,6 +305,9 @@ export default {
 			Base64,
 			currentParentItem: null,
 			currentItem: null,
+			isLogin: false,
+			currentAuthUserInfo: {},
+			sqlUserInfo: {},
 		};
 	},
 	watch: {
@@ -281,6 +322,8 @@ export default {
 	created() {
 		this.comments = this.dataSource;
 		this.currentArticleId = this.$route.params.id;
+		this.isLogin = calculateIsLogin();
+		this.currentAuthUserInfo = getCurrentOauthUserInfo();
 	},
 	methods: {
 		// ctrl+enter发送
@@ -298,13 +341,15 @@ export default {
 		// 发表评论
 		async sendComment() {
 			try {
+				const sui = sessionStorage.getItem("sqlUserInfo");
+				const sqlUserInfo = JSON.parse(sui);
 				if (this.textarea.trim()) {
 					//用户点击了ctrl+enter触发
 					const ret = await publishComment({
 						hierarchy: 1,
 						to_article_id: this.currentArticleId * 1,
 						comment_content: this.textarea.trim(),
-						comment_user_name: randomName.getNickName(),
+						comment_user_id: sqlUserInfo.id,
 					});
 					if (ret.status == 200) {
 						this.$message.success("发表成功！");
@@ -342,11 +387,13 @@ export default {
 		// 回复评论
 		async replyComment() {
 			try {
+				const sui = sessionStorage.getItem("sqlUserInfo");
+				const sqlUserInfo = JSON.parse(sui);
 				const res = await publishComment({
 					hierarchy: 2,
 					to_article_id: this.currentArticleId * 1,
 					comment_content: this.replyArea.trim(),
-					comment_user_name: randomName.getNickName(),
+					comment_user_id: sqlUserInfo.id,
 					to_comment_parent_id: this.currentParentItem
 						? this.currentParentItem.comment_id
 						: this.currentItem.comment_id,
@@ -354,7 +401,7 @@ export default {
 						? this.currentItem.comment_id
 						: "",
 					to_comment_son_user_name: this.currentParentItem
-						? this.currentItem.comment_user_name
+						? this.currentItem.comment_user_info.username
 						: "",
 				});
 				if (res.status == 200) {
@@ -385,6 +432,38 @@ export default {
 			} catch (error) {
 				this.$message.error(error);
 			}
+		},
+		// 删除自己的评论
+		deleteComment(item) {
+			this.$confirm("此操作将永久删除该评论, 是否继续?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "warning",
+			})
+				.then(async () => {
+					const sui = sessionStorage.getItem("sqlUserInfo");
+					const sqlUserInfo = JSON.parse(sui);
+					const ret = await deleteOwnComment({
+						comment_id: item.comment_id,
+						comment_user_id: sqlUserInfo.id,
+						isDeleted: 1,
+					});
+					if (ret.status == 200) {
+						this.$message({
+							type: "success",
+							message: "评论删除成功!",
+						});
+						this.$emit("updateComment");
+					} else {
+						this.$message.error(ret.msg);
+					}
+				})
+				.catch(() => {
+					this.$message({
+						type: "info",
+						message: "已取消删除操作",
+					});
+				});
 		},
 	},
 };

@@ -29,6 +29,7 @@
     "mavon-editor": "^2.10.4",
     "process": "^0.11.10",
     "public-ip": "^6.0.1",
+    "qs": "^6.11.1",
     "ua-parser-js": "^1.0.32",
     "vue": "^2.6.11",
     "vue-clipboard2": "^0.3.3",

@@ -65,6 +65,27 @@
 					</div>
 				</div>
 			</div>
+			<div class="menu-item hasChild" v-if="!isLogin">
+				<a href="#">登录</a>
+				<div class="childMenu">
+					<div
+						class="sub-menu"
+						v-for="item in loginPlatforms"
+						:key="item.value"
+					>
+						<a @click="toggleLogin(item)">{{ item.name }}</a>
+					</div>
+				</div>
+			</div>
+			<div class="menu-item hasChild" v-else>
+				<el-avatar :src="currentUserInfo.avatar_url"></el-avatar>
+				<a href="#">{{ currentUserInfo.name }}</a>
+				<div class="childMenu">
+					<div class="sub-menu">
+						<a @click="logout">注 销</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -73,6 +94,10 @@
 import HeaderSearch from "@/components/header-search";
 import WeatherCard from "@/components/weather-card";
 import { fetchCategories } from "@/api/category";
+import { fetchOauthUserInfoByGitee } from "@/api/oauth";
+import { register, fetchUserInfoByUnpt } from "@/api/user";
+import { oauth } from "@/utils/oauth";
+const qs = require("qs");
 
 export default {
 	name: "layout-header",
@@ -85,6 +110,15 @@ export default {
 			mobileShow: false,
 			langTypes: [],
 			categories: [],
+			loginPlatforms: [
+				{ name: "QQ", value: "qq" },
+				{ name: "Gitee", value: "gitee" },
+				{ name: "Github", value: "github" },
+				{ name: "微博", value: "weibo" },
+			],
+			queryObj: {},
+			currentUserInfo: {},
+			isLogin: false,
 		};
 	},
 	computed: {
@@ -106,6 +140,23 @@ export default {
 	},
 	created() {
 		this.getCategories();
+		const queryStr = window.location.search;
+		if (queryStr) {
+			this.queryObj = qs.parse(queryStr, { ignoreQueryPrefix: true });
+			if (this.queryObj?.code) {
+				this.getOauthUserInfo(this.queryObj.code);
+			}
+		} else {
+			const cui = sessionStorage.getItem("currentUserInfo");
+			const currentUserInfo = JSON.parse(cui);
+			if (currentUserInfo.name) {
+				this.isLogin = true;
+				this.currentUserInfo = currentUserInfo;
+			} else {
+				this.isLogin = false;
+				this.currentUserInfo = {};
+			}
+		}
 	},
 	mounted() {
 		window.addEventListener("scroll", this.watchScroll);
@@ -157,6 +208,57 @@ export default {
 			} catch (error) {
 				this.$message.error(error);
 			}
+		},
+		// 点击登录
+		toggleLogin(item) {
+			localStorage.setItem("currentUserPlatform", item.value);
+			if (item.value === "gitee") {
+				window.open(
+					`https://gitee.com/oauth/authorize?client_id=${oauth.gitee.GITEE_CLIENT_ID}&redirect_uri=${oauth.gitee.REDIRECT_URI}&response_type=code`
+				);
+			}
+		},
+		// 获取授权用户信息
+		async getOauthUserInfo(code) {
+			const res = await fetchOauthUserInfoByGitee(code);
+			if (res.status == 200) {
+				this.currentUserInfo = res.data;
+				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				this.isLogin = true;
+				const { name, avatar_url, html_url, email } = this.currentUserInfo;
+				const user_platform = localStorage.getItem("currentUserPlatform");
+				setTimeout(async () => {
+					await register({
+						username: name,
+						password: "123456",
+						rePassword: "123456",
+						avatar: avatar_url,
+						user_type: 0,
+						user_platform,
+						user_page: html_url,
+						email,
+					});
+				}, 1500);
+				setTimeout(async () => {
+					history.replaceState(null, null, "/");
+					const ret = await fetchUserInfoByUnpt({
+						username: this.currentUserInfo.name,
+						user_type: 0,
+						user_platform,
+					});
+					if (ret.status == 200) {
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+					}
+				}, 3000);
+			} else {
+				this.isLogin = false;
+			}
+		},
+		// 注销
+		logout() {
+			sessionStorage.removeItem("currentUserInfo");
+			sessionStorage.removeItem("sqlUserInfo");
+			window.location.reload();
 		},
 	},
 };
@@ -226,6 +328,7 @@ export default {
 			color: #545454;
 			font-weight: 500;
 			font-size: 16px;
+			vertical-align: text-bottom;
 
 			&:hover {
 				color: #ff6d6d;
@@ -363,7 +466,7 @@ export default {
 	}
 }
 
-@media (max-width: 1186px) {
+@media (max-width: 1350px) {
 	.site-menus {
 		.weather {
 			display: none;

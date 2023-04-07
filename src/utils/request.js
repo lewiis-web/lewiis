@@ -24,7 +24,6 @@ service.interceptors.response.use(
 		return response.data;
 	},
 	(error) => {
-		Message.error(error);
 		return Promise.reject(error);
 	}
 );
