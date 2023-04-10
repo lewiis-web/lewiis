@@ -94,7 +94,10 @@
 import HeaderSearch from "@/components/header-search";
 import WeatherCard from "@/components/weather-card";
 import { fetchCategories } from "@/api/category";
-import { fetchOauthUserInfoByGitee } from "@/api/oauth";
+import {
+	fetchOauthUserInfoByGitee,
+	fetchOauthUserInfoByGithub,
+} from "@/api/oauth";
 import { register, fetchUserInfoByUnpt } from "@/api/user";
 import {
 	oauth,
@@ -148,7 +151,12 @@ export default {
 		if (queryStr) {
 			this.queryObj = qs.parse(queryStr, { ignoreQueryPrefix: true });
 			if (this.queryObj?.code) {
-				this.getOauthUserInfo(this.queryObj.code);
+				const cPlatform = localStorage.getItem("currentUserPlatform");
+				if (cPlatform === "gitee") {
+					this.getGiteeOauthUserInfo(this.queryObj.code);
+				} else if (cPlatform === "github") {
+					this.getGithubOauthUserInfo(this.queryObj.code);
+				}
 			}
 		} else {
 			if (calculateIsLogin()) {
@@ -218,10 +226,14 @@ export default {
 				window.open(
 					`https://gitee.com/oauth/authorize?client_id=${oauth.gitee.GITEE_CLIENT_ID}&redirect_uri=${oauth.gitee.REDIRECT_URI}&response_type=code`
 				);
+			} else if (item.value === "github") {
+				window.open(
+					`https://github.com/login/oauth/authorize?client_id=${oauth.github.GITHUB_CLIENT_ID}&redirect_uri=${oauth.github.REDIRECT_URI}&scope=${oauth.github.SCOPE}&state=${oauth.github.STATE}&allow_signup=${oauth.github.ALLOW_SIGNUP}`
+				);
 			}
 		},
-		// 获取授权用户信息
-		async getOauthUserInfo(code) {
+		// 获取gitee授权用户信息
+		async getGiteeOauthUserInfo(code) {
 			const res = await fetchOauthUserInfoByGitee(code);
 			if (res.status == 200) {
 				this.currentUserInfo = res.data;
@@ -254,6 +266,43 @@ export default {
 				}, 3000);
 			} else {
 				this.isLogin = false;
+			}
+		},
+		// 获取gitee授权用户信息
+		async getGithubOauthUserInfo(code) {
+			const res = await fetchOauthUserInfoByGithub(code);
+			if (res.status == 200) {
+				this.currentUserInfo = res.data;
+				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				this.isLogin = true;
+				const { name, avatar_url, html_url, email } = this.currentUserInfo;
+				const user_platform = localStorage.getItem("currentUserPlatform");
+				setTimeout(async () => {
+					await register({
+						username: name,
+						password: "123456",
+						rePassword: "123456",
+						avatar: avatar_url,
+						user_type: 0,
+						user_platform,
+						user_page: html_url,
+						email,
+					});
+				}, 1500);
+				setTimeout(async () => {
+					history.replaceState(null, null, "/");
+					const ret = await fetchUserInfoByUnpt({
+						username: this.currentUserInfo.name,
+						user_type: 0,
+						user_platform,
+					});
+					if (ret.status == 200) {
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+					}
+				}, 3000);
+			} else {
+				this.isLogin = false;
+				console.log("错误", res);
 			}
 		},
 		// 注销

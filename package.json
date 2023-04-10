@@ -27,6 +27,7 @@
     "markdown-loader": "^8.0.0",
     "marked": "^4.0.12",
     "mavon-editor": "^2.10.4",
+    "nanoid": "^4.0.2",
     "process": "^0.11.10",
     "public-ip": "^6.0.1",
     "qs": "^6.11.1",
