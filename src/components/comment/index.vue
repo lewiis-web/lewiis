@@ -138,12 +138,12 @@
 								{{ sonItem.comment_user_info.username
 								}}<span
 									style="color: #545454; margin: 0 6px; font-size: 15px"
-									v-show="sonItem.to_comment_son_user_name"
+									v-show="sonItem.to_comment_son_id"
 									v-if="isLogin"
 									>回复</span
 								>
-								<span v-show="sonItem.to_comment_son_user_name">{{
-									sonItem.to_comment_son_user_name
+								<span v-if="sonItem.to_comment_son_id">{{
+									sonItem.to_comment_son_info.username
 								}}</span>
 							</h3>
 							<p class="comment-content">
@@ -399,9 +399,6 @@ export default {
 						: this.currentItem.comment_id,
 					to_comment_son_id: this.currentParentItem
 						? this.currentItem.comment_id
-						: "",
-					to_comment_son_user_name: this.currentParentItem
-						? this.currentItem.comment_user_info.username
 						: "",
 				});
 				if (res.status == 200) {

@@ -96,7 +96,11 @@ import WeatherCard from "@/components/weather-card";
 import { fetchCategories } from "@/api/category";
 import { fetchOauthUserInfoByGitee } from "@/api/oauth";
 import { register, fetchUserInfoByUnpt } from "@/api/user";
-import { oauth } from "@/utils/oauth";
+import {
+	oauth,
+	calculateIsLogin,
+	getCurrentOauthUserInfo,
+} from "@/utils/oauth";
 const qs = require("qs");
 
 export default {
@@ -147,11 +151,9 @@ export default {
 				this.getOauthUserInfo(this.queryObj.code);
 			}
 		} else {
-			const cui = sessionStorage.getItem("currentUserInfo");
-			const currentUserInfo = JSON.parse(cui);
-			if (currentUserInfo.name) {
+			if (calculateIsLogin()) {
 				this.isLogin = true;
-				this.currentUserInfo = currentUserInfo;
+				this.currentUserInfo = getCurrentOauthUserInfo();
 			} else {
 				this.isLogin = false;
 				this.currentUserInfo = {};
@@ -258,6 +260,7 @@ export default {
 		logout() {
 			sessionStorage.removeItem("currentUserInfo");
 			sessionStorage.removeItem("sqlUserInfo");
+			localStorage.removeItem("currentUserPlatform");
 			window.location.reload();
 		},
 	},
