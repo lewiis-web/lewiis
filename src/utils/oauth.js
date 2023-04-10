@@ -1,7 +1,7 @@
 export const oauth = {
 	gitee: {
 		GITEE_CLIENT_ID: `64d0cb8fe89c1db81192711eec555924d4598b2d7a86a813bbeff71572b84a21`,
-		REDIRECT_URI: `http://localhost:8890/`,
+		REDIRECT_URI: `http://lewiis.top/`,
 	},
 };
 
