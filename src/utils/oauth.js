@@ -5,6 +5,10 @@ export const oauth = {
 		GITEE_CLIENT_ID: `64d0cb8fe89c1db81192711eec555924d4598b2d7a86a813bbeff71572b84a21`,
 		REDIRECT_URI: `http://lewiis.top/`,
 	},
+	gitee_test: {
+		GITEE_CLIENT_ID: `16b744f6521390adfe7653334b1f2227d40e047191a01852575454cf59444d19`,
+		REDIRECT_URI: `http://localhost:8890/`,
+	},
 	github: {
 		GITHUB_CLIENT_ID: `6f69dc8edcbaf3780541`,
 		REDIRECT_URI: `http://lewiis.top/`,

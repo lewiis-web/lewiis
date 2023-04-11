@@ -14,6 +14,18 @@ export function fetchOauthUserInfoByGitee(code) {
 }
 
 /**
+ * gitee_test获取用户信息
+ * @method get
+ * @param {string} code 返回的code
+ */
+export function fetchOauthUserInfoByGiteeTest(code) {
+	return request({
+		url: `/oauth/gitee_test/user/info?code=${code}`,
+		method: "get",
+	});
+}
+
+/**
  * github获取用户信息
  * @method get
  * @param {string} code 返回的code

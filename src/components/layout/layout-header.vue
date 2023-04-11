@@ -81,14 +81,17 @@
 				<el-avatar
 					:src="
 						Object.keys(sqlUserInfo).length > 0
-							? sqlUserInfo.avatar
+							? sqlUserInfo.avatar || sqlUserInfo.avatar_url
 							: 'http://lewiis.top/img/rabbit.84962985.svg'
 					"
 				></el-avatar>
-				<a href="#">{{ sqlUserInfo.username }}</a>
+				<a href="#">{{ sqlUserInfo.username || sqlUserInfo.name }}</a>
 				<div class="childMenu">
 					<div class="sub-menu">
-						<a @click="logout">注 销</a>
+						<a @click="logout">我的消息</a>
+					</div>
+					<div class="sub-menu">
+						<a @click="logout">注销登录</a>
 					</div>
 				</div>
 			</div>
@@ -105,6 +108,7 @@ import {
 	fetchOauthUserInfoByGithub,
 	fetchOauthUserInfoByHuawei,
 	fetchOauthUserInfoByBaidu,
+	fetchOauthUserInfoByGiteeTest,
 } from "@/api/oauth";
 import { register, fetchUserInfoByUnpt } from "@/api/user";
 import {
@@ -133,6 +137,7 @@ export default {
 				{ name: "微博", value: "weibo" },
 				{ name: "华为", value: "huawei" },
 				{ name: "百度", value: "baidu" },
+				// { name: "Gitee测试", value: "gitee_test" },
 			],
 			queryObj: {},
 			currentUserInfo: {},
@@ -172,6 +177,8 @@ export default {
 					this.getHuaweiOauthUserInfo(this.queryObj.code);
 				} else if (cPlatform === "baidu") {
 					this.getBaiduOauthUserInfo(this.queryObj.code);
+				} else if (cPlatform === "gitee_test") {
+					this.getGiteeTestOauthUserInfo(this.queryObj.code);
 				} else {
 					console.log("啥也不是");
 				}
@@ -197,6 +204,15 @@ export default {
 		}
 		const cui = sessionStorage.getItem("sqlUserInfo");
 		this.sqlUserInfo = cui ? JSON.parse(cui) : {};
+	},
+	watch: {
+		sqlUserInfo: {
+			immediate: true,
+			deep: true,
+			handler(newVal) {
+				console.log(newVal);
+			},
+		},
 	},
 	beforeDestroy() {
 		window.removeEventListener("scroll", this.watchScroll);
@@ -264,6 +280,10 @@ export default {
 						oauth.baidu.API_KEY
 					}&redirect_uri=${oauth.baidu.REDIRECT_URI}&state=${uuidv4()}`
 				);
+			} else if (item.value === "gitee_test") {
+				window.open(
+					`https://gitee.com/oauth/authorize?client_id=${oauth.gitee_test.GITEE_CLIENT_ID}&redirect_uri=${oauth.gitee_test.REDIRECT_URI}&response_type=code`
+				);
 			}
 		},
 		// 获取gitee授权用户信息
@@ -299,6 +319,43 @@ export default {
 						this.sqlUserInfo = res.data;
 					}
 				}, 3000);
+			} else {
+				this.isLogin = false;
+			}
+		},
+		// 获取gitee_test授权用户信息
+		async getGiteeTestOauthUserInfo(code) {
+			const res = await fetchOauthUserInfoByGiteeTest(code);
+			if (res.status == 200) {
+				this.currentUserInfo = res.data;
+				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				this.isLogin = true;
+				const { name, avatar_url, html_url, email } = this.currentUserInfo;
+				const user_platform = localStorage.getItem("currentUserPlatform");
+				setTimeout(async () => {
+					await register({
+						username: name,
+						password: "123456",
+						rePassword: "123456",
+						avatar: avatar_url,
+						user_type: 0,
+						user_platform,
+						user_page: html_url,
+						email,
+					});
+				}, 500);
+				setTimeout(async () => {
+					history.replaceState(null, null, "/");
+					const ret = await fetchUserInfoByUnpt({
+						username: this.currentUserInfo.name,
+						user_type: 0,
+						user_platform,
+					});
+					if (ret.status == 200) {
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						this.sqlUserInfo = res.data;
+					}
+				}, 1000);
 			} else {
 				this.isLogin = false;
 			}
