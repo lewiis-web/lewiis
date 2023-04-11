@@ -4,11 +4,7 @@
 			<h2>评论</h2>
 			<div class="comment-box">
 				<div class="box-avatar">
-					<el-avatar
-						v-if="isLogin"
-						:size="50"
-						:src="currentAuthUserInfo.avatar_url"
-					>
+					<el-avatar v-if="isLogin" :size="50" :src="sqlUserInfo.avatar">
 					</el-avatar>
 					<el-avatar v-else :size="50" icon="el-icon-user-solid"> </el-avatar>
 				</div>
@@ -202,11 +198,7 @@
 			<div class="operate">
 				<div class="comment-box">
 					<div class="box-avatar">
-						<el-avatar
-							v-if="isLogin"
-							:size="50"
-							:src="currentAuthUserInfo.avatar_url"
-						>
+						<el-avatar v-if="isLogin" :size="50" :src="sqlUserInfo.avatar">
 						</el-avatar>
 						<el-avatar v-else :size="50" icon="el-icon-user-solid"> </el-avatar>
 					</div>
