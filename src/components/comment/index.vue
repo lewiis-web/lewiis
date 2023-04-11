@@ -116,10 +116,16 @@
 							<span>{{ parentItem.comment_hate_count }}</span>
 						</div>
 					</div>
-					<a @click="openReplyModal(parentItem)" class="reply" v-if="isLogin"
+					<a
+						@click="openReplyModal(parentItem)"
+						class="reply"
+						v-if="computeIsReply(parentItem)"
 						>回复</a
 					>
-					<a @click="deleteComment(parentItem)" class="reply" v-if="isLogin"
+					<a
+						@click="deleteComment(parentItem)"
+						class="reply"
+						v-if="computeIsDelete(parentItem)"
 						>删除</a
 					>
 				</div>
@@ -139,7 +145,6 @@
 								}}<span
 									style="color: #545454; margin: 0 6px; font-size: 15px"
 									v-show="sonItem.to_comment_son_id"
-									v-if="isLogin"
 									>回复</span
 								>
 								<span v-if="sonItem.to_comment_son_id">{{
@@ -171,10 +176,13 @@
 								<a
 									@click="openReplyModal(sonItem, parentItem)"
 									class="reply"
-									v-if="isLogin"
+									v-if="computeIsReply(sonItem)"
 									>回复</a
 								>
-								<a @click="deleteComment(sonItem)" class="reply" v-if="isLogin"
+								<a
+									@click="deleteComment(sonItem)"
+									class="reply"
+									v-if="computeIsDelete(sonItem)"
 									>删除</a
 								>
 							</div>
@@ -277,7 +285,6 @@ import {
 	publishComment,
 	deleteOwnComment,
 } from "@/api/comment";
-import { fetchUserInfoByUnpt } from "@/api/user";
 import { Base64 } from "js-base64";
 import { calculateIsLogin, getCurrentOauthUserInfo } from "@/utils/oauth";
 
@@ -317,6 +324,26 @@ export default {
 			handler(newVal) {
 				this.comments = newVal;
 			},
+		},
+	},
+	computed: {
+		// 是否存在删除按钮
+		computeIsDelete() {
+			return (parentItem) => {
+				const sui = sessionStorage.getItem("sqlUserInfo");
+				const sqlUserInfo = JSON.parse(sui);
+				return (
+					this.isLogin && parentItem.comment_user_info.id === sqlUserInfo.id
+				);
+			};
+		},
+		// 是否存在回复按钮
+		computeIsReply() {
+			return (item) => {
+				const sui = sessionStorage.getItem("sqlUserInfo");
+				const sqlUserInfo = JSON.parse(sui);
+				return this.isLogin && item.comment_user_info.id !== sqlUserInfo.id;
+			};
 		},
 	},
 	created() {
