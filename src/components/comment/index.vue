@@ -4,7 +4,15 @@
 			<h2>评论</h2>
 			<div class="comment-box">
 				<div class="box-avatar">
-					<el-avatar v-if="isLogin" :size="50" :src="sqlUserInfo.avatar">
+					<el-avatar
+						v-if="isLogin"
+						:size="50"
+						:src="
+							Object.keys(sqlUserInfo).length > 0
+								? sqlUserInfo.avatar
+								: 'http://lewiis.top/img/rabbit.84962985.svg'
+						"
+					>
 					</el-avatar>
 					<el-avatar v-else :size="50" icon="el-icon-user-solid"> </el-avatar>
 				</div>
@@ -198,7 +206,15 @@
 			<div class="operate">
 				<div class="comment-box">
 					<div class="box-avatar">
-						<el-avatar v-if="isLogin" :size="50" :src="sqlUserInfo.avatar">
+						<el-avatar
+							v-if="isLogin"
+							:size="50"
+							:src="
+								Object.keys(sqlUserInfo).length > 0
+									? sqlUserInfo.avatar
+									: 'http://lewiis.top/img/rabbit.84962985.svg'
+							"
+						>
 						</el-avatar>
 						<el-avatar v-else :size="50" icon="el-icon-user-solid"> </el-avatar>
 					</div>
@@ -343,6 +359,10 @@ export default {
 		this.currentArticleId = this.$route.params.id;
 		this.isLogin = calculateIsLogin();
 		this.currentAuthUserInfo = getCurrentOauthUserInfo();
+	},
+	mounted() {
+		const sui = sessionStorage.getItem("sqlUserInfo");
+		this.sqlUserInfo = sui ? JSON.parse(sui) : {};
 	},
 	methods: {
 		// ctrl+enter发送

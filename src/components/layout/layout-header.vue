@@ -78,7 +78,13 @@
 				</div>
 			</div>
 			<div class="menu-item hasChild" v-else>
-				<el-avatar :src="sqlUserInfo.avatar"></el-avatar>
+				<el-avatar
+					:src="
+						Object.keys(sqlUserInfo).length > 0
+							? sqlUserInfo.avatar
+							: 'http://lewiis.top/img/rabbit.84962985.svg'
+					"
+				></el-avatar>
 				<a href="#">{{ sqlUserInfo.username }}</a>
 				<div class="childMenu">
 					<div class="sub-menu">
@@ -131,6 +137,7 @@ export default {
 			queryObj: {},
 			currentUserInfo: {},
 			isLogin: false,
+			sqlUserInfo: {},
 		};
 	},
 	computed: {
@@ -188,6 +195,8 @@ export default {
 				title: this.$t("index.menu.languages")[key],
 			});
 		}
+		const cui = sessionStorage.getItem("sqlUserInfo");
+		this.sqlUserInfo = cui ? JSON.parse(cui) : {};
 	},
 	beforeDestroy() {
 		window.removeEventListener("scroll", this.watchScroll);
@@ -287,6 +296,7 @@ export default {
 					});
 					if (ret.status == 200) {
 						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						this.sqlUserInfo = res.data;
 					}
 				}, 3000);
 			} else {
@@ -323,6 +333,7 @@ export default {
 					});
 					if (ret.status == 200) {
 						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						this.sqlUserInfo = res.data;
 					}
 				}, 3000);
 			} else {
@@ -365,6 +376,7 @@ export default {
 					});
 					if (ret.status == 200) {
 						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						this.sqlUserInfo = res.data;
 					}
 				}, 3000);
 			} else {
@@ -407,6 +419,7 @@ export default {
 					});
 					if (ret.status == 200) {
 						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						this.sqlUserInfo = res.data;
 					}
 				}, 3000);
 			} else {
