@@ -78,8 +78,8 @@
 				</div>
 			</div>
 			<div class="menu-item hasChild" v-else>
-				<el-avatar :src="currentUserInfo.avatar_url"></el-avatar>
-				<a href="#">{{ currentUserInfo.name }}</a>
+				<el-avatar :src="sqlUserInfo.avatar"></el-avatar>
+				<a href="#">{{ sqlUserInfo.username }}</a>
 				<div class="childMenu">
 					<div class="sub-menu">
 						<a @click="logout">注 销</a>
