@@ -97,6 +97,8 @@ import { fetchCategories } from "@/api/category";
 import {
 	fetchOauthUserInfoByGitee,
 	fetchOauthUserInfoByGithub,
+	fetchOauthUserInfoByHuawei,
+	fetchOauthUserInfoByBaidu,
 } from "@/api/oauth";
 import { register, fetchUserInfoByUnpt } from "@/api/user";
 import {
@@ -105,6 +107,7 @@ import {
 	getCurrentOauthUserInfo,
 } from "@/utils/oauth";
 const qs = require("qs");
+import { v4 as uuidv4 } from "uuid";
 
 export default {
 	name: "layout-header",
@@ -122,6 +125,8 @@ export default {
 				{ name: "Gitee", value: "gitee" },
 				{ name: "Github", value: "github" },
 				{ name: "微博", value: "weibo" },
+				{ name: "华为", value: "huawei" },
+				{ name: "百度", value: "baidu" },
 			],
 			queryObj: {},
 			currentUserInfo: {},
@@ -156,6 +161,12 @@ export default {
 					this.getGiteeOauthUserInfo(this.queryObj.code);
 				} else if (cPlatform === "github") {
 					this.getGithubOauthUserInfo(this.queryObj.code);
+				} else if (cPlatform === "huawei") {
+					this.getHuaweiOauthUserInfo(this.queryObj.code);
+				} else if (cPlatform === "baidu") {
+					this.getBaiduOauthUserInfo(this.queryObj.code);
+				} else {
+					console.log("啥也不是");
 				}
 			}
 		} else {
@@ -230,6 +241,20 @@ export default {
 				window.open(
 					`https://github.com/login/oauth/authorize?client_id=${oauth.github.GITHUB_CLIENT_ID}&redirect_uri=${oauth.github.REDIRECT_URI}&scope=${oauth.github.SCOPE}&state=${oauth.github.STATE}&allow_signup=${oauth.github.ALLOW_SIGNUP}`
 				);
+			} else if (item.value === "huawei") {
+				window.open(
+					`https://oauth-login.cloud.huawei.com/oauth2/v3/authorize?
+            response_type=code&access_type=offline&state=${uuidv4()}&client_id=${
+						oauth.huawei.CLIENT_ID
+					}
+            &redirect_uri=${oauth.huawei.REDIRECT_URI}&scope=openid+profile`
+				);
+			} else if (item.value === "baidu") {
+				window.open(
+					`https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=${
+						oauth.baidu.API_KEY
+					}&redirect_uri=${oauth.baidu.REDIRECT_URI}&state=${uuidv4()}`
+				);
 			}
 		},
 		// 获取gitee授权用户信息
@@ -302,7 +327,90 @@ export default {
 				}, 3000);
 			} else {
 				this.isLogin = false;
-				console.log("错误", res);
+			}
+		},
+		// 获取华为授权用户信息
+		async getHuaweiOauthUserInfo(code) {
+			const res = await fetchOauthUserInfoByHuawei({
+				code,
+			});
+			if (res.status == 200) {
+				this.currentUserInfo = {
+					name: res.data.displayName,
+					avatar_url: res.data.headPictureURL,
+					email: res.data.email ? res.data.email : "",
+				};
+				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				this.isLogin = true;
+				const { name, avatar_url, email } = this.currentUserInfo;
+				const user_platform = localStorage.getItem("currentUserPlatform");
+				setTimeout(async () => {
+					await register({
+						username: name,
+						password: "123456",
+						rePassword: "123456",
+						avatar: avatar_url,
+						user_type: 0,
+						user_platform,
+						user_page: "",
+						email,
+					});
+				}, 1500);
+				setTimeout(async () => {
+					history.replaceState(null, null, "/");
+					const ret = await fetchUserInfoByUnpt({
+						username: this.currentUserInfo.name,
+						user_type: 0,
+						user_platform,
+					});
+					if (ret.status == 200) {
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+					}
+				}, 3000);
+			} else {
+				this.isLogin = false;
+			}
+		},
+		// 获取华为授权用户信息
+		async getBaiduOauthUserInfo(code) {
+			const res = await fetchOauthUserInfoByBaidu({
+				code,
+			});
+			if (res.status == 200) {
+				this.currentUserInfo = {
+					name: res.data.username,
+					avatar_url: `https://himg.bdimg.com/sys/portrait/item/${res.data.portrait}`,
+					email: res.data.email ? res.data.email : "",
+				};
+				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				this.isLogin = true;
+				const { name, avatar_url, email } = this.currentUserInfo;
+				const user_platform = localStorage.getItem("currentUserPlatform");
+				setTimeout(async () => {
+					await register({
+						username: name,
+						password: "123456",
+						rePassword: "123456",
+						avatar: avatar_url,
+						user_type: 0,
+						user_platform,
+						user_page: "",
+						email,
+					});
+				}, 1500);
+				setTimeout(async () => {
+					history.replaceState(null, null, "/");
+					const ret = await fetchUserInfoByUnpt({
+						username: this.currentUserInfo.name,
+						user_type: 0,
+						user_platform,
+					});
+					if (ret.status == 200) {
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+					}
+				}, 3000);
+			} else {
+				this.isLogin = false;
 			}
 		},
 		// 注销

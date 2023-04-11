@@ -13,10 +13,13 @@ export const oauth = {
 		STATE: nanoid(),
 	},
 	huawei: {
-		HUAWEI_CLIENT_ID: `108042279`,
-		// REDIRECT_URI: `http://lewiis.top/`,
-		REDIRECT_URI: `http://localhost:8890/`,
-		SECRET_KEY: `f2185ea86cf8ba3d16cd237c949a9d6a688a7da621ad292dac940b043496ecd5`,
+		CLIENT_ID: `108042279`,
+		REDIRECT_URI: `http://lewiis.top/`,
+	},
+	baidu: {
+		ID: `32254957`,
+		REDIRECT_URI: `http://lewiis.top/`,
+		API_KEY: `jsAgEehIBMYxcTaa1rc6m56q`,
 	},
 };
 

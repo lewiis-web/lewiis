@@ -24,3 +24,29 @@ export function fetchOauthUserInfoByGithub(code) {
 		method: "get",
 	});
 }
+
+/**
+ * HUAWEI获取用户信息
+ * @method post
+ * @param {string} code 返回的code
+ */
+export function fetchOauthUserInfoByHuawei(data) {
+	return request({
+		url: `/oauth/huawei/user/info`,
+		method: "post",
+		data,
+	});
+}
+
+/**
+ * 百度获取用户信息
+ * @method post
+ * @param {string} code 返回的code
+ */
+export function fetchOauthUserInfoByBaidu(data) {
+	return request({
+		url: `/oauth/baidu/user/info`,
+		method: "post",
+		data,
+	});
+}
