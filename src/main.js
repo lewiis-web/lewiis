@@ -45,6 +45,9 @@ router.beforeEach((to, from, next) => {
 	next();
 });
 Vue.component("skycon", Skycon);
+import VueTimeline from "@growthbunker/vuetimeline";
+
+Vue.use(VueTimeline);
 
 Vue.use(ElementUI);
 

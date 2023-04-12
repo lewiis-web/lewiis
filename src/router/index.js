@@ -12,12 +12,6 @@ const routes = [
 		meta: { title: "首页" },
 	},
 	{
-		path: "/message",
-		name: "message",
-		component: () => import("@/views/Message"),
-		meta: { title: "消息中心" },
-	},
-	{
 		path: "/category/:cate",
 		name: "category",
 		component: () => import("@/views/Home.vue"),

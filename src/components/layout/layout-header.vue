@@ -81,15 +81,16 @@
 				<el-avatar
 					:src="
 						Object.keys(sqlUserInfo).length > 0
-							? sqlUserInfo.avatar || sqlUserInfo.avatar_url
+							? sqlUserInfo.avatar ||
+							  sqlUserInfo.avatar_url ||
+							  sqlUserInfo.headPictureURL
 							: 'http://lewiis.top/img/rabbit.84962985.svg'
 					"
 				></el-avatar>
-				<a href="#">{{ sqlUserInfo.username || sqlUserInfo.name }}</a>
+				<a href="#">{{
+					sqlUserInfo.username || sqlUserInfo.name || sqlUserInfo.displayName
+				}}</a>
 				<div class="childMenu">
-					<div class="sub-menu">
-						<a @click="logout">我的消息</a>
-					</div>
 					<div class="sub-menu">
 						<a @click="logout">注销登录</a>
 					</div>
@@ -137,7 +138,7 @@ export default {
 				{ name: "微博", value: "weibo" },
 				{ name: "华为", value: "huawei" },
 				{ name: "百度", value: "baidu" },
-				// { name: "Gitee测试", value: "gitee_test" },
+				{ name: "Gitee测试", value: "gitee_test" },
 			],
 			queryObj: {},
 			currentUserInfo: {},
@@ -205,15 +206,7 @@ export default {
 		const cui = sessionStorage.getItem("sqlUserInfo");
 		this.sqlUserInfo = cui ? JSON.parse(cui) : {};
 	},
-	watch: {
-		sqlUserInfo: {
-			immediate: true,
-			deep: true,
-			handler(newVal) {
-				console.log(newVal);
-			},
-		},
-	},
+	watch: {},
 	beforeDestroy() {
 		window.removeEventListener("scroll", this.watchScroll);
 	},
