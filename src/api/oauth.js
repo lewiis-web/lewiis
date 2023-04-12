@@ -1,5 +1,4 @@
 import request from "@/utils/request";
-import axios from "axios";
 
 /**
  * gitee获取用户信息
@@ -60,5 +59,17 @@ export function fetchOauthUserInfoByBaidu(data) {
 		url: `/oauth/baidu/user/info`,
 		method: "post",
 		data,
+	});
+}
+
+/**
+ * 微博获取用户信息
+ * @method get
+ * @param {string} code 返回的code
+ */
+export function fetchOauthUserInfoByWeibo(code) {
+	return request({
+		url: `/oauth/weibo/user/info?code=${code}`,
+		method: "get",
 	});
 }

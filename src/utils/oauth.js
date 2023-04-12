@@ -25,6 +25,10 @@ export const oauth = {
 		REDIRECT_URI: `http://lewiis.top/`,
 		API_KEY: `jsAgEehIBMYxcTaa1rc6m56q`,
 	},
+	weibo: {
+		CLIENT_ID: `1348332593`,
+		REDIRECT_URI: `http://lewiis.top`,
+	},
 };
 
 // 是否登录

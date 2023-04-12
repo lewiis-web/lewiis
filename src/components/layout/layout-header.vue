@@ -110,6 +110,7 @@ import {
 	fetchOauthUserInfoByHuawei,
 	fetchOauthUserInfoByBaidu,
 	fetchOauthUserInfoByGiteeTest,
+	fetchOauthUserInfoByWeibo,
 } from "@/api/oauth";
 import { register, fetchUserInfoByUnpt } from "@/api/user";
 import {
@@ -180,6 +181,8 @@ export default {
 					this.getBaiduOauthUserInfo(this.queryObj.code);
 				} else if (cPlatform === "gitee_test") {
 					this.getGiteeTestOauthUserInfo(this.queryObj.code);
+				} else if (cPlatform === "weibo") {
+					this.getWeiboOauthUserInfo(this.queryObj.code);
 				} else {
 					console.log("啥也不是");
 				}
@@ -276,6 +279,10 @@ export default {
 			} else if (item.value === "gitee_test") {
 				window.open(
 					`https://gitee.com/oauth/authorize?client_id=${oauth.gitee_test.GITEE_CLIENT_ID}&redirect_uri=${oauth.gitee_test.REDIRECT_URI}&response_type=code`
+				);
+			} else if (item.value === "weibo") {
+				window.open(
+					`https://api.weibo.com/oauth2/authorize?client_id=${oauth.weibo.CLIENT_ID}&response_type=code&redirect_uri=${oauth.weibo.REDIRECT_URI}`
 				);
 			}
 		},
@@ -433,7 +440,7 @@ export default {
 				this.isLogin = false;
 			}
 		},
-		// 获取华为授权用户信息
+		// 获取百度授权用户信息
 		async getBaiduOauthUserInfo(code) {
 			const res = await fetchOauthUserInfoByBaidu({
 				code,
@@ -475,6 +482,44 @@ export default {
 			} else {
 				this.isLogin = false;
 			}
+		},
+		// 获取微博授权用户信息
+		async getWeiboOauthUserInfo(code) {
+			const res = await fetchOauthUserInfoByWeibo(code);
+			console.log("微博", res);
+			// if (res.status == 200) {
+			// 	this.currentUserInfo = res.data;
+			// 	sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+			// 	this.isLogin = true;
+			// 	const { name, avatar_url, html_url, email } = this.currentUserInfo;
+			// 	const user_platform = localStorage.getItem("currentUserPlatform");
+			// 	setTimeout(async () => {
+			// 		await register({
+			// 			username: name,
+			// 			password: "123456",
+			// 			rePassword: "123456",
+			// 			avatar: avatar_url,
+			// 			user_type: 0,
+			// 			user_platform,
+			// 			user_page: html_url,
+			// 			email,
+			// 		});
+			// 	}, 1500);
+			// 	setTimeout(async () => {
+			// 		history.replaceState(null, null, "/");
+			// 		const ret = await fetchUserInfoByUnpt({
+			// 			username: this.currentUserInfo.name,
+			// 			user_type: 0,
+			// 			user_platform,
+			// 		});
+			// 		if (ret.status == 200) {
+			// 			sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+			// 			this.sqlUserInfo = res.data;
+			// 		}
+			// 	}, 3000);
+			// } else {
+			// 	this.isLogin = false;
+			// }
 		},
 		// 注销
 		logout() {
