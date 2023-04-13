@@ -291,7 +291,7 @@ export default {
 			const res = await fetchOauthUserInfoByGitee(code);
 			if (res.status == 200) {
 				this.currentUserInfo = res.data;
-				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 				this.isLogin = true;
 				const { name, avatar_url, html_url, email } = this.currentUserInfo;
 				const user_platform = localStorage.getItem("currentUserPlatform");
@@ -328,7 +328,7 @@ export default {
 			const res = await fetchOauthUserInfoByGiteeTest(code);
 			if (res.status == 200) {
 				this.currentUserInfo = res.data;
-				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 				this.isLogin = true;
 				const { name, avatar_url, html_url, email } = this.currentUserInfo;
 				const user_platform = localStorage.getItem("currentUserPlatform");
@@ -365,7 +365,7 @@ export default {
 			const res = await fetchOauthUserInfoByGithub(code);
 			if (res.status == 200) {
 				this.currentUserInfo = res.data;
-				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 				this.isLogin = true;
 				const { name, avatar_url, html_url, email } = this.currentUserInfo;
 				const user_platform = localStorage.getItem("currentUserPlatform");
@@ -408,7 +408,7 @@ export default {
 					avatar_url: res.data.headPictureURL,
 					email: res.data.email ? res.data.email : "",
 				};
-				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 				this.isLogin = true;
 				const { name, avatar_url, email } = this.currentUserInfo;
 				const user_platform = localStorage.getItem("currentUserPlatform");
@@ -451,7 +451,7 @@ export default {
 					avatar_url: `https://himg.bdimg.com/sys/portrait/item/${res.data.portrait}`,
 					email: res.data.email ? res.data.email : "",
 				};
-				sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 				this.isLogin = true;
 				const { name, avatar_url, email } = this.currentUserInfo;
 				const user_platform = localStorage.getItem("currentUserPlatform");
@@ -486,40 +486,39 @@ export default {
 		// 获取微博授权用户信息
 		async getWeiboOauthUserInfo(code) {
 			const res = await fetchOauthUserInfoByWeibo(code);
-			console.log("微博", res);
-			// if (res.status == 200) {
-			// 	this.currentUserInfo = res.data;
-			// 	sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
-			// 	this.isLogin = true;
-			// 	const { name, avatar_url, html_url, email } = this.currentUserInfo;
-			// 	const user_platform = localStorage.getItem("currentUserPlatform");
-			// 	setTimeout(async () => {
-			// 		await register({
-			// 			username: name,
-			// 			password: "123456",
-			// 			rePassword: "123456",
-			// 			avatar: avatar_url,
-			// 			user_type: 0,
-			// 			user_platform,
-			// 			user_page: html_url,
-			// 			email,
-			// 		});
-			// 	}, 1500);
-			// 	setTimeout(async () => {
-			// 		history.replaceState(null, null, "/");
-			// 		const ret = await fetchUserInfoByUnpt({
-			// 			username: this.currentUserInfo.name,
-			// 			user_type: 0,
-			// 			user_platform,
-			// 		});
-			// 		if (ret.status == 200) {
-			// 			sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
-			// 			this.sqlUserInfo = res.data;
-			// 		}
-			// 	}, 3000);
-			// } else {
-			// 	this.isLogin = false;
-			// }
+			if (res.status == 200) {
+				this.currentUserInfo = res.data;
+				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+				this.isLogin = true;
+				const { name, avatar_hd, domain, email = "" } = this.currentUserInfo;
+				const user_platform = localStorage.getItem("currentUserPlatform");
+				setTimeout(async () => {
+					await register({
+						username: name,
+						password: "123456",
+						rePassword: "123456",
+						avatar: avatar_hd,
+						user_type: 0,
+						user_platform,
+						user_page: domain,
+						email,
+					});
+				}, 1500);
+				setTimeout(async () => {
+					history.replaceState(null, null, "/");
+					const ret = await fetchUserInfoByUnpt({
+						username: this.currentUserInfo.name,
+						user_type: 0,
+						user_platform,
+					});
+					if (ret.status == 200) {
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						this.sqlUserInfo = res.data;
+					}
+				}, 3000);
+			} else {
+				this.isLogin = false;
+			}
 		},
 		// 注销
 		logout() {
