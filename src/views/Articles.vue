@@ -210,6 +210,8 @@ export default {
 					}
 					this.addViewsCount();
 					this.appendArticleLog(0);
+				} else {
+					this.$message.error(res.errors);
 				}
 			} catch (error) {
 				this.$message.error(error);
@@ -222,7 +224,7 @@ export default {
 				if (res.status === 200) {
 					this.commentList = res.data;
 				} else {
-					this.$message.error(res.msg);
+					this.$message.error(res.errors);
 				}
 			} catch (error) {
 				this.$message.error(error);

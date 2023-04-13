@@ -144,7 +144,7 @@ export default {
 						return a.id * 1 - b.id * 1;
 					});
 				} else {
-					this.$message.success(res.msg);
+					this.$message.error(res.errors);
 				}
 			} catch (error) {
 				this.$message.error(error);

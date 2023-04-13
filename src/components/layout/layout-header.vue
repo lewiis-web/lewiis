@@ -246,6 +246,8 @@ export default {
 				const res = await fetchCategories();
 				if (res.status == 200) {
 					this.categories = res.data;
+				} else {
+					this.$message.error(res.errors);
 				}
 			} catch (error) {
 				this.$message.error(error);

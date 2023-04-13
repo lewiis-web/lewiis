@@ -48,7 +48,7 @@ export default {
 					area_code = area_code ? area_code.split("*")[2] : "141102";
 					this.getWeather(area_code);
 				} else {
-					this.$message.error(res.msg);
+					this.$message.error(res.errors);
 				}
 			} catch (error) {
 				this.$message.error(error);
@@ -115,7 +115,9 @@ export default {
 				if (res.status === 0) {
 					this.areaInfo = res.result || {};
 					return this.areaInfo;
-				} else this.$message.error("区域信息异常！");
+				} else {
+					this.$message.error(res.errors);
+				}
 			} catch (error) {
 				this.$message.error(error);
 			}
@@ -137,7 +139,9 @@ export default {
 						AnimatedWeatherTypes[weatherIcon(this.iconTitle)],
 						AnimatedWeatherTimes[hourType]
 					);
-				} else this.$message.error("天气信息异常！");
+				} else {
+					this.$message.error(res.errors);
+				}
 			} catch (error) {
 				this.$message.error(error);
 			}

@@ -395,7 +395,7 @@ export default {
 						this.textarea = "";
 						this.$emit("updateComment");
 					} else {
-						this.$message.error(ret.msg);
+						this.$message.error(ret.errors);
 					}
 				}
 			} catch (error) {
@@ -446,7 +446,7 @@ export default {
 					this.replyArea = "";
 					this.replyVisible = false;
 				} else {
-					this.$message.error(res.msg);
+					this.$message.error(res.errors);
 				}
 			} catch (error) {
 				this.$message.error(error);
@@ -463,7 +463,7 @@ export default {
 				if (res.status == 200) {
 					this.$emit("updateComment");
 				} else {
-					this.$message.error(res.msg);
+					this.$message.error(res.errors);
 				}
 			} catch (error) {
 				this.$message.error(error);
@@ -491,7 +491,7 @@ export default {
 						});
 						this.$emit("updateComment");
 					} else {
-						this.$message.error(ret.msg);
+						this.$message.error(res.errors);
 					}
 				})
 				.catch(() => {
