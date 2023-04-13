@@ -288,236 +288,271 @@ export default {
 		},
 		// 获取gitee授权用户信息
 		async getGiteeOauthUserInfo(code) {
-			const res = await fetchOauthUserInfoByGitee(code);
-			if (res.status == 200) {
-				this.currentUserInfo = res.data;
-				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
-				this.isLogin = true;
-				const { name, avatar_url, html_url, email } = this.currentUserInfo;
-				const user_platform = localStorage.getItem("currentUserPlatform");
-				setTimeout(async () => {
-					await register({
-						username: name,
-						password: "123456",
-						rePassword: "123456",
-						avatar: avatar_url,
-						user_type: 0,
-						user_platform,
-						user_page: html_url,
-						email,
-					});
-				}, 1500);
-				setTimeout(async () => {
-					history.replaceState(null, null, "/");
-					const ret = await fetchUserInfoByUnpt({
-						username: this.currentUserInfo.name,
-						user_type: 0,
-						user_platform,
-					});
-					if (ret.status == 200) {
-						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
-						this.sqlUserInfo = res.data;
-					}
-				}, 3000);
+			const sui = sessionStorage.getItem("sqlUserInfo");
+			const sqlUserInfo = sui ? JSON.parse(sui) : {};
+			if (Object.keys(sqlUserInfo).length > 0) {
+				this.sqlUserInfo = sqlUserInfo;
 			} else {
-				this.isLogin = false;
+				const res = await fetchOauthUserInfoByGitee(code);
+				if (res.status == 200) {
+					this.currentUserInfo = res.data;
+					this.isLogin = true;
+					const { name, avatar_url, html_url, email } = this.currentUserInfo;
+					const user_platform = localStorage.getItem("currentUserPlatform");
+					setTimeout(async () => {
+						await register({
+							username: name,
+							password: "123456",
+							rePassword: "123456",
+							avatar: avatar_url,
+							user_type: 0,
+							user_platform,
+							user_page: html_url,
+							email,
+						});
+					}, 1500);
+					setTimeout(async () => {
+						history.replaceState(null, null, "/");
+						const ret = await fetchUserInfoByUnpt({
+							username: this.currentUserInfo.name,
+							user_type: 0,
+							user_platform,
+						});
+						if (ret.status == 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+							this.sqlUserInfo = res.data;
+						}
+					}, 3000);
+				} else {
+					this.isLogin = false;
+				}
 			}
 		},
 		// 获取gitee_test授权用户信息
 		async getGiteeTestOauthUserInfo(code) {
-			const res = await fetchOauthUserInfoByGiteeTest(code);
-			if (res.status == 200) {
-				this.currentUserInfo = res.data;
-				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
-				this.isLogin = true;
-				const { name, avatar_url, html_url, email } = this.currentUserInfo;
-				const user_platform = localStorage.getItem("currentUserPlatform");
-				setTimeout(async () => {
-					await register({
-						username: name,
-						password: "123456",
-						rePassword: "123456",
-						avatar: avatar_url,
-						user_type: 0,
-						user_platform,
-						user_page: html_url,
-						email,
-					});
-				}, 500);
-				setTimeout(async () => {
-					history.replaceState(null, null, "/");
-					const ret = await fetchUserInfoByUnpt({
-						username: this.currentUserInfo.name,
-						user_type: 0,
-						user_platform,
-					});
-					if (ret.status == 200) {
-						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
-						this.sqlUserInfo = res.data;
-					}
-				}, 1000);
+			const sui = sessionStorage.getItem("sqlUserInfo");
+			const sqlUserInfo = sui ? JSON.parse(sui) : {};
+			if (Object.keys(sqlUserInfo).length > 0) {
+				this.sqlUserInfo = sqlUserInfo;
 			} else {
-				this.isLogin = false;
+				const res = await fetchOauthUserInfoByGiteeTest(code);
+				if (res.status == 200) {
+					this.currentUserInfo = res.data;
+					sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+					this.isLogin = true;
+					const { name, avatar_url, html_url, email } = this.currentUserInfo;
+					const user_platform = localStorage.getItem("currentUserPlatform");
+					setTimeout(async () => {
+						await register({
+							username: name,
+							password: "123456",
+							rePassword: "123456",
+							avatar: avatar_url,
+							user_type: 0,
+							user_platform,
+							user_page: html_url,
+							email,
+						});
+					}, 500);
+					setTimeout(async () => {
+						history.replaceState(null, null, "/");
+						const ret = await fetchUserInfoByUnpt({
+							username: this.currentUserInfo.name,
+							user_type: 0,
+							user_platform,
+						});
+						if (ret.status == 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+							this.sqlUserInfo = res.data;
+						}
+					}, 1000);
+				} else {
+					this.isLogin = false;
+				}
 			}
 		},
 		// 获取gitee授权用户信息
 		async getGithubOauthUserInfo(code) {
-			const res = await fetchOauthUserInfoByGithub(code);
-			if (res.status == 200) {
-				this.currentUserInfo = res.data;
-				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
-				this.isLogin = true;
-				const { name, avatar_url, html_url, email } = this.currentUserInfo;
-				const user_platform = localStorage.getItem("currentUserPlatform");
-				setTimeout(async () => {
-					await register({
-						username: name,
-						password: "123456",
-						rePassword: "123456",
-						avatar: avatar_url,
-						user_type: 0,
-						user_platform,
-						user_page: html_url,
-						email,
-					});
-				}, 1500);
-				setTimeout(async () => {
-					history.replaceState(null, null, "/");
-					const ret = await fetchUserInfoByUnpt({
-						username: this.currentUserInfo.name,
-						user_type: 0,
-						user_platform,
-					});
-					if (ret.status == 200) {
-						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
-						this.sqlUserInfo = res.data;
-					}
-				}, 3000);
+			const sui = sessionStorage.getItem("sqlUserInfo");
+			const sqlUserInfo = sui ? JSON.parse(sui) : {};
+			if (Object.keys(sqlUserInfo).length > 0) {
+				this.sqlUserInfo = sqlUserInfo;
 			} else {
-				this.isLogin = false;
+				const res = await fetchOauthUserInfoByGithub(code);
+				if (res.status == 200) {
+					this.currentUserInfo = res.data;
+					sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+					this.isLogin = true;
+					const { name, avatar_url, html_url, email } = this.currentUserInfo;
+					const user_platform = localStorage.getItem("currentUserPlatform");
+					setTimeout(async () => {
+						await register({
+							username: name,
+							password: "123456",
+							rePassword: "123456",
+							avatar: avatar_url,
+							user_type: 0,
+							user_platform,
+							user_page: html_url,
+							email,
+						});
+					}, 1500);
+					setTimeout(async () => {
+						history.replaceState(null, null, "/");
+						const ret = await fetchUserInfoByUnpt({
+							username: this.currentUserInfo.name,
+							user_type: 0,
+							user_platform,
+						});
+						if (ret.status == 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+							this.sqlUserInfo = res.data;
+						}
+					}, 3000);
+				} else {
+					this.isLogin = false;
+				}
 			}
 		},
 		// 获取华为授权用户信息
 		async getHuaweiOauthUserInfo(code) {
-			const res = await fetchOauthUserInfoByHuawei({
-				code,
-			});
-			if (res.status == 200) {
-				this.currentUserInfo = {
-					name: res.data.displayName,
-					avatar_url: res.data.headPictureURL,
-					email: res.data.email ? res.data.email : "",
-				};
-				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
-				this.isLogin = true;
-				const { name, avatar_url, email } = this.currentUserInfo;
-				const user_platform = localStorage.getItem("currentUserPlatform");
-				setTimeout(async () => {
-					await register({
-						username: name,
-						password: "123456",
-						rePassword: "123456",
-						avatar: avatar_url,
-						user_type: 0,
-						user_platform,
-						user_page: "",
-						email,
-					});
-				}, 1500);
-				setTimeout(async () => {
-					history.replaceState(null, null, "/");
-					const ret = await fetchUserInfoByUnpt({
-						username: this.currentUserInfo.name,
-						user_type: 0,
-						user_platform,
-					});
-					if (ret.status == 200) {
-						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
-						this.sqlUserInfo = res.data;
-					}
-				}, 3000);
+			const sui = sessionStorage.getItem("sqlUserInfo");
+			const sqlUserInfo = sui ? JSON.parse(sui) : {};
+			if (Object.keys(sqlUserInfo).length > 0) {
+				this.sqlUserInfo = sqlUserInfo;
 			} else {
-				this.isLogin = false;
+				const res = await fetchOauthUserInfoByHuawei({
+					code,
+				});
+				if (res.status == 200) {
+					this.currentUserInfo = {
+						name: res.data.displayName,
+						avatar_url: res.data.headPictureURL,
+						email: res.data.email ? res.data.email : "",
+					};
+					// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+					this.isLogin = true;
+					const { name, avatar_url, email } = this.currentUserInfo;
+					const user_platform = localStorage.getItem("currentUserPlatform");
+					setTimeout(async () => {
+						await register({
+							username: name,
+							password: "123456",
+							rePassword: "123456",
+							avatar: avatar_url,
+							user_type: 0,
+							user_platform,
+							user_page: "",
+							email,
+						});
+					}, 1500);
+					setTimeout(async () => {
+						history.replaceState(null, null, "/");
+						const ret = await fetchUserInfoByUnpt({
+							username: this.currentUserInfo.name,
+							user_type: 0,
+							user_platform,
+						});
+						if (ret.status == 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+							this.sqlUserInfo = res.data;
+						}
+					}, 3000);
+				} else {
+					this.isLogin = false;
+				}
 			}
 		},
 		// 获取百度授权用户信息
 		async getBaiduOauthUserInfo(code) {
-			const res = await fetchOauthUserInfoByBaidu({
-				code,
-			});
-			if (res.status == 200) {
-				this.currentUserInfo = {
-					name: res.data.username,
-					avatar_url: `https://himg.bdimg.com/sys/portrait/item/${res.data.portrait}`,
-					email: res.data.email ? res.data.email : "",
-				};
-				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
-				this.isLogin = true;
-				const { name, avatar_url, email } = this.currentUserInfo;
-				const user_platform = localStorage.getItem("currentUserPlatform");
-				setTimeout(async () => {
-					await register({
-						username: name,
-						password: "123456",
-						rePassword: "123456",
-						avatar: avatar_url,
-						user_type: 0,
-						user_platform,
-						user_page: "",
-						email,
-					});
-				}, 1500);
-				setTimeout(async () => {
-					history.replaceState(null, null, "/");
-					const ret = await fetchUserInfoByUnpt({
-						username: this.currentUserInfo.name,
-						user_type: 0,
-						user_platform,
-					});
-					if (ret.status == 200) {
-						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
-						this.sqlUserInfo = res.data;
-					}
-				}, 3000);
+			const sui = sessionStorage.getItem("sqlUserInfo");
+			const sqlUserInfo = sui ? JSON.parse(sui) : {};
+			if (Object.keys(sqlUserInfo).length > 0) {
+				this.sqlUserInfo = sqlUserInfo;
 			} else {
-				this.isLogin = false;
+				const res = await fetchOauthUserInfoByBaidu({
+					code,
+				});
+				if (res.status == 200) {
+					this.currentUserInfo = {
+						name: res.data.username,
+						avatar_url: `https://himg.bdimg.com/sys/portrait/item/${res.data.portrait}`,
+						email: res.data.email ? res.data.email : "",
+					};
+					// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+					this.isLogin = true;
+					const { name, avatar_url, email } = this.currentUserInfo;
+					const user_platform = localStorage.getItem("currentUserPlatform");
+					setTimeout(async () => {
+						await register({
+							username: name,
+							password: "123456",
+							rePassword: "123456",
+							avatar: avatar_url,
+							user_type: 0,
+							user_platform,
+							user_page: "",
+							email,
+						});
+					}, 1500);
+					setTimeout(async () => {
+						history.replaceState(null, null, "/");
+						const ret = await fetchUserInfoByUnpt({
+							username: this.currentUserInfo.name,
+							user_type: 0,
+							user_platform,
+						});
+						if (ret.status == 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+							this.sqlUserInfo = res.data;
+						}
+					}, 3000);
+				} else {
+					this.isLogin = false;
+				}
 			}
 		},
 		// 获取微博授权用户信息
 		async getWeiboOauthUserInfo(code) {
-			const res = await fetchOauthUserInfoByWeibo(code);
-			if (res.status == 200) {
-				this.currentUserInfo = res.data;
-				// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
-				this.isLogin = true;
-				const { name, avatar_hd, domain, email = "" } = this.currentUserInfo;
-				const user_platform = localStorage.getItem("currentUserPlatform");
-				setTimeout(async () => {
-					await register({
-						username: name,
-						password: "123456",
-						rePassword: "123456",
-						avatar: avatar_hd,
-						user_type: 0,
-						user_platform,
-						user_page: domain,
-						email,
-					});
-				}, 1500);
-				setTimeout(async () => {
-					history.replaceState(null, null, "/");
-					const ret = await fetchUserInfoByUnpt({
-						username: this.currentUserInfo.name,
-						user_type: 0,
-						user_platform,
-					});
-					if (ret.status == 200) {
-						sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
-						this.sqlUserInfo = res.data;
-					}
-				}, 3000);
+			const sui = sessionStorage.getItem("sqlUserInfo");
+			const sqlUserInfo = sui ? JSON.parse(sui) : {};
+			if (Object.keys(sqlUserInfo).length > 0) {
+				this.sqlUserInfo = sqlUserInfo;
 			} else {
-				this.isLogin = false;
+				const res = await fetchOauthUserInfoByWeibo(code);
+				if (res.status == 200) {
+					this.currentUserInfo = res.data;
+					// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
+					this.isLogin = true;
+					const { name, avatar_hd, domain, email = "" } = this.currentUserInfo;
+					const user_platform = localStorage.getItem("currentUserPlatform");
+					setTimeout(async () => {
+						await register({
+							username: name,
+							password: "123456",
+							rePassword: "123456",
+							avatar: avatar_hd,
+							user_type: 0,
+							user_platform,
+							user_page: domain,
+							email,
+						});
+					}, 1500);
+					setTimeout(async () => {
+						history.replaceState(null, null, "/");
+						const ret = await fetchUserInfoByUnpt({
+							username: this.currentUserInfo.name,
+							user_type: 0,
+							user_platform,
+						});
+						if (ret.status == 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+							this.sqlUserInfo = res.data;
+						}
+					}, 3000);
+				} else {
+					this.isLogin = false;
+				}
 			}
 		},
 		// 注销
