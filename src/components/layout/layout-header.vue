@@ -338,7 +338,6 @@ export default {
 				const res = await fetchOauthUserInfoByGiteeTest(code);
 				if (res.status == 200) {
 					this.currentUserInfo = res.data;
-					sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 					this.isLogin = true;
 					const { name, avatar_url, html_url, email } = this.currentUserInfo;
 					const user_platform = localStorage.getItem("currentUserPlatform");
@@ -381,7 +380,6 @@ export default {
 				const res = await fetchOauthUserInfoByGithub(code);
 				if (res.status == 200) {
 					this.currentUserInfo = res.data;
-					sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 					this.isLogin = true;
 					const { name, avatar_url, html_url, email } = this.currentUserInfo;
 					const user_platform = localStorage.getItem("currentUserPlatform");
@@ -430,7 +428,6 @@ export default {
 						avatar_url: res.data.headPictureURL,
 						email: res.data.email ? res.data.email : "",
 					};
-					// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 					this.isLogin = true;
 					const { name, avatar_url, email } = this.currentUserInfo;
 					const user_platform = localStorage.getItem("currentUserPlatform");
@@ -479,7 +476,6 @@ export default {
 						avatar_url: `https://himg.bdimg.com/sys/portrait/item/${res.data.portrait}`,
 						email: res.data.email ? res.data.email : "",
 					};
-					// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 					this.isLogin = true;
 					const { name, avatar_url, email } = this.currentUserInfo;
 					const user_platform = localStorage.getItem("currentUserPlatform");
@@ -522,7 +518,6 @@ export default {
 				const res = await fetchOauthUserInfoByWeibo(code);
 				if (res.status == 200) {
 					this.currentUserInfo = res.data;
-					// sessionStorage.setItem("currentUserInfo", JSON.stringify(res.data));
 					this.isLogin = true;
 					const { name, avatar_hd, domain, email = "" } = this.currentUserInfo;
 					const user_platform = localStorage.getItem("currentUserPlatform");
@@ -557,7 +552,6 @@ export default {
 		},
 		// 注销
 		logout() {
-			sessionStorage.removeItem("currentUserInfo");
 			sessionStorage.removeItem("sqlUserInfo");
 			localStorage.removeItem("currentUserPlatform");
 			window.location.reload();

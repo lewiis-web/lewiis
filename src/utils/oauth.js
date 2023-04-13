@@ -33,13 +33,13 @@ export const oauth = {
 
 // 是否登录
 export const calculateIsLogin = () => {
-	const cui = sessionStorage.getItem("currentUserInfo");
-	const currentUserInfo = cui ? JSON.parse(cui) : {};
-	return Object.keys(currentUserInfo).length > 0;
+	const cui = sessionStorage.getItem("sqlUserInfo");
+	const sqlUserInfo = cui ? JSON.parse(cui) : {};
+	return Object.keys(sqlUserInfo).length > 0;
 };
 
 // 授权登录用户信息
 export const getCurrentOauthUserInfo = () => {
-	const cui = sessionStorage.getItem("currentUserInfo");
+	const cui = sessionStorage.getItem("sqlUserInfo");
 	return cui ? JSON.parse(cui) : {};
 };
