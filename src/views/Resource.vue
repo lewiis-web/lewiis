@@ -11,10 +11,18 @@
 							class="search_input"
 						></el-input>
 						<el-button
+							type="primary"
 							icon="el-icon-search"
 							circle
 							class="search_btn"
 							@click="handleQuery"
+						></el-button>
+						<el-button
+							v-if="isLogin"
+							type="success"
+							icon="el-icon-share"
+							circle
+							@click="openReplyModal"
 						></el-button>
 					</div>
 				</div>
@@ -109,14 +117,116 @@
 				@size-change="handleSizeChange"
 			></el-pagination>
 		</div>
+		<!-- 资源共享申请 -->
+		<el-dialog
+			title="资源共享"
+			:visible.sync="dialogFormVisible"
+			@close="handleBeforeClose"
+			:close-on-click-modal="false"
+			:destroy-on-close="true"
+		>
+			<el-form
+				:model="dialogForm"
+				label-width="100px"
+				:rules="dialogRules"
+				ref="dialogForm"
+			>
+				<el-form-item label="资源名称" prop="name">
+					<el-input
+						v-model="dialogForm.name"
+						autocomplete="off"
+						maxlength="255"
+						show-word-limit
+						placeholder="请输入资源名称"
+					></el-input>
+				</el-form-item>
+				<el-form-item label="资源类型" prop="resource_type">
+					<el-select
+						v-model="dialogForm.resource_type"
+						placeholder="请选择资源类型"
+					>
+						<el-option
+							v-for="item in resourceTypeList"
+							:key="item.id"
+							:label="item.name"
+							:value="item.id"
+						></el-option>
+					</el-select>
+				</el-form-item>
+				<el-form-item label="资源链接">
+					<el-checkbox-group v-model="checkList">
+						<el-checkbox label="百度网盘"></el-checkbox>
+						<el-checkbox label="阿里云盘"></el-checkbox>
+						<el-checkbox label="夸克网盘"></el-checkbox>
+						<el-checkbox label="蓝奏云盘"></el-checkbox>
+						<el-checkbox label="天翼云盘"></el-checkbox>
+						<el-checkbox label="网址"></el-checkbox>
+					</el-checkbox-group>
+					<el-form-item
+						label="百度网盘"
+						v-if="checkList.indexOf('百度网盘') >= 0"
+					>
+						<el-input v-model="dialogForm.baidu" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item
+						label="阿里云盘"
+						v-if="checkList.indexOf('阿里云盘') >= 0"
+					>
+						<el-input v-model="dialogForm.aliyun" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item
+						label="夸克网盘"
+						v-if="checkList.indexOf('夸克网盘') >= 0"
+					>
+						<el-input v-model="dialogForm.kuake" autocomplete="off"></el-input>
+					</el-form-item>
+					<el-form-item
+						label="蓝奏云盘"
+						v-if="checkList.indexOf('蓝奏云盘') >= 0"
+					>
+						<el-input
+							v-model="dialogForm.lanzouyun"
+							autocomplete="off"
+						></el-input>
+					</el-form-item>
+					<el-form-item
+						label="天翼云盘"
+						v-if="checkList.indexOf('天翼云盘') >= 0"
+					>
+						<el-input
+							v-model="dialogForm.tianyiyun"
+							autocomplete="off"
+						></el-input>
+					</el-form-item>
+					<el-form-item label="网址" v-if="checkList.indexOf('网址') >= 0">
+						<el-input
+							v-model="dialogForm.website"
+							autocomplete="off"
+						></el-input>
+					</el-form-item>
+				</el-form-item>
+				<el-form-item>
+					<el-button @click="dialogFormVisible = false">取 消</el-button>
+					<el-button type="primary" @click="submitForm('dialogForm')"
+						>确 定</el-button
+					>
+				</el-form-item>
+			</el-form>
+		</el-dialog>
 	</div>
 </template>
 
 <script>
 import sectionTitle from "@/components/section-title";
 import Quote from "@/components/quote";
-import { fetchResource, fetchResourceType } from "@/api/resource";
+import {
+	fetchResource,
+	fetchResourceType,
+	replyResource,
+} from "@/api/resource";
 import TypeSelection from "../components/type-selection.vue";
+import { calculateIsLogin, getCurrentOauthUserInfo } from "@/utils/oauth";
+
 export default {
 	name: "Friend",
 	data() {
@@ -132,6 +242,17 @@ export default {
 			layout: "total, sizes, prev, pager, next, jumper",
 			total: 0,
 			resourceTypeList: [],
+			dialogFormVisible: false,
+			dialogForm: {},
+			checkList: [],
+			dialogRules: {
+				name: [{ required: true, message: "请输入资源名称", trigger: "blur" }],
+				resource_type: [
+					{ required: true, message: "请选择资源类型", trigger: "change" },
+				],
+			},
+			isLogin: false,
+			authUserInfo: {},
 		};
 	},
 	components: {
@@ -203,10 +324,45 @@ export default {
 		errorHandler() {
 			return true;
 		},
+		// 提交资源上传申请
+		openReplyModal() {
+			this.dialogFormVisible = true;
+		},
+		handleBeforeClose() {
+			this.dialogForm = {};
+			this.checkList = [];
+		},
+		// 提交资源申请表单
+		submitForm(formName) {
+			this.$refs[formName].validate(async (valid) => {
+				if (valid) {
+					try {
+						this.authUserInfo = getCurrentOauthUserInfo();
+						const res = await replyResource({
+							...this.dialogForm,
+							reply_user_id: this.authUserInfo.id,
+						});
+						if (res.status === 200) {
+							this.$message.success(
+								"资源共享申请提交成功！我们将在1-3个工作日内进行审核，感谢您的大力支持！"
+							);
+							this.dialogFormVisible = false;
+						} else {
+							this.$message.error(res.errors);
+						}
+					} catch (error) {
+						this.$message.error(error);
+					}
+				} else {
+					return false;
+				}
+			});
+		},
 	},
 	created() {
 		this.fetchResource();
 		this.getResourceType();
+		this.isLogin = calculateIsLogin();
 	},
 	mounted() {
 		this.getWebSiteInfo();
@@ -235,6 +391,9 @@ export default {
 		.search_input {
 			float: left;
 			width: 250px;
+			:deep(.el-input__inner) {
+				border-radius: 20px;
+			}
 		}
 
 		.search_btn {

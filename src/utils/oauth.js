@@ -7,7 +7,7 @@ export const oauth = {
 	},
 	gitee_test: {
 		GITEE_CLIENT_ID: `16b744f6521390adfe7653334b1f2227d40e047191a01852575454cf59444d19`,
-		REDIRECT_URI: `http://localhost:8890/`,
+		REDIRECT_URI: `http://localhost:8891/`,
 	},
 	github: {
 		GITHUB_CLIENT_ID: `6f69dc8edcbaf3780541`,

@@ -52,3 +52,24 @@ export function fetchResourceType() {
 		method: "get",
 	});
 }
+
+/**
+ * 提交资源申请
+ * @method put
+ * @param {string} name 资源名称 √
+ * @param {string} reply_user_id 资源申请者id √
+ * @param {number} resource_type 资源类型 √
+ * @param {string} baidu 百度链接
+ * @param {string} aliyun 阿里链接
+ * @param {string} kuake 夸克链接
+ * @param {string} lanzouyun 蓝奏云链接
+ * @param {string} tianyiyun 天翼云链接
+ * @param {string} website 网址
+ */
+export function replyResource(data) {
+	return request({
+		url: "/resource/reply/add",
+		method: "put",
+		data,
+	});
+}
