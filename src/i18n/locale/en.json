@@ -55,7 +55,8 @@
     },
     "resource": {
       "placeholder": "Search resources start from here···",
-      "name": "Resource Name"
+      "name": "Resource Name",
+      "publisher": "Publisher"
     },
     "about": {
       "title": "About Blog",

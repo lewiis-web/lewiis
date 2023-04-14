@@ -28,6 +28,23 @@
 			<div class="statement" v-for="item in list" :key="item.id">
 				<quote>
 					<p>{{ $t("index.resource.name") }}：{{ item.name }}</p>
+					<div style="display: flex; align-items: center">
+						<p>
+							{{ $t("index.resource.publisher") }}：{{
+								item.publisher_info.username
+							}}
+						</p>
+						<el-avatar
+							:size="48"
+							:src="item.publisher_info.avatar"
+							@error="errorHandler"
+							style="margin-left: 12px"
+						>
+							<img
+								src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
+							/>
+						</el-avatar>
+					</div>
 				</quote>
 				<el-tabs type="border-card" class="tabname">
 					<el-tab-pane v-if="item.baidu" label="百度网盘">
@@ -182,6 +199,9 @@ export default {
 			}
 			this.queryForm.pageNum = 1;
 			this.fetchResource();
+		},
+		errorHandler() {
+			return true;
 		},
 	},
 	created() {

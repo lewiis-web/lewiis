@@ -55,7 +55,8 @@
     },
     "resource": {
       "placeholder": "搜索资源从这里开始···",
-      "name": "资源名称"
+      "name": "资源名称",
+      "publisher": "发布者"
     },
     "about": {
       "title": "关于博客",
