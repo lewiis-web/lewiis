@@ -73,3 +73,23 @@ export function replyResource(data) {
 		data,
 	});
 }
+
+/**
+ * 获取个人资源共享申请列表
+ * @method get
+ * @param {string} userId 用户id √
+ */
+export function fetchPersonalResourceReply(userId) {
+	return request({
+		url: `/resource/reply/mine/${userId}`,
+		method: "get",
+	});
+}
+
+// 删除个人资源共享申请
+export function deletePersonalResourceReply(id) {
+	return request({
+		url: `/resource/reply/${id}`,
+		method: "delete",
+	});
+}

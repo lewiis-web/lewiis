@@ -10,7 +10,10 @@
       "languages": {
         "en": "English",
         "zh": "简体中文"
-      }
+      },
+      "login": "登录",
+      "logout": "注销登录",
+      "resource_sharing_apply": "资源共享申请"
     },
     "category": [
       {
@@ -57,6 +60,28 @@
       "placeholder": "搜索资源从这里开始···",
       "name": "资源名称",
       "publisher": "发布者"
+    },
+    "resourceReply": {
+      "title": "资源共享申请",
+      "apply": "共享资源",
+      "empty_description": "暂无数据",
+      "dialogForm": {
+        "title": "资源共享",
+        "name_label": "资源名称",
+        "type_label": "资源类型",
+        "link_label": "资源链接",
+        "name_placeholder": "请输入资源名称",
+        "type_placeholder": "请选择资源类型",
+        "label_width": "100px",
+        "confirm": "确定",
+        "cancel": "取消",
+        "baidu": "百度网盘",
+        "aliyun": "阿里云盘",
+        "lanzouyun": "蓝奏云",
+        "tianyiyun": "天翼云盘",
+        "kuake": "夸克网盘",
+        "website": "网址"
+      }
     },
     "about": {
       "title": "关于博客",

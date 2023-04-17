@@ -66,7 +66,7 @@
 				</div>
 			</div>
 			<div class="menu-item hasChild" v-if="!isLogin">
-				<a href="#">登录</a>
+				<a href="#">{{ $t("index.menu.login") }}</a>
 				<div class="childMenu">
 					<div
 						class="sub-menu"
@@ -79,6 +79,7 @@
 			</div>
 			<div class="menu-item hasChild" v-else>
 				<el-avatar
+					class="header_avatar"
 					:src="
 						Object.keys(sqlUserInfo).length > 0
 							? sqlUserInfo.avatar ||
@@ -92,7 +93,12 @@
 				}}</a>
 				<div class="childMenu">
 					<div class="sub-menu">
-						<a @click="logout">注销登录</a>
+						<a @click="goResourceReply">{{
+							$t("index.menu.resource_sharing_apply")
+						}}</a>
+					</div>
+					<div class="sub-menu">
+						<a @click="logout">{{ $t("index.menu.logout") }}</a>
 					</div>
 				</div>
 			</div>
@@ -139,7 +145,7 @@ export default {
 				{ name: "微博", value: "weibo" },
 				{ name: "华为", value: "huawei" },
 				{ name: "百度", value: "baidu" },
-				// { name: "Gitee测试", value: "gitee_test" },
+				{ name: "Gitee测试", value: "gitee_test" },
 			],
 			queryObj: {},
 			currentUserInfo: {},
@@ -557,6 +563,10 @@ export default {
 			sessionStorage.removeItem("sqlUserInfo");
 			localStorage.removeItem("currentUserPlatform");
 			window.location.reload();
+		},
+		// 跳转到资源共享申请页
+		goResourceReply() {
+			this.$router.push("resourceReply");
 		},
 	},
 };

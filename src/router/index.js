@@ -47,6 +47,12 @@ const routes = [
 		component: () => import("@/views/Resource.vue"),
 		meta: { title: "资源" },
 	},
+	{
+		path: "/resourceReply",
+		name: "resourceReply",
+		component: () => import("@/views/ResourceReply"),
+		meta: { title: "资源共享申请" },
+	},
 ];
 
 const router = new VueRouter({

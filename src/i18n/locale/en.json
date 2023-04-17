@@ -10,7 +10,10 @@
       "languages": {
         "en": "English",
         "zh": "简体中文"
-      }
+      },
+      "login": "Login",
+      "logout": "Logout",
+      "resource_sharing_apply": "Resource Sharing Apply"
     },
     "category": [
       {
@@ -54,9 +57,31 @@
       "desc": "Short Description"
     },
     "resource": {
-      "placeholder": "Search resources start from here···",
+      "title": "Search resources start from here···",
       "name": "Resource Name",
       "publisher": "Publisher"
+    },
+    "resourceReply": {
+      "title": "Resource Sharing Application",
+      "apply": "Apply",
+      "empty_description": "Temporarily no data",
+      "dialogForm": {
+        "title": "Resource Sharing",
+        "name_label": "Resource Name",
+        "type_label": "Resource Type",
+        "link_label": "Resource Link",
+        "name_placeholder": "Please input the name of the resource",
+        "type_placeholder": "Please select the resource type",
+        "label_width": "150px",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "baidu": "Baidu Netdisk",
+        "aliyun": "aDrive",
+        "lanzouyun": "Lanzou Cloud",
+        "tianyiyun": "Tianyi Cloud Disk",
+        "kuake": "Quark Cloud Disk",
+        "website": "Website"
+      }
     },
     "about": {
       "title": "About Blog",
