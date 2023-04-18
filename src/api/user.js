@@ -67,3 +67,30 @@ export function fetchUserInfoByUnpt(data) {
 		data,
 	});
 }
+
+/**
+ * 更新用户积分
+ * @method put
+ * @param {string} id 用户id
+ * @param {number} operate_type 操作类型(0-减少 1-增加)
+ * @param {number} operate_num 操作数量
+ */
+export function updateIntegral(data) {
+	return request({
+		url: "/user/integral/update",
+		method: "put",
+		data,
+	});
+}
+
+/**
+ * 根据id获取用户信息
+ * @method get
+ * @param {string} userId 用户id
+ */
+export function fetchUserInfoByUserId(userId) {
+	return request({
+		url: `/user/info/${userId}`,
+		method: "get",
+	});
+}
