@@ -118,7 +118,7 @@ import {
 	fetchOauthUserInfoByGiteeTest,
 	fetchOauthUserInfoByWeibo,
 } from "@/api/oauth";
-import { register, fetchUserInfoByUnpt } from "@/api/user";
+import { register, portalLogin, fetchUserInfoByUnpt } from "@/api/user";
 import {
 	oauth,
 	calculateIsLogin,
@@ -318,7 +318,7 @@ export default {
 							user_page: html_url,
 							email,
 						});
-					}, 1500);
+					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
 						const ret = await fetchUserInfoByUnpt({
@@ -329,8 +329,18 @@ export default {
 						if (ret.status == 200) {
 							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
 							this.sqlUserInfo = res.data;
+							this.$store.dispatch("setProgress", true);
 						}
-					}, 3000);
+					}, 1000);
+					setTimeout(async () => {
+						const ret1 = await portalLogin({
+							username: name,
+							password: "123456",
+						});
+						if (ret1.code === 200) {
+							sessionStorage.setItem("token", ret1.data.token);
+						}
+					}, 1500);
 				} else {
 					this.isLogin = false;
 				}
@@ -371,8 +381,18 @@ export default {
 						if (ret.status == 200) {
 							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
 							this.sqlUserInfo = res.data;
+							this.$store.dispatch("setProgress", true);
 						}
 					}, 1000);
+					setTimeout(async () => {
+						const ret1 = await portalLogin({
+							username: name,
+							password: "123456",
+						});
+						if (ret1.code === 200) {
+							sessionStorage.setItem("token", ret1.data.token);
+						}
+					}, 1500);
 				} else {
 					this.isLogin = false;
 				}
@@ -402,7 +422,7 @@ export default {
 							user_page: html_url,
 							email,
 						});
-					}, 1500);
+					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
 						const ret = await fetchUserInfoByUnpt({
@@ -413,8 +433,18 @@ export default {
 						if (ret.status == 200) {
 							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
 							this.sqlUserInfo = res.data;
+							this.$store.dispatch("setProgress", true);
 						}
-					}, 3000);
+					}, 1000);
+					setTimeout(async () => {
+						const ret1 = await portalLogin({
+							username: name,
+							password: "123456",
+						});
+						if (ret1.code === 200) {
+							sessionStorage.setItem("token", ret1.data.token);
+						}
+					}, 1500);
 				} else {
 					this.isLogin = false;
 				}
@@ -450,7 +480,7 @@ export default {
 							user_page: "",
 							email,
 						});
-					}, 1500);
+					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
 						const ret = await fetchUserInfoByUnpt({
@@ -461,8 +491,18 @@ export default {
 						if (ret.status == 200) {
 							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
 							this.sqlUserInfo = res.data;
+							this.$store.dispatch("setProgress", true);
 						}
-					}, 3000);
+					}, 1000);
+					setTimeout(async () => {
+						const ret1 = await portalLogin({
+							username: name,
+							password: "123456",
+						});
+						if (ret1.code === 200) {
+							sessionStorage.setItem("token", ret1.data.token);
+						}
+					}, 1500);
 				} else {
 					this.isLogin = false;
 				}
@@ -498,7 +538,7 @@ export default {
 							user_page: "",
 							email,
 						});
-					}, 1500);
+					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
 						const ret = await fetchUserInfoByUnpt({
@@ -509,8 +549,18 @@ export default {
 						if (ret.status == 200) {
 							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
 							this.sqlUserInfo = res.data;
+							this.$store.dispatch("setProgress", true);
 						}
-					}, 3000);
+					}, 1000);
+					setTimeout(async () => {
+						const ret1 = await portalLogin({
+							username: name,
+							password: "123456",
+						});
+						if (ret1.code === 200) {
+							sessionStorage.setItem("token", ret1.data.token);
+						}
+					}, 1500);
 				} else {
 					this.isLogin = false;
 				}
@@ -540,7 +590,7 @@ export default {
 							user_page: domain,
 							email,
 						});
-					}, 1500);
+					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
 						const ret = await fetchUserInfoByUnpt({
@@ -551,8 +601,18 @@ export default {
 						if (ret.status == 200) {
 							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
 							this.sqlUserInfo = res.data;
+							this.$store.dispatch("setProgress", true);
 						}
-					}, 3000);
+					}, 1000);
+					setTimeout(async () => {
+						const ret1 = await portalLogin({
+							username: name,
+							password: "123456",
+						});
+						if (ret1.code === 200) {
+							sessionStorage.setItem("token", ret1.data.token);
+						}
+					}, 1500);
 				} else {
 					this.isLogin = false;
 				}
@@ -561,12 +621,13 @@ export default {
 		// 注销
 		logout() {
 			sessionStorage.removeItem("sqlUserInfo");
+			sessionStorage.removeItem("token");
 			localStorage.removeItem("currentUserPlatform");
 			window.location.reload();
 		},
 		// 跳转到资源共享申请页
 		goResourceReply() {
-			this.$router.push("resourceReply");
+			this.$router.push("/resourceReply");
 		},
 	},
 };

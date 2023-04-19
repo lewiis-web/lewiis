@@ -3,7 +3,7 @@
 		<router-view> </router-view>
 		<back-top></back-top>
 		<el-progress
-			v-if="isShowProgress"
+			v-if="isShowProgress1"
 			:width="80"
 			:stroke-width="8"
 			type="circle"
@@ -29,49 +29,65 @@ export default {
 			minHeight: 600,
 			isFocus: true,
 			progress: 0,
-			isShowProgress: true,
+			isShowProgress1: false,
 		};
+	},
+	computed: {
+		isShowProgress() {
+			return this.$store.state.isShowProgress;
+		},
+	},
+	watch: {
+		// 是否显示进度条
+		isShowProgress: {
+			immediate: true,
+			deep: true,
+			handler(newVal) {
+				clearInterval(window.intervalTimer);
+				this.isShowProgress1 = newVal;
+				let sui = getCurrentOauthUserInfo();
+				if (sui.id) {
+					this.$store.dispatch("setProgress", true);
+					window.intervalTimer = setInterval(() => {
+						if (!window.noAction) {
+							if (this.progress >= 100) {
+								this.progress = 0;
+								this.updateUserIntegral();
+							} else {
+								this.progress += 100 / 60;
+							}
+						}
+					}, 1000);
+				} else {
+					this.$store.dispatch("setProgress", false);
+				}
+			},
+		},
 	},
 	components: { backTop },
 	created() {
+		clearInterval(window.intervalTimer);
 		let sui = getCurrentOauthUserInfo();
 		if (sui.id) {
-			this.isShowProgress = true;
-			clearInterval(window.timer);
-			window.onmousemove = () => {
-				this.isFocus = true;
-			};
-			window.onblur = () => {
-				this.isFocus = false;
-			};
-			window.onscroll = () => {
-				this.isFocus = true;
-			};
-			window.timer = setInterval(() => {
-				if (this.isFocus) {
+			this.$store.dispatch("setProgress", true);
+			window.intervalTimer = setInterval(() => {
+				if (!window.noAction) {
 					if (this.progress >= 100) {
 						this.updateUserIntegral();
-						this.isShowProgress = false;
-						setTimeout(() => {
-							this.isShowProgress = true;
-							this.progress = 0;
-						}, 0);
+						this.progress = 0;
 					} else {
-						this.progress += 1 / 12;
+						this.progress += 100 / 60;
 					}
-				} else {
-					this.progress += 0;
 				}
-			}, 50);
+			}, 1000);
 		} else {
-			this.isShowProgress = false;
+			this.$store.dispatch("setProgress", false);
 		}
 	},
 	methods: {
 		formatInsideText(progress) {
 			let sui = getCurrentOauthUserInfo();
 			return `💰 x ${sui.integral}`;
-			// return (progress * 0.6).toFixed(0);
 		},
 		// 积分+1
 		async updateUserIntegral() {
@@ -83,11 +99,6 @@ export default {
 					operate_num: 1,
 				});
 				if (res.status === 200) {
-					this.$notify({
-						title: "成功",
-						message: "积分+1",
-						type: "success",
-					});
 					this.getUserInfoByUserId();
 				} else {
 					this.$message.error(res.errors);
@@ -104,6 +115,12 @@ export default {
 				if (res.status === 200) {
 					const userInfoStr = JSON.stringify(res.data);
 					sessionStorage.setItem("sqlUserInfo", userInfoStr);
+					this.$notify({
+						title: `积分 + 1`,
+						dangerouslyUseHTMLString: true,
+						message: `当前总积分：<span style="color:#d81e06;font-size:16px;font-weight:600">${res.data.integral}</span>`,
+						type: "success",
+					});
 				} else {
 					this.$message.error(res.errors);
 				}

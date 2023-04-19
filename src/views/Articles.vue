@@ -13,18 +13,9 @@
 					<section-title>
 						<footer class="post-footer">
 							<!-- 下载按钮 -->
-							<div class="post-like">
+							<div class="post-like" v-if="isShowDownload">
 								<i class="el-icon-download"></i>
-								<el-popconfirm
-									confirm-button-text="好的"
-									cancel-button-text="不用了"
-									icon="el-icon-info"
-									icon-color="red"
-									title="确定下载吗？"
-									@confirm="downLoad(article)"
-								>
-									<span slot="reference">下载</span>
-								</el-popconfirm>
+								<a slot="reference" @click="downLoad(article)">下载</a>
 							</div>
 							<!-- 阅读次数 -->
 							<div class="post-like">
@@ -81,10 +72,13 @@ import {
 	addDownloadsCount,
 	addArticleLog,
 } from "../api/post";
-import { fetchComment } from "../api/comment";
+import { fetchComment } from "@/api/comment";
+import { fetchUserInfoByUserId, updateIntegral } from "@/api/user";
 import { env } from "process";
 // 引入docx-preview插件
 import { Loading } from "element-ui";
+// 引入oauth
+import { getCurrentOauthUserInfo } from "@/utils/oauth";
 
 let loading;
 let docx = require("docx-preview");
@@ -104,6 +98,8 @@ export default {
 			},
 			commentList: [],
 			currentArticleId: "",
+			currentUserInfo: {},
+			isShowDownload: false,
 		};
 	},
 	components: {
@@ -113,6 +109,27 @@ export default {
 		Comment,
 	},
 	methods: {
+		// 从缓存获取当前用户信息
+		async getCurrentUserInfo() {
+			try {
+				let cui = getCurrentOauthUserInfo();
+				if (cui && cui.id) {
+					this.isShowDownload = true;
+					const res = await fetchUserInfoByUserId(cui.id);
+					if (res.status === 200) {
+						this.currentUserInfo = res.data;
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
+					} else {
+						this.$message.error(res.errors);
+					}
+				} else {
+					this.isShowDownload = false;
+					this.currentUserInfo = {};
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
 		// 文章访问量+1
 		addViewsCount() {
 			addViewsCount({ articleId: this.article.id })
@@ -146,32 +163,57 @@ export default {
 		},
 		// 下载
 		downLoad(article) {
-			if (article.article_type) {
-				require("downloadjs")(
-					article.content,
-					`${article.title}.md`,
-					"text/plain"
-				);
-			} else {
-				// 下载文件
-				this.$axios({
-					method: "get",
-					responseType: "blob", // 因为是流文件，所以要指定blob类型
-					url: `${process.env.VUE_APP_BASE_API}/getDoc?articleName=${article.content}`, // 自己的服务器，提供的一个word下载文件接口
-				}).then(({ data }) => {
-					const blob = new Blob([data]); // 把得到的结果用流对象转一下
-					var a = document.createElement("a"); //创建一个<a></a>标签
-					a.href = URL.createObjectURL(blob); // 将流文件写入a标签的href属性值
-					a.download = `${article.content}.docx`; //设置文件名
-					a.style.display = "none"; // 障眼法藏起来a标签
-					document.body.appendChild(a); // 将a标签追加到文档对象中
-					a.click(); // 模拟点击了a标签，会触发a标签的href的读取，浏览器就会自动下载了
-					a.remove(); // 一次性的，用完就删除a标签
+			this.$confirm("您确定要花费 20积分 下载该博客吗?", "提示", {
+				confirmButtonText: "确定",
+				cancelButtonText: "取消",
+				type: "info",
+			}).then(async () => {
+				Promise.all([this.getCurrentUserInfo()]).then(() => {
+					// 获取当前用户信息，得到用户积分
+					if (this.currentUserInfo.integral >= 10) {
+						if (article.article_type) {
+							require("downloadjs")(
+								article.content,
+								`${article.title}.md`,
+								"text/plain"
+							);
+							// 消耗20积分
+							this.updateIntegral({
+								userId: this.currentUserInfo.id,
+								operate_num: 20,
+								operate_type: 0,
+							});
+						} else {
+							// 下载文件
+							this.$axios({
+								method: "get",
+								responseType: "blob", // 因为是流文件，所以要指定blob类型
+								url: `${process.env.VUE_APP_BASE_API}/getDoc?articleName=${article.content}`, // 自己的服务器，提供的一个word下载文件接口
+							}).then(({ data }) => {
+								const blob = new Blob([data]); // 把得到的结果用流对象转一下
+								var a = document.createElement("a"); //创建一个<a></a>标签
+								a.href = URL.createObjectURL(blob); // 将流文件写入a标签的href属性值
+								a.download = `${article.content}.docx`; //设置文件名
+								a.style.display = "none"; // 障眼法藏起来a标签
+								document.body.appendChild(a); // 将a标签追加到文档对象中
+								a.click(); // 模拟点击了a标签，会触发a标签的href的读取，浏览器就会自动下载了
+								a.remove(); // 一次性的，用完就删除a标签
+								// 消耗20积分
+								this.updateIntegral({
+									userId: this.currentUserInfo.id,
+									operate_num: 20,
+									operate_type: 0,
+								});
+							});
+						}
+						// 调用接口增加文章下载数量
+						this.increaseDownloadsCount(article.id);
+						this.appendArticleLog(1);
+					} else {
+						this.$message.error("积分余额不足！");
+					}
 				});
-			}
-			// 调用接口增加文章下载数量
-			this.increaseDownloadsCount(article.id);
-			this.appendArticleLog(1);
+			});
 		},
 		// 文章下载量+1
 		async increaseDownloadsCount(articleId) {
@@ -230,6 +272,17 @@ export default {
 				this.$message.error(error);
 			}
 		},
+		// 更新积分
+		async updateIntegral(data) {
+			try {
+				const ret = await updateIntegral(data);
+				if (ret.status === 200) {
+					this.getCurrentUserInfo();
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
 	},
 	mounted() {},
 	created() {
@@ -237,9 +290,10 @@ export default {
 		loading = Loading.service({
 			//开始loading加载动画
 			lock: true,
-			text: "报告文件加载中...",
+			text: "文章加载中...",
 			background: "rgba(0, 0, 0, 0)",
 		});
+		this.getCurrentUserInfo();
 		this.getArticle();
 		this.getComment();
 	},
@@ -331,6 +385,10 @@ article.hentry {
 
 			& span:hover {
 				cursor: pointer;
+				color: red;
+				font-weight: 500;
+			}
+			& a:hover {
 				color: red;
 				font-weight: 500;
 			}

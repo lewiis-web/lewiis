@@ -1,14 +1,14 @@
 import request from "@/utils/request";
 
 /**
- * 登录
+ * 门户登录
  * @method POST
  * @param {string} username 用户名
  * @param {string} password 密码
  */
-export function login(data) {
+export function portalLogin(data) {
 	return request({
-		url: "/login",
+		url: "/portal/login",
 		method: "post",
 		data,
 	});
@@ -71,7 +71,7 @@ export function fetchUserInfoByUnpt(data) {
 /**
  * 更新用户积分
  * @method put
- * @param {string} id 用户id
+ * @param {string} userId 用户id
  * @param {number} operate_type 操作类型(0-减少 1-增加)
  * @param {number} operate_num 操作数量
  */
@@ -79,6 +79,11 @@ export function updateIntegral(data) {
 	return request({
 		url: "/user/integral/update",
 		method: "put",
+		headers: {
+			authorization: `Bearer ${
+				sessionStorage.getItem("token") ? sessionStorage.getItem("token") : ""
+			}`,
+		},
 		data,
 	});
 }

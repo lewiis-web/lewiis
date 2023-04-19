@@ -13,6 +13,7 @@ const state = {
 	socials: "",
 	websiteInfo: "",
 	bms: false,
+	isShowProgress: false,
 };
 const mutations = {
 	SET_LOADING: (state, v) => {
@@ -35,6 +36,9 @@ const mutations = {
 			}, 1000);
 		}
 	},
+	SET_PROGRESS: (state, v) => {
+		state.isShowProgress = v;
+	},
 };
 const actions = {
 	setLoading: ({ commit }, v) => {
@@ -42,6 +46,9 @@ const actions = {
 	},
 	setBms: ({ commit }, v) => {
 		commit("SET_BMS", v);
+	},
+	setProgress: ({ commit }, v) => {
+		commit("SET_PROGRESS", v);
 	},
 	initComputeTime: ({ commit }) => {
 		commit("GET_RUNTIME_INTERVAL");
