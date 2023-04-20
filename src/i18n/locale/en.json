@@ -13,7 +13,9 @@
       },
       "login": "Login",
       "logout": "Logout",
-      "resource_sharing_apply": "Resource Sharing Apply"
+      "resource_sharing_apply": "Resource Sharing Apply",
+      "cdk": "CDK Exchange Center",
+      "exchange_records": "Exchange Records"
     },
     "category": [
       {

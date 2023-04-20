@@ -13,7 +13,9 @@
       },
       "login": "登录",
       "logout": "注销登录",
-      "resource_sharing_apply": "资源共享申请"
+      "resource_sharing_apply": "资源共享申请",
+      "cdk": "CDK兑换中心",
+      "exchange_records": "兑换记录"
     },
     "category": [
       {

@@ -53,6 +53,12 @@ const routes = [
 		component: () => import("@/views/ResourceReply"),
 		meta: { title: "资源共享申请" },
 	},
+	{
+		path: "/cdkExchangeCenter",
+		name: "cdkExchangeCenter",
+		component: () => import("@/views/CdkExchangeCenter"),
+		meta: { title: "CDK兑换中心" },
+	},
 ];
 
 const router = new VueRouter({

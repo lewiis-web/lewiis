@@ -98,6 +98,9 @@
 						}}</a>
 					</div>
 					<div class="sub-menu">
+						<a @click="goCdkCenter">{{ $t("index.menu.cdk") }}</a>
+					</div>
+					<div class="sub-menu">
 						<a @click="logout">{{ $t("index.menu.logout") }}</a>
 					</div>
 				</div>
@@ -628,6 +631,10 @@ export default {
 		// 跳转到资源共享申请页
 		goResourceReply() {
 			this.$router.push("/resourceReply");
+		},
+		// 跳转到cdk兑换中心
+		goCdkCenter() {
+			this.$router.push("/cdkExchangeCenter");
 		},
 	},
 };

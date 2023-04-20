@@ -293,6 +293,7 @@ import {
 	publishComment,
 	deleteOwnComment,
 } from "@/api/comment";
+import { fetchUserInfoByUserId } from "@/api/user";
 import { Base64 } from "js-base64";
 import { calculateIsLogin, getCurrentOauthUserInfo } from "@/utils/oauth";
 
@@ -394,6 +395,7 @@ export default {
 						this.$message.success("发表成功！");
 						this.textarea = "";
 						this.$emit("updateComment");
+						this.getCurrentUserInfo();
 					} else {
 						this.$message.error(ret.errors);
 					}
@@ -445,6 +447,7 @@ export default {
 					this.$emit("updateComment");
 					this.replyArea = "";
 					this.replyVisible = false;
+					this.getCurrentUserInfo();
 				} else {
 					this.$message.error(res.errors);
 				}
@@ -500,6 +503,22 @@ export default {
 						message: "已取消删除操作",
 					});
 				});
+		},
+		// 获取个人信息
+		async getCurrentUserInfo() {
+			try {
+				let cui = getCurrentOauthUserInfo();
+				if (cui && cui.id) {
+					const res = await fetchUserInfoByUserId(cui.id);
+					if (res.status === 200) {
+						sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
+					} else {
+						this.$message.error(res.errors);
+					}
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
 		},
 	},
 };
