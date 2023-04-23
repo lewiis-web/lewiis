@@ -340,8 +340,8 @@ export default {
 							username: name,
 							password: "123456",
 						});
-						if (ret1.code === 200) {
-							sessionStorage.setItem("token", ret1.data.token);
+						if (res1.code === 200) {
+							sessionStorage.setItem("token", res1.data.token);
 						}
 					}, 1500);
 				} else {
@@ -392,8 +392,8 @@ export default {
 							username: name,
 							password: "123456",
 						});
-						if (ret1.code === 200) {
-							sessionStorage.setItem("token", ret1.data.token);
+						if (res1.code === 200) {
+							sessionStorage.setItem("token", res1.data.token);
 						}
 					}, 1500);
 				} else {
@@ -444,8 +444,8 @@ export default {
 							username: name,
 							password: "123456",
 						});
-						if (ret1.code === 200) {
-							sessionStorage.setItem("token", ret1.data.token);
+						if (res1.code === 200) {
+							sessionStorage.setItem("token", res1.data.token);
 						}
 					}, 1500);
 				} else {
@@ -502,8 +502,8 @@ export default {
 							username: name,
 							password: "123456",
 						});
-						if (ret1.code === 200) {
-							sessionStorage.setItem("token", ret1.data.token);
+						if (res1.code === 200) {
+							sessionStorage.setItem("token", res1.data.token);
 						}
 					}, 1500);
 				} else {
@@ -560,8 +560,8 @@ export default {
 							username: name,
 							password: "123456",
 						});
-						if (ret1.code === 200) {
-							sessionStorage.setItem("token", ret1.data.token);
+						if (res1.code === 200) {
+							sessionStorage.setItem("token", res1.data.token);
 						}
 					}, 1500);
 				} else {
@@ -612,8 +612,8 @@ export default {
 							username: name,
 							password: "123456",
 						});
-						if (ret1.code === 200) {
-							sessionStorage.setItem("token", ret1.data.token);
+						if (res1.code === 200) {
+							sessionStorage.setItem("token", res1.data.token);
 						}
 					}, 1500);
 				} else {
