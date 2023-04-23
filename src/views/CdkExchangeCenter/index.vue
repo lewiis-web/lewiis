@@ -169,7 +169,7 @@ export default {
 								cdkId: this.ruleForm.cdkId,
 								claimUserId: this.authUserInfo.id,
 							});
-							if (res.status === 200) {
+							if (res.code === 200) {
 								this.$message.success(`CD-KEY兑换成功！`);
 								this.resetForm("ruleForm");
 							} else {

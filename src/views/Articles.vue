@@ -116,7 +116,7 @@ export default {
 				if (cui && cui.id) {
 					this.isShowDownload = true;
 					const res = await fetchUserInfoByUserId(cui.id);
-					if (res.status === 200) {
+					if (res.code === 200) {
 						this.currentUserInfo = res.data;
 						sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 					} else {
@@ -243,7 +243,7 @@ export default {
 		async getArticle() {
 			try {
 				const res = await fetchArticle(this.$route.params.id);
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.article = res.data;
 					if (!this.article.article_type) {
 						this.goPreview(this.article);
@@ -263,7 +263,7 @@ export default {
 		async getComment() {
 			try {
 				const res = await fetchComment(this.currentArticleId);
-				if (res.status === 200) {
+				if (res.code === 200) {
 					this.commentList = res.data;
 				} else {
 					this.$message.error(res.errors);
@@ -275,8 +275,8 @@ export default {
 		// 更新积分
 		async updateIntegral(data) {
 			try {
-				const ret = await updateIntegral(data);
-				if (ret.status === 200) {
+				const res = await updateIntegral(data);
+				if (res.code === 200) {
 					this.getCurrentUserInfo();
 				}
 			} catch (error) {

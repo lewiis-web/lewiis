@@ -253,7 +253,7 @@ export default {
 		async getCategories() {
 			try {
 				const res = await fetchCategories();
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.categories = res.data;
 				} else {
 					this.$message.error(res.errors);
@@ -305,7 +305,7 @@ export default {
 				this.sqlUserInfo = sqlUserInfo;
 			} else {
 				const res = await fetchOauthUserInfoByGitee(code);
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.currentUserInfo = res.data;
 					this.isLogin = true;
 					const { name, avatar_url, html_url, email } = this.currentUserInfo;
@@ -324,19 +324,19 @@ export default {
 					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
-						const ret = await fetchUserInfoByUnpt({
+						const res = await fetchUserInfoByUnpt({
 							username: this.currentUserInfo.name,
 							user_type: 0,
 							user_platform,
 						});
-						if (ret.status == 200) {
-							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						if (res.code === 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 							this.sqlUserInfo = res.data;
 							this.$store.dispatch("setProgress", true);
 						}
 					}, 1000);
 					setTimeout(async () => {
-						const ret1 = await portalLogin({
+						const res1 = await portalLogin({
 							username: name,
 							password: "123456",
 						});
@@ -357,7 +357,7 @@ export default {
 				this.sqlUserInfo = sqlUserInfo;
 			} else {
 				const res = await fetchOauthUserInfoByGiteeTest(code);
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.currentUserInfo = res.data;
 					this.isLogin = true;
 					const { name, avatar_url, html_url, email } = this.currentUserInfo;
@@ -376,19 +376,19 @@ export default {
 					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
-						const ret = await fetchUserInfoByUnpt({
+						const res = await fetchUserInfoByUnpt({
 							username: this.currentUserInfo.name,
 							user_type: 0,
 							user_platform,
 						});
-						if (ret.status == 200) {
-							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						if (res.code === 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 							this.sqlUserInfo = res.data;
 							this.$store.dispatch("setProgress", true);
 						}
 					}, 1000);
 					setTimeout(async () => {
-						const ret1 = await portalLogin({
+						const res1 = await portalLogin({
 							username: name,
 							password: "123456",
 						});
@@ -409,7 +409,7 @@ export default {
 				this.sqlUserInfo = sqlUserInfo;
 			} else {
 				const res = await fetchOauthUserInfoByGithub(code);
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.currentUserInfo = res.data;
 					this.isLogin = true;
 					const { name, avatar_url, html_url, email } = this.currentUserInfo;
@@ -428,19 +428,19 @@ export default {
 					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
-						const ret = await fetchUserInfoByUnpt({
+						const res = await fetchUserInfoByUnpt({
 							username: this.currentUserInfo.name,
 							user_type: 0,
 							user_platform,
 						});
-						if (ret.status == 200) {
-							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						if (res.code === 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 							this.sqlUserInfo = res.data;
 							this.$store.dispatch("setProgress", true);
 						}
 					}, 1000);
 					setTimeout(async () => {
-						const ret1 = await portalLogin({
+						const res1 = await portalLogin({
 							username: name,
 							password: "123456",
 						});
@@ -463,7 +463,7 @@ export default {
 				const res = await fetchOauthUserInfoByHuawei({
 					code,
 				});
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.currentUserInfo = {
 						name: res.data.displayName,
 						avatar_url: res.data.headPictureURL,
@@ -486,19 +486,19 @@ export default {
 					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
-						const ret = await fetchUserInfoByUnpt({
+						const res = await fetchUserInfoByUnpt({
 							username: this.currentUserInfo.name,
 							user_type: 0,
 							user_platform,
 						});
-						if (ret.status == 200) {
-							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						if (res.code === 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 							this.sqlUserInfo = res.data;
 							this.$store.dispatch("setProgress", true);
 						}
 					}, 1000);
 					setTimeout(async () => {
-						const ret1 = await portalLogin({
+						const res1 = await portalLogin({
 							username: name,
 							password: "123456",
 						});
@@ -521,7 +521,7 @@ export default {
 				const res = await fetchOauthUserInfoByBaidu({
 					code,
 				});
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.currentUserInfo = {
 						name: res.data.username,
 						avatar_url: `https://himg.bdimg.com/sys/portrait/item/${res.data.portrait}`,
@@ -544,19 +544,19 @@ export default {
 					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
-						const ret = await fetchUserInfoByUnpt({
+						const res = await fetchUserInfoByUnpt({
 							username: this.currentUserInfo.name,
 							user_type: 0,
 							user_platform,
 						});
-						if (ret.status == 200) {
-							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						if (res.code === 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 							this.sqlUserInfo = res.data;
 							this.$store.dispatch("setProgress", true);
 						}
 					}, 1000);
 					setTimeout(async () => {
-						const ret1 = await portalLogin({
+						const res1 = await portalLogin({
 							username: name,
 							password: "123456",
 						});
@@ -577,7 +577,7 @@ export default {
 				this.sqlUserInfo = sqlUserInfo;
 			} else {
 				const res = await fetchOauthUserInfoByWeibo(code);
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.currentUserInfo = res.data;
 					this.isLogin = true;
 					const { name, avatar_hd, domain, email = "" } = this.currentUserInfo;
@@ -596,19 +596,19 @@ export default {
 					}, 500);
 					setTimeout(async () => {
 						history.replaceState(null, null, "/");
-						const ret = await fetchUserInfoByUnpt({
+						const res = await fetchUserInfoByUnpt({
 							username: this.currentUserInfo.name,
 							user_type: 0,
 							user_platform,
 						});
-						if (ret.status == 200) {
-							sessionStorage.setItem("sqlUserInfo", JSON.stringify(ret.data));
+						if (res.code === 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 							this.sqlUserInfo = res.data;
 							this.$store.dispatch("setProgress", true);
 						}
 					}, 1000);
 					setTimeout(async () => {
-						const ret1 = await portalLogin({
+						const res1 = await portalLogin({
 							username: name,
 							password: "123456",
 						});

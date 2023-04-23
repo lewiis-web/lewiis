@@ -156,8 +156,8 @@ export default {
 			this.$axios({
 				method: "get",
 				url: `https://api.muxiaoguo.cn/api/sjtx?method=pc`,
-			}).then((ret) => {
-				this.avatarUrl = ret.data.data.imgurl;
+			}).then((res) => {
+				this.avatarUrl = res.data.data.imgurl;
 			});
 		},
 	},

@@ -43,7 +43,7 @@ export default {
 		async getSiteInfo() {
 			try {
 				const res = await fetchSiteInfo();
-				if (res.status == 200) {
+				if (res.code === 200) {
 					let area_code = res.data.area_code;
 					area_code = area_code ? area_code.split("*")[2] : "141102";
 					this.getWeather(area_code);
@@ -112,7 +112,7 @@ export default {
 		async getAreaByLocation(lng, lat) {
 			try {
 				const res = await fetchAreaByLocation({ lng, lat });
-				if (res.status === 0) {
+				if (res.code === 0) {
 					this.areaInfo = res.result || {};
 					return this.areaInfo;
 				} else {
@@ -125,9 +125,9 @@ export default {
 		// 根据区县代码获取天气情况
 		async getWeather(district_id) {
 			try {
-				const ret = await fetchWeather({ district_id });
-				if (ret.status === 0) {
-					this.weatherInfo = ret.result;
+				const res = await fetchWeather({ district_id });
+				if (res.status === 0) {
+					this.weatherInfo = res.result;
 					const renderTarget = document.querySelector(".weather-icon");
 					const icon = new AnimatedWeatherIcon(renderTarget);
 					this.iconTitle = this.weatherInfo?.now?.text

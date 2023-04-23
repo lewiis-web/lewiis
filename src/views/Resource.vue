@@ -277,7 +277,7 @@ export default {
 		async getResourceType() {
 			try {
 				const res = await fetchResourceType();
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.resourceTypeList = res.data.sort((a, b) => {
 						return a.id * 1 - b.id * 1;
 					});
@@ -342,7 +342,7 @@ export default {
 							...this.dialogForm,
 							reply_user_id: this.authUserInfo.id,
 						});
-						if (res.status === 200) {
+						if (res.code === 200) {
 							this.$message.success(
 								"资源共享申请提交成功！我们将在1-3个工作日内进行审核，感谢您的大力支持！"
 							);

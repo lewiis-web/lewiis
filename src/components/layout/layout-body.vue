@@ -98,7 +98,7 @@ export default {
 					operate_type: 1,
 					operate_num: 1,
 				});
-				if (res.status === 200) {
+				if (res.code === 200) {
 					this.getUserInfoByUserId();
 				} else {
 					this.$message.error(res.errors);
@@ -112,7 +112,7 @@ export default {
 			try {
 				let sui = getCurrentOauthUserInfo();
 				const res = await fetchUserInfoByUserId(sui.id);
-				if (res.status === 200) {
+				if (res.code === 200) {
 					const userInfoStr = JSON.stringify(res.data);
 					sessionStorage.setItem("sqlUserInfo", userInfoStr);
 					this.$notify({

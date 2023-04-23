@@ -385,19 +385,19 @@ export default {
 				const sqlUserInfo = JSON.parse(sui);
 				if (this.textarea.trim()) {
 					//用户点击了ctrl+enter触发
-					const ret = await publishComment({
+					const res = await publishComment({
 						hierarchy: 1,
 						to_article_id: this.currentArticleId * 1,
 						comment_content: this.textarea.trim(),
 						comment_user_id: sqlUserInfo.id,
 					});
-					if (ret.status == 200) {
+					if (res.code === 200) {
 						this.$message.success("发表成功！");
 						this.textarea = "";
 						this.$emit("updateComment");
 						this.getCurrentUserInfo();
 					} else {
-						this.$message.error(ret.errors);
+						this.$message.error(res.errors);
 					}
 				}
 			} catch (error) {
@@ -442,7 +442,7 @@ export default {
 						? this.currentItem.comment_id
 						: "",
 				});
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.$message.success("回复成功！");
 					this.$emit("updateComment");
 					this.replyArea = "";
@@ -463,7 +463,7 @@ export default {
 		async hopComment(comment_id, comment_type) {
 			try {
 				const res = await handleHopComment({ comment_id, comment_type });
-				if (res.status == 200) {
+				if (res.code === 200) {
 					this.$emit("updateComment");
 				} else {
 					this.$message.error(res.errors);
@@ -482,12 +482,12 @@ export default {
 				.then(async () => {
 					const sui = sessionStorage.getItem("sqlUserInfo");
 					const sqlUserInfo = JSON.parse(sui);
-					const ret = await deleteOwnComment({
+					const res = await deleteOwnComment({
 						comment_id: item.comment_id,
 						comment_user_id: sqlUserInfo.id,
 						isDeleted: 1,
 					});
-					if (ret.status == 200) {
+					if (res.code === 200) {
 						this.$message({
 							type: "success",
 							message: "评论删除成功!",
@@ -510,7 +510,7 @@ export default {
 				let cui = getCurrentOauthUserInfo();
 				if (cui && cui.id) {
 					const res = await fetchUserInfoByUserId(cui.id);
-					if (res.status === 200) {
+					if (res.code === 200) {
 						sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
 					} else {
 						this.$message.error(res.errors);
