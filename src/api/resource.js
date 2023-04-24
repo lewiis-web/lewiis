@@ -93,3 +93,15 @@ export function deletePersonalResourceReply(id) {
 		method: "delete",
 	});
 }
+
+/**
+ * 获取个人解锁资源列表
+ * @method get
+ * @param {string} userId 用户id √
+ */
+export function fetchPersonalUnlockedResource(userId) {
+	return request({
+		url: `/resource/unlock/mine/${userId}`,
+		method: "get",
+	});
+}

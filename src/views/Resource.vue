@@ -56,53 +56,113 @@
 				</quote>
 				<el-tabs type="border-card" class="tabname">
 					<el-tab-pane v-if="item.baidu" label="百度网盘">
-						{{ item.baidu }}
-						<el-button
-							type="text"
-							icon="el-icon-copy-document"
-							@click="handleCopy(item.baidu)"
-						></el-button>
+						<div v-if="computeIsLocked(item.id, 'baidu')">
+							{{ item.baidu }}
+							<el-button
+								type="text"
+								icon="el-icon-copy-document"
+								@click="handleCopy(item.baidu)"
+							></el-button>
+						</div>
+						<el-link
+							v-else
+							type="success"
+							icon="el-icon-unlock"
+							@click="handleUnlock('baidu')"
+							:underline="false"
+							>解锁</el-link
+						>
 					</el-tab-pane>
-					<el-tab-pane v-if="item.kuake" label="夸克网盘"
-						>{{ item.kuake }}
-						<el-button
-							type="text"
-							icon="el-icon-copy-document"
-							@click="handleCopy(item.kuake)"
-						></el-button>
+					<el-tab-pane v-if="item.kuake" label="夸克网盘">
+						<div v-if="computeIsLocked(item.id, 'kuake')">
+							{{ item.kuake }}
+							<el-button
+								type="text"
+								icon="el-icon-copy-document"
+								@click="handleCopy(item.kuake)"
+							></el-button>
+						</div>
+						<el-link
+							v-else
+							type="success"
+							icon="el-icon-unlock"
+							@click="handleUnlock('kuake')"
+							:underline="false"
+							>解锁</el-link
+						>
 					</el-tab-pane>
-					<el-tab-pane v-if="item.aliyun" label="阿里云盘"
-						>{{ item.aliyun }}
-						<el-button
-							type="text"
-							icon="el-icon-copy-document"
-							@click="handleCopy(item.aliyun)"
-						></el-button
-					></el-tab-pane>
-					<el-tab-pane v-if="item.lanzouyun" label="蓝奏云"
-						>{{ item.lanzouyun }}
-						<el-button
-							type="text"
-							icon="el-icon-copy-document"
-							@click="handleCopy(item.lanzouyun)"
-						></el-button
-					></el-tab-pane>
-					<el-tab-pane v-if="item.tianyiyun" label="天翼云盘"
-						>{{ item.tianyiyun }}
-						<el-button
-							type="text"
-							icon="el-icon-copy-document"
-							@click="handleCopy(item.tianyiyun)"
-						></el-button
-					></el-tab-pane>
-					<el-tab-pane v-if="item.website" label="网址"
-						>{{ item.website }}
-						<el-button
-							type="text"
-							icon="el-icon-copy-document"
-							@click="handleCopy(item.website)"
-						></el-button
-					></el-tab-pane>
+					<el-tab-pane v-if="item.aliyun" label="阿里云盘">
+						<div v-if="computeIsLocked(item.id, 'aliyun')">
+							{{ item.aliyun }}
+							<el-button
+								type="text"
+								icon="el-icon-copy-document"
+								@click="handleCopy(item.aliyun)"
+							></el-button>
+						</div>
+						<el-link
+							v-else
+							type="success"
+							icon="el-icon-unlock"
+							@click="handleUnlock('aliyun')"
+							:underline="false"
+							>解锁</el-link
+						>
+					</el-tab-pane>
+					<el-tab-pane v-if="item.lanzouyun" label="蓝奏云">
+						<div v-if="computeIsLocked(item.id, 'lanzouyun')">
+							{{ item.lanzouyun }}
+							<el-button
+								type="text"
+								icon="el-icon-copy-document"
+								@click="handleCopy(item.lanzouyun)"
+							></el-button>
+						</div>
+						<el-link
+							v-else
+							type="success"
+							icon="el-icon-unlock"
+							@click="handleUnlock('lanzouyun')"
+							:underline="false"
+							>解锁</el-link
+						>
+					</el-tab-pane>
+					<el-tab-pane v-if="item.tianyiyun" label="天翼云盘">
+						<div v-if="computeIsLocked(item.id, 'tianyiyun')">
+							{{ item.tianyiyun }}
+							<el-button
+								type="text"
+								icon="el-icon-copy-document"
+								@click="handleCopy(item.tianyiyun)"
+							></el-button>
+						</div>
+						<el-link
+							v-else
+							type="success"
+							icon="el-icon-unlock"
+							@click="handleUnlock('tianyiyun')"
+							:underline="false"
+							>解锁</el-link
+						>
+					</el-tab-pane>
+					<el-tab-pane v-if="item.website" label="网址">
+						<div v-if="computeIsLocked(item.id, 'website')">
+							{{ item.website }}
+							<el-button
+								type="text"
+								icon="el-icon-copy-document"
+								@click="handleCopy(item.website)"
+							></el-button>
+						</div>
+						<el-link
+							v-else
+							type="success"
+							icon="el-icon-unlock"
+							@click="handleUnlock('website')"
+							:underline="false"
+							>解锁</el-link
+						>
+					</el-tab-pane>
 				</el-tabs>
 				<hr />
 			</div>
@@ -223,6 +283,7 @@ import {
 	fetchResource,
 	fetchResourceType,
 	replyResource,
+	fetchPersonalUnlockedResource,
 } from "@/api/resource";
 import TypeSelection from "../components/type-selection.vue";
 import { calculateIsLogin, getCurrentOauthUserInfo } from "@/utils/oauth";
@@ -253,12 +314,25 @@ export default {
 			},
 			isLogin: false,
 			authUserInfo: {},
+			personalUnlockedResource: [],
 		};
 	},
 	components: {
 		Quote,
 		sectionTitle,
 		TypeSelection,
+	},
+	computed: {
+		computeIsLocked() {
+			return (resourceId, platform) => {
+				const index = this.personalUnlockedResource.findIndex((element) => {
+					return (
+						element.resource_id === resourceId && element.platform === platform
+					);
+				});
+				return index >= 0;
+			};
+		},
 	},
 	methods: {
 		getWebSiteInfo() {
@@ -358,9 +432,25 @@ export default {
 				}
 			});
 		},
+		// 获取个人解锁资源
+		async getPersonalUnlockedResource() {
+			try {
+				this.authUserInfo = getCurrentOauthUserInfo();
+				const res = await fetchPersonalUnlockedResource(this.authUserInfo.id);
+				if (res.code === 200) {
+					this.personalUnlockedResource = res.data || [];
+				} else {
+					this.$message.error(res.errors);
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
 	},
 	created() {
-		this.fetchResource();
+		Promise.all([this.getPersonalUnlockedResource()]).then(() => {
+			this.fetchResource();
+		});
 		this.getResourceType();
 		this.isLogin = calculateIsLogin();
 	},
