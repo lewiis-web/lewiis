@@ -148,7 +148,7 @@ export default {
 				{ name: "微博", value: "weibo" },
 				{ name: "华为", value: "huawei" },
 				{ name: "百度", value: "baidu" },
-				// { name: "Gitee测试", value: "gitee_test" },
+				{ name: "Gitee测试", value: "gitee_test" },
 			],
 			queryObj: {},
 			currentUserInfo: {},
