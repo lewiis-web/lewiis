@@ -98,7 +98,15 @@
 						}}</a>
 					</div>
 					<div class="sub-menu">
+						<a @click="goResourceUnlockRecord">{{
+							$t("index.menu.resource_unlock_record")
+						}}</a>
+					</div>
+					<div class="sub-menu">
 						<a @click="goCdkCenter">{{ $t("index.menu.cdk") }}</a>
+					</div>
+					<div class="sub-menu">
+						<a @click="goIntegralRule">{{ $t("index.menu.integral_rule") }}</a>
 					</div>
 					<div class="sub-menu">
 						<a @click="logout">{{ $t("index.menu.logout") }}</a>
@@ -632,9 +640,17 @@ export default {
 		goResourceReply() {
 			this.$router.push("/resourceReply");
 		},
+		// 跳转到资源解锁记录
+		goResourceUnlockRecord() {
+			this.$router.push("/resourceUnlockRecord");
+		},
 		// 跳转到cdk兑换中心
 		goCdkCenter() {
 			this.$router.push("/cdkExchangeCenter");
+		},
+		// 跳转到积分规则
+		goIntegralRule() {
+			this.$router.push("/article/82");
 		},
 	},
 };

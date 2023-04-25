@@ -54,6 +54,12 @@ const routes = [
 		meta: { title: "资源共享申请" },
 	},
 	{
+		path: "/resourceUnlockRecord",
+		name: "resourceUnlockRecord",
+		component: () => import("@/views/resourceUnlockRecord"),
+		meta: { title: "资源解锁记录" },
+	},
+	{
 		path: "/cdkExchangeCenter",
 		name: "cdkExchangeCenter",
 		component: () => import("@/views/CdkExchangeCenter"),

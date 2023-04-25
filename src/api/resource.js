@@ -105,3 +105,38 @@ export function fetchPersonalUnlockedResource(userId) {
 		method: "get",
 	});
 }
+
+/**
+ * 解锁资源
+ * @method put
+ * @param {string} resourceId 资源id √
+ * @param {string} userId 用户id √
+ * @param {number} platform 资源所属平台 √
+ */
+export function unlockResource(data) {
+	return request({
+		url: "/resource/unlock",
+		method: "put",
+		headers: {
+			authorization: `Bearer ${
+				sessionStorage.getItem("token") ? sessionStorage.getItem("token") : ""
+			}`,
+		},
+		data,
+	});
+}
+
+/**
+ * 获取个人解锁资源列表（分页）
+ * @method post
+ * @param {string} userId 用户id √
+ * @param {number} pageNum 页码 √
+ * @param {number} pageSize 每页数量 √
+ */
+export function fetchUnlockedResourceRecord(data) {
+	return request({
+		url: `/resource/unlock/record/mine`,
+		method: "post",
+		data,
+	});
+}

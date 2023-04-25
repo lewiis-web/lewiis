@@ -68,7 +68,7 @@
 							v-else
 							type="success"
 							icon="el-icon-unlock"
-							@click="handleUnlock('baidu')"
+							@click="handleUnlock(item.id, 'baidu')"
 							:underline="false"
 							>解锁</el-link
 						>
@@ -86,7 +86,7 @@
 							v-else
 							type="success"
 							icon="el-icon-unlock"
-							@click="handleUnlock('kuake')"
+							@click="handleUnlock(item.id, 'kuake')"
 							:underline="false"
 							>解锁</el-link
 						>
@@ -104,7 +104,7 @@
 							v-else
 							type="success"
 							icon="el-icon-unlock"
-							@click="handleUnlock('aliyun')"
+							@click="handleUnlock(item.id, 'aliyun')"
 							:underline="false"
 							>解锁</el-link
 						>
@@ -122,7 +122,7 @@
 							v-else
 							type="success"
 							icon="el-icon-unlock"
-							@click="handleUnlock('lanzouyun')"
+							@click="handleUnlock(item.id, 'lanzouyun')"
 							:underline="false"
 							>解锁</el-link
 						>
@@ -140,7 +140,7 @@
 							v-else
 							type="success"
 							icon="el-icon-unlock"
-							@click="handleUnlock('tianyiyun')"
+							@click="handleUnlock(item.id, 'tianyiyun')"
 							:underline="false"
 							>解锁</el-link
 						>
@@ -158,7 +158,7 @@
 							v-else
 							type="success"
 							icon="el-icon-unlock"
-							@click="handleUnlock('website')"
+							@click="handleUnlock(item.id, 'website')"
 							:underline="false"
 							>解锁</el-link
 						>
@@ -168,7 +168,6 @@
 			</div>
 
 			<el-pagination
-				background
 				:current-page="queryForm.pageNum"
 				:layout="layout"
 				:page-size="queryForm.pageSize"
@@ -284,7 +283,9 @@ import {
 	fetchResourceType,
 	replyResource,
 	fetchPersonalUnlockedResource,
+	unlockResource,
 } from "@/api/resource";
+import { fetchUserInfoByUserId } from "@/api/user";
 import TypeSelection from "../components/type-selection.vue";
 import { calculateIsLogin, getCurrentOauthUserInfo } from "@/utils/oauth";
 
@@ -436,9 +437,67 @@ export default {
 		async getPersonalUnlockedResource() {
 			try {
 				this.authUserInfo = getCurrentOauthUserInfo();
-				const res = await fetchPersonalUnlockedResource(this.authUserInfo.id);
+				if (this.authUserInfo.id) {
+					const res = await fetchPersonalUnlockedResource(this.authUserInfo.id);
+					if (res.code === 200) {
+						this.personalUnlockedResource = res.data || [];
+					} else {
+						this.$message.error(res.errors);
+					}
+				} else {
+					this.$message({
+						type: "error",
+						message: "请登录后查看资源",
+					});
+				}
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
+		// 解锁资源
+		handleUnlock(resourceId, platform) {
+			try {
+				this.$confirm("此操作将永久解锁该资源, 是否继续?", "提示", {
+					confirmButtonText: "确定",
+					cancelButtonText: "取消",
+					type: "success",
+				}).then(async () => {
+					this.authUserInfo = getCurrentOauthUserInfo();
+					const res = await unlockResource({
+						resourceId,
+						platform,
+						userId: this.authUserInfo.id,
+					});
+					if (res.code === 200) {
+						this.$message.success("资源解锁成功");
+						Promise.all([
+							this.getPersonalUnlockedResource(),
+							this.getUserInfoByUserId(),
+						]).then(() => {
+							this.fetchResource();
+						});
+					} else {
+						this.$message.error(res.errors);
+					}
+				});
+			} catch (error) {
+				this.$message.error(error);
+			}
+		},
+		// 获取用户信息，更新缓存
+		async getUserInfoByUserId() {
+			try {
+				this.authUserInfo = getCurrentOauthUserInfo();
+				const res = await fetchUserInfoByUserId(this.authUserInfo.id);
 				if (res.code === 200) {
-					this.personalUnlockedResource = res.data || [];
+					const userInfoStr = JSON.stringify(res.data);
+					sessionStorage.setItem("sqlUserInfo", userInfoStr);
+					this.$notify({
+						title: `积分 - 20`,
+						dangerouslyUseHTMLString: true,
+						message: `当前总积分：<span style="color:#d81e06;font-size:16px;font-weight:600">${res.data.integral}</span>`,
+						type: "info",
+					});
 				} else {
 					this.$message.error(res.errors);
 				}

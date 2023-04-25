@@ -14,8 +14,10 @@
       "login": "登录",
       "logout": "注销登录",
       "resource_sharing_apply": "资源共享申请",
+      "resource_unlock_record": "资源解锁记录",
       "cdk": "CDK兑换中心",
-      "exchange_records": "兑换记录"
+      "exchange_records": "兑换记录",
+      "integral_rule": "积分规则"
     },
     "category": [
       {
@@ -100,6 +102,10 @@
       "pi-blogName": "请输入你的博客名称",
       "pi-homepage": "请输入你的博客主页",
       "pi-profile": "请输入你的个人简介"
+    },
+    "resourceUnlockRecord": {
+      "title": "资源解锁记录",
+      "clear": "清空记录"
     },
     "myMessage": {
       "title": "消息中心"

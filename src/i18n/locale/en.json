@@ -14,8 +14,10 @@
       "login": "Login",
       "logout": "Logout",
       "resource_sharing_apply": "Resource Sharing Apply",
+      "resource_unlock_record": "Resource Unlock Record",
       "cdk": "CDK Exchange Center",
-      "exchange_records": "Exchange Records"
+      "exchange_records": "Exchange Records",
+      "integral_rule": "Integral Rule"
     },
     "category": [
       {
@@ -84,6 +86,10 @@
         "kuake": "Quark Cloud Disk",
         "website": "Website"
       }
+    },
+    "resourceUnlockRecord": {
+      "title": "Resource Unlock Record",
+      "clear": "Clear All Records"
     },
     "about": {
       "title": "About Blog",
