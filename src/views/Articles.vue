@@ -47,12 +47,12 @@
 								<router-link to="/category/technology">技术</router-link>
 							</div>
 						</footer>
-						<!-- 评论区 -->
-						<comment
-							:dataSource="commentList"
-							@updateComment="getComment"
-						></comment>
 					</section-title>
+					<!-- 评论区 -->
+					<comment
+						:dataSource="commentList"
+						@updateComment="getComment"
+					></comment>
 				</article>
 			</main>
 		</div>

@@ -70,6 +70,7 @@
 							icon="el-icon-unlock"
 							@click="handleUnlock(item.id, 'baidu')"
 							:underline="false"
+							:disabled="!isLogin"
 							>解锁</el-link
 						>
 					</el-tab-pane>
@@ -88,6 +89,7 @@
 							icon="el-icon-unlock"
 							@click="handleUnlock(item.id, 'kuake')"
 							:underline="false"
+							:disabled="!isLogin"
 							>解锁</el-link
 						>
 					</el-tab-pane>
@@ -106,6 +108,7 @@
 							icon="el-icon-unlock"
 							@click="handleUnlock(item.id, 'aliyun')"
 							:underline="false"
+							:disabled="!isLogin"
 							>解锁</el-link
 						>
 					</el-tab-pane>
@@ -124,6 +127,7 @@
 							icon="el-icon-unlock"
 							@click="handleUnlock(item.id, 'lanzouyun')"
 							:underline="false"
+							:disabled="!isLogin"
 							>解锁</el-link
 						>
 					</el-tab-pane>
@@ -142,6 +146,7 @@
 							icon="el-icon-unlock"
 							@click="handleUnlock(item.id, 'tianyiyun')"
 							:underline="false"
+							:disabled="!isLogin"
 							>解锁</el-link
 						>
 					</el-tab-pane>
@@ -160,6 +165,7 @@
 							icon="el-icon-unlock"
 							@click="handleUnlock(item.id, 'website')"
 							:underline="false"
+							:disabled="!isLogin"
 							>解锁</el-link
 						>
 					</el-tab-pane>
