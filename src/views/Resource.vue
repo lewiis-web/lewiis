@@ -52,6 +52,9 @@
 								src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png"
 							/>
 						</el-avatar>
+						<el-tag type="info" size="small" style="margin-left: 12px"
+							>{{ item.unlock_user_count }}个用户已解锁该资源</el-tag
+						>
 					</div>
 				</quote>
 				<el-tabs type="border-card" class="tabname">
