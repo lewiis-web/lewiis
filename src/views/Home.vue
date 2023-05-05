@@ -168,6 +168,7 @@ export default {
 		},
 	},
 	mounted() {
+		this.searchCondition.pageNum = 1;
 		this.fetchList();
 		this.saveVisitorInfo();
 	},

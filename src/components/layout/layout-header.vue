@@ -137,6 +137,10 @@ import {
 } from "@/utils/oauth";
 const qs = require("qs");
 import { v4 as uuidv4 } from "uuid";
+// 登录日志
+import { publicIpv4 } from "public-ip";
+import { addLoginLog } from "@/api/visitor";
+const { UAParser } = require("ua-parser-js");
 
 export default {
 	name: "layout-header",
@@ -162,6 +166,7 @@ export default {
 			currentUserInfo: {},
 			isLogin: false,
 			sqlUserInfo: {},
+			clientInfo: {},
 		};
 	},
 	computed: {
@@ -350,6 +355,7 @@ export default {
 						});
 						if (res1.code === 200) {
 							sessionStorage.setItem("token", res1.data.token);
+							this.loginLog(res1.data.username, res1.data.id);
 						}
 					}, 1500);
 				} else {
@@ -402,6 +408,7 @@ export default {
 						});
 						if (res1.code === 200) {
 							sessionStorage.setItem("token", res1.data.token);
+							this.loginLog(res1.data.username, res1.data.id);
 						}
 					}, 1500);
 				} else {
@@ -454,6 +461,7 @@ export default {
 						});
 						if (res1.code === 200) {
 							sessionStorage.setItem("token", res1.data.token);
+							this.loginLog(res1.data.username, res1.data.id);
 						}
 					}, 1500);
 				} else {
@@ -512,6 +520,7 @@ export default {
 						});
 						if (res1.code === 200) {
 							sessionStorage.setItem("token", res1.data.token);
+							this.loginLog(res1.data.username, res1.data.id);
 						}
 					}, 1500);
 				} else {
@@ -570,6 +579,7 @@ export default {
 						});
 						if (res1.code === 200) {
 							sessionStorage.setItem("token", res1.data.token);
+							this.loginLog(res1.data.username, res1.data.id);
 						}
 					}, 1500);
 				} else {
@@ -622,6 +632,7 @@ export default {
 						});
 						if (res1.code === 200) {
 							sessionStorage.setItem("token", res1.data.token);
+							this.loginLog(res1.data.username, res1.data.id);
 						}
 					}, 1500);
 				} else {
@@ -651,6 +662,24 @@ export default {
 		// 跳转到积分规则
 		goIntegralRule() {
 			this.$router.push("/article/82");
+		},
+		// 添加登录日志
+		async loginLog(username, userId) {
+			try {
+				const clientIp = await publicIpv4();
+				let { browser, os } = new UAParser().getResult();
+				this.clientInfo = {
+					user_name: username,
+					user_id: userId,
+					ip: clientIp,
+					browser: `${browser.name} ${browser.version}`,
+					os: `${os.name} ${os.version}`,
+					login_type: 0,
+				};
+				await addLoginLog(this.clientInfo);
+			} catch (error) {
+				Message.error(error);
+			}
 		},
 	},
 };
