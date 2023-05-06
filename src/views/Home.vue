@@ -83,6 +83,7 @@ export default {
 			handler() {
 				this.searchCondition.category = this.$route.params.cate;
 				this.searchCondition.keyword = this.$route.params.words;
+				this.searchCondition.pageNum = 1;
 				this.fetchList();
 			},
 		},
@@ -167,8 +168,10 @@ export default {
 			this.fetchList();
 		},
 	},
-	mounted() {
+	created() {
 		this.searchCondition.pageNum = 1;
+	},
+	mounted() {
 		this.fetchList();
 		this.saveVisitorInfo();
 	},
