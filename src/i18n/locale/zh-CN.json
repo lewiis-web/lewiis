@@ -109,6 +109,9 @@
     },
     "myMessage": {
       "title": "消息中心"
+    },
+    "attendance": {
+      "title": "签到中心"
     }
   }
 }

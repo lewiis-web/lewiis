@@ -73,3 +73,15 @@ export function fetchOauthUserInfoByWeibo(code) {
 		method: "get",
 	});
 }
+
+/**
+ * osChina获取用户信息
+ * @method get
+ * @param {string} code 返回的code
+ */
+export function fetchOauthUserInfoByOsChina(code) {
+	return request({
+		url: `/oauth/oschina/user/info?code=${code}`,
+		method: "get",
+	});
+}

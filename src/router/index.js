@@ -48,6 +48,12 @@ const routes = [
 		meta: { title: "资源" },
 	},
 	{
+		path: "/attendanceCenter",
+		name: "attendanceCenter",
+		component: () => import("@/views/AttendanceCenter"),
+		meta: { title: "签到中心" },
+	},
+	{
 		path: "/resourceReply",
 		name: "resourceReply",
 		component: () => import("@/views/ResourceReply"),

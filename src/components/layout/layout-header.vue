@@ -93,6 +93,11 @@
 				}}</a>
 				<div class="childMenu">
 					<div class="sub-menu">
+						<a @click="goAttendanceCenter">{{
+							$t("index.attendance.title")
+						}}</a>
+					</div>
+					<div class="sub-menu">
 						<a @click="goResourceReply">{{
 							$t("index.menu.resource_sharing_apply")
 						}}</a>
@@ -128,6 +133,7 @@ import {
 	fetchOauthUserInfoByBaidu,
 	fetchOauthUserInfoByGiteeTest,
 	fetchOauthUserInfoByWeibo,
+	fetchOauthUserInfoByOsChina,
 } from "@/api/oauth";
 import { register, portalLogin, fetchUserInfoByUnpt } from "@/api/user";
 import {
@@ -161,6 +167,7 @@ export default {
 				{ name: "华为", value: "huawei" },
 				{ name: "百度", value: "baidu" },
 				// { name: "Gitee测试", value: "gitee_test" },
+				{ name: "开源中国", value: "osChina" },
 			],
 			queryObj: {},
 			currentUserInfo: {},
@@ -205,6 +212,8 @@ export default {
 					this.getGiteeTestOauthUserInfo(this.queryObj.code);
 				} else if (cPlatform === "weibo") {
 					this.getWeiboOauthUserInfo(this.queryObj.code);
+				} else if (cPlatform === "osChina") {
+					this.getOsChinaOauthUserInfo(this.queryObj.code);
 				} else {
 					console.log("啥也不是");
 				}
@@ -307,6 +316,12 @@ export default {
 			} else if (item.value === "weibo") {
 				window.open(
 					`https://api.weibo.com/oauth2/authorize?client_id=${oauth.weibo.CLIENT_ID}&response_type=code&redirect_uri=${oauth.weibo.REDIRECT_URI}`
+				);
+			} else if (item.value === "osChina") {
+				window.open(
+					`https://www.oschina.net/action/oauth2/authorize?response_type=code&client_id=${
+						oauth.osChina.CLIENT_ID
+					}&redirect_uri=${oauth.osChina.REDIRECT_URI}&state=${uuidv4()}`
 				);
 			}
 		},
@@ -640,6 +655,59 @@ export default {
 				}
 			}
 		},
+		// 获取osChina授权用户信息
+		async getOsChinaOauthUserInfo(code) {
+			const sui = sessionStorage.getItem("sqlUserInfo");
+			const sqlUserInfo = sui ? JSON.parse(sui) : {};
+			if (Object.keys(sqlUserInfo).length > 0) {
+				this.sqlUserInfo = sqlUserInfo;
+			} else {
+				const res = await fetchOauthUserInfoByOsChina(code);
+				if (res.code === 200) {
+					this.currentUserInfo = res.data;
+					this.isLogin = true;
+					const { name, avatar, url, email } = this.currentUserInfo;
+					const user_platform = localStorage.getItem("currentUserPlatform");
+					setTimeout(async () => {
+						await register({
+							username: name,
+							password: "123456",
+							rePassword: "123456",
+							avatar,
+							user_type: 0,
+							user_platform,
+							user_page: url,
+							email,
+						});
+					}, 500);
+					setTimeout(async () => {
+						history.replaceState(null, null, "/");
+						const res = await fetchUserInfoByUnpt({
+							username: this.currentUserInfo.name,
+							user_type: 0,
+							user_platform,
+						});
+						if (res.code === 200) {
+							sessionStorage.setItem("sqlUserInfo", JSON.stringify(res.data));
+							this.sqlUserInfo = res.data;
+							this.$store.dispatch("setProgress", true);
+						}
+					}, 1000);
+					setTimeout(async () => {
+						const res1 = await portalLogin({
+							username: name,
+							password: "123456",
+						});
+						if (res1.code === 200) {
+							sessionStorage.setItem("token", res1.data.token);
+							this.loginLog(res1.data.username, res1.data.id);
+						}
+					}, 1500);
+				} else {
+					this.isLogin = false;
+				}
+			}
+		},
 		// 注销
 		logout() {
 			sessionStorage.removeItem("sqlUserInfo");
@@ -662,6 +730,10 @@ export default {
 		// 跳转到积分规则
 		goIntegralRule() {
 			this.$router.push("/article/82");
+		},
+		// 跳转到签到中心
+		goAttendanceCenter() {
+			this.$router.push("/attendanceCenter");
 		},
 		// 添加登录日志
 		async loginLog(username, userId) {

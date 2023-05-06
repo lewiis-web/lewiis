@@ -87,6 +87,9 @@
         "website": "Website"
       }
     },
+    "attendance": {
+      "title": "Attendance Center"
+    },
     "resourceUnlockRecord": {
       "title": "Resource Unlock Record",
       "clear": "Clear All Records"
