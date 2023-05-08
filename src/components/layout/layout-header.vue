@@ -166,7 +166,7 @@ export default {
 				{ name: "微博", value: "weibo" },
 				{ name: "华为", value: "huawei" },
 				{ name: "百度", value: "baidu" },
-				// { name: "Gitee测试", value: "gitee_test" },
+				{ name: "Gitee测试", value: "gitee_test" },
 				{ name: "开源中国", value: "osChina" },
 			],
 			queryObj: {},
@@ -713,6 +713,7 @@ export default {
 			sessionStorage.removeItem("sqlUserInfo");
 			sessionStorage.removeItem("token");
 			localStorage.removeItem("currentUserPlatform");
+			this.$router.push("/");
 			window.location.reload();
 		},
 		// 跳转到资源共享申请页
