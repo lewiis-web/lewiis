@@ -31,7 +31,7 @@ export const oauth = {
 	},
 	osChina: {
 		CLIENT_ID: `7hh3CbbeeGYaPzZ4KlGd`,
-		REDIRECT_URI: `http://localhost:5498/`,
+		REDIRECT_URI: `http://lewiis.top/`,
 	},
 };
 
