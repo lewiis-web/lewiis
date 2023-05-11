@@ -18,16 +18,6 @@
 				ref="ruleForm"
 				label-width="100px"
 			>
-				<el-form-item label="CDK-ID：" prop="cdkId">
-					<el-input
-						v-model="ruleForm.cdkId"
-						autocomplete="new-password"
-						clearable
-						maxlength="255"
-						show-word-limit
-						placeholder="请输入CDK-ID"
-					></el-input>
-				</el-form-item>
 				<el-form-item label="CD-KEY：" prop="cdkCode">
 					<el-input
 						v-model="ruleForm.cdkCode"
@@ -100,6 +90,7 @@ import sectionTitle from "@/components/section-title";
 import Quote from "@/components/quote";
 import { getCurrentOauthUserInfo } from "@/utils/oauth";
 import { fetchCdkRecord, exchangeCdk } from "@/api/cdk";
+import { fetchUserInfoByUserId } from "@/api/user";
 
 export default {
 	name: "Friend",
@@ -108,20 +99,10 @@ export default {
 			ruleForm: {
 				cdkCode: "",
 				authCode: "",
-				cdkId: "",
 			},
 			rules: {
-				cdkId: [
-					{ required: true, message: "请输入CDK-ID", trigger: "blur" },
-					{
-						min: 8,
-						max: 255,
-						message: "长度在 8 到 255 个字符",
-						trigger: "blur",
-					},
-				],
 				cdkCode: [
-					{ required: true, message: "请输入CD-KEY", trigger: "blur" },
+					{ required: true, message: "请输入CDK", trigger: "blur" },
 					{
 						min: 8,
 						max: 255,
@@ -166,11 +147,11 @@ export default {
 						if (val == num) {
 							const res = await exchangeCdk({
 								cdkCode: this.ruleForm.cdkCode,
-								cdkId: this.ruleForm.cdkId,
 								claimUserId: this.authUserInfo.id,
 							});
 							if (res.code === 200) {
 								this.$message.success(`CD-KEY兑换成功！`);
+                this.getUserInfoByUserId()
 								this.resetForm("ruleForm");
 							} else {
 								this.$message.error(res.errors);
@@ -279,6 +260,21 @@ export default {
 				this.$message.error(error);
 			} finally {
 				this.isLoadingData = false;
+			}
+		},
+    // 获取用户信息，更新缓存
+		async getUserInfoByUserId() {
+			try {
+				let sui = getCurrentOauthUserInfo();
+				const res = await fetchUserInfoByUserId(sui.id);
+				if (res.code === 200) {
+					const userInfoStr = JSON.stringify(res.data);
+					sessionStorage.setItem("sqlUserInfo", userInfoStr);
+				} else {
+					this.$message.error(res.errors);
+				}
+			} catch (error) {
+				this.$message.error(error);
 			}
 		},
 	},
